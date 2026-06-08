@@ -112,18 +112,23 @@ For pre-existing customers, all of the above will already be in the thread conte
 
 ## 6. Quality gates
 
-Run each filter on the matching asset type. Auto-regen on score < 8/10 (one retry max — second failure flags for human review, does not silently re-output).
+Fetch each rubric on demand (only when scoring the matching asset type — keeps token use low). Auto-regen on score < 8/10 (one retry max — second failure flags for human review, does not silently re-output).
 
-| Asset type | Filter | File |
-|---|---|---|
-| Pillar articles (A–D) | `article_filter` | `NEXUS MKII/brand/voice_system/filters/article_filter.md` |
-| Carousels (A–D) | `carousel_filter` | `NEXUS MKII/brand/voice_system/filters/carousel_filter.md` |
-| LinkedIn posts | `ember_filter` | `NEXUS MKII/brand/voice_system/filters/ember_filter.md` |
-| Lead magnet copy | `lm_filter` | `NEXUS MKII/brand/voice_system/filters/lm_filter.md` |
-| Video scripts | `video_filter` | `NEXUS MKII/brand/voice_system/filters/video_filter.md` |
-| Lead magnet HTML pages | `page_filter` | `NEXUS MKII/brand/voice_system/filters/page_filter.md` |
+| Asset type | Rubric URL |
+|---|---|
+| Pillar articles (A–D) | https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/specs/_shared/filters/Article_Pillar_Scoring_Rubric.md |
+| Carousels (A–D) + Infographic copy (A–B) | https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/specs/_shared/filters/Carousel_Infographic_Scoring_Rubric.md |
+| LinkedIn posts (16) + Wrapper posts (4) | https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/specs/_shared/filters/LinkedIn_Conversion_Post_Scoring_Tool.md |
+| Video scripts (16) | https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/specs/_shared/filters/Video_Script_Scoring_Rubric.md |
+| Lead magnet copy (diagnostic + framework) | https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/specs/_shared/filters/Lead_Magnet_Scoring_Rubric.md |
+| Rendered lead magnet HTML pages | https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/specs/_shared/filters/Page_Landing_Result_Scoring_Rubric.md |
+| GEO blogs (6) | Blend Article_Pillar + Page_Landing rubrics — Article for body voice, Page for SEO/structure |
+| Long-form LM Gamma prompt | Lead_Magnet_Scoring_Rubric (apply to the prompt's intended output, not prompt syntax) |
+| Posting schedule · Brand Brief · Spine | No rubric — structural correctness check only |
 
 Universal scorer rubric + per-buyer overlay from the buyer's Voice Parameter Block — never per-buyer-bespoke filter logic.
+
+**Python parity note:** the canonical Python build (`nexus_wow_option_a.py`) auto-wires only `article_filter` + `carousel_filter`. The Claude.ai skill applies more rubrics because in-thread serial scoring is cheaper than the Python pipeline's subprocess fan-out. To stay in strict Python parity, run only the first two rubrics.
 
 ## 7. Delivery structure (Google Drive)
 
