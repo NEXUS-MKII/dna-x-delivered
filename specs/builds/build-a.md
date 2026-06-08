@@ -1,21 +1,19 @@
 ---
-spec_version: 1.0
+spec_version: 1.1
 last_updated: 2026-06-08
 build_letter: A
 build_name: Content Pack Pro
-tier: 2
+tier: 1
 tagline: 8 weeks of buyer-voice LinkedIn content in one delivery
 status: live
-references:
-  - specs/tiers/tier-2.md
 source: nexus_wow_option_a.py (NEXUS MKII canonical builder) + lm_builder/templates/*
 ---
 
-# Build A — Content Pack Pro
+# Option A — Content Pack Pro (Tier 1)
 
 > A complete 8-week LinkedIn content campaign in the buyer's brand and voice — 4 fortnightly pillar articles + every derivative asset (posts, carousels, videos, infographics, GEO blogs, lead magnets). Built in one delivery; the buyer publishes on schedule.
 >
-> First Tier 2 build. Reference asset structure for Builds B–F derivative work.
+> Tier 1 one-shot delivery build. Reference asset structure for Options B and C.
 
 ## 1. Intent
 
@@ -25,7 +23,7 @@ Content Pack Pro produces a complete 8-week LinkedIn content campaign for one bu
 
 - **Setup**: $1,997 NZD excl GST · one-off · ~14-day turnaround
 - **No ongoing** — pack is a finite deliverable; buyer can re-engage for next pack
-- **Common Tier 2 terms apply** — see `specs/tiers/tier-2.md`
+- **Commercial terms** — NZD excl GST · 7-day payment terms (NOW Group standard)
 
 ## 3. Deliverables (one delivery)
 
