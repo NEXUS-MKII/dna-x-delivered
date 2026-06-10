@@ -22,17 +22,18 @@ Verify the thread contains everything below. If anything is missing, ask for the
 - Website + tagline
 - ICP: 3–4 pain points + 3–4 desires
 - Primary services (3–5)
-- Voice sample: written content excerpt OR transcript (~1500 chars sufficient)
+- **VOICE_PARAMETER_BLOCK** for the buyer — the canonical voice encoding from the NEXUS Voice Engineering System (`nowgroup-voice-parameter-system` skill). This is the master voice input.
 - Brand palette: primary, secondary, accent, cta (hex codes)
 - Brand fonts: display + body (Google Fonts family names)
 - Buyer email (for Drive share at the end)
 
 ### Recommended (use sensible defaults if missing — flag the substitution)
-- Voice Parameter Block (drives banned words + signature move). If absent, apply the universal voice rules in §3 below.
 - Person photo URL · logo URL · primary domain
 - Extended palette: ink, body, cream, mozzarella, rule, red-flag
 
-Output before proceeding: `Buyer context: ready` OR a grouped list of what's missing, in one message.
+Output before proceeding: `Buyer context + voice: ready` OR a grouped list of what's missing, in one message.
+
+**On the VOICE_PARAMETER_BLOCK** (per `specs/_shared/build-standards.md §1`): if the buyer doesn't have one yet, that's a dependency on the NEXUS Voice Engineering System — Build A *consumes* the block, it does not author it. Pause and flag; do not improvise voice from a website skim or a 1500-char snippet. A weak voice input poisons every asset downstream (32+ copy artefacts × downstream Kartra workflows × buyer's publishing schedule). Worth blocking on. Refer the user to the `nowgroup-voice-parameter-system` skill to produce the block first.
 
 ---
 
@@ -71,17 +72,35 @@ Under- or over-delivering is a fail. The campaign architecture depends on this e
 
 ---
 
-## 3. Voice rules (non-negotiable)
+## 3. Voice layer — the canonical VOICE_PARAMETER_BLOCK (not PILLARS)
 
-Apply on every asset. Auto-reject any draft containing banned words.
+Every asset in this build — 4 articles, 16 posts, 4 carousels, 2 infographics, 16 video scripts, 4 wrappers, 6 GEO blogs, 1 long-form LM, 4 HTML LMs, the master doc — is grounded against the buyer's **VOICE_PARAMETER_BLOCK (VPB)**. The VPB loads as voice authority and supersedes any generic voice instruction. If a general instruction conflicts with the VPB, the VPB wins.
 
-- Plain English. Short sentences. No fluff.
-- Outcome-first: time saved, risk reduced, margin improved, decision speed
-- Confident, calm urgency. No panic. No hype.
-- Concrete examples — not overly technical
-- Universal banned words: `synergy`, `leverage`, `paradigm`, `best-in-class`, `digital transformation`
-- Plus the buyer's own banned-word list from their Voice Parameter Block (if present)
-- Every derivative must be **derived from the Pass 1 foundation** — not invented independently. If you find yourself writing copy that doesn't trace back to a hook / framework / proof / objection from Pass 1, stop and re-anchor.
+Per `specs/_shared/build-standards.md §1`. Do **not** use PILLARS for voice — superseded.
+
+VPB fields applied on every asset:
+- **banned_words** — never appear in any output
+- **signature_phrases** — used verbatim or not at all. Never paraphrase
+- **spine sentences** — anchor each piece; snap back when drafts drift
+- **rule_hook / rule_close / rule_register / rule_structure / rule_philosophy / rule_empathy / rule_cta** — applied to every asset
+- **tone_descriptors, temperature poles, dominant register, structural signatures** — shape rhythm and register
+
+### Universal banned words (baseline — extend per buyer)
+`synergy`, `leverage`, `paradigm`, `best-in-class`, `digital transformation`, `in today's business environment`, `genuinely`, `honestly`, `straightforward`, `as you can see`, `many business owners struggle with`, `I want to talk to you about`. Plus the buyer's VPB-specific banned_words.
+
+### Foundation discipline
+Every derivative must be **derived from the Pass 1 foundation** — not invented independently. If you find yourself writing copy that doesn't trace back to a hook / framework / proof / objection from Pass 1, stop and re-anchor.
+
+### Drift detection (quality gate per `build-standards.md §2`)
+Run the 5-signal drift check on every prose asset before delivery. Catch any one → **re-run the asset, never hand-edit**. Manual editing trains the model toward the editor's voice, not the buyer's.
+
+1. **Context before hook** — opens with scene-setting before the hook. Fix: hook is line 1, no preamble
+2. **Symmetrical lists** — equal-length points, identical rhythm, template-shaped. Fix: dissolve into prose/scene (does NOT apply to scorecards, tag tables, or structurally-list assets)
+3. **One temperature throughout** — warm all the way OR precise all the way, no shift. Fix: find the coldest true line, hard-cut to where warmth arrives
+4. **Summary close** — final line recaps ("So as you can see…"). Fix: close on a principle that survives extraction
+5. **Philosophical claim leads** — spine/phil anchor in the first 2 lines before the piece earns it. Fix: move to final substantive paragraph, build the concrete scene first
+
+Apply Signal 2 to prose assets (articles, posts, video scripts, GEO blog body, LM copy) — not to the posting schedule, the Spine block, or other structurally-list artefacts.
 
 ---
 
@@ -99,7 +118,7 @@ These URLs are verified live. Fetch a rubric ONLY when about to score that asset
 | Rendered lead magnet HTML pages | https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/specs/_shared/filters/Page_Landing_Result_Scoring_Rubric.md |
 | GEO blogs (6) | Blend Article_Pillar + Page_Landing rubrics — Article for body voice, Page for SEO/structure |
 
-Universal scorer rubric + per-buyer overlay from the buyer's Voice Parameter Block — never per-buyer-bespoke filter logic.
+Universal scorer rubric + per-buyer overlay from the VPB — never per-buyer-bespoke filter logic. The §3 drift detection gate runs on every prose asset **in addition** to the rubric.
 
 ---
 
@@ -139,7 +158,7 @@ For each of the 4 HTML files in §2.3, write **fully populated HTML directly** �
 7. Shift section (numbered list of the 4 framework summaries)
 8. Red-flag bar (red background, single line warning)
 9. CTA grid: soft CTA card + hard CTA card side by side
-10. Footer (person name + tagline · primary domain)
+10. Footer (person name + tagline · primary domain · **NOW credit line per §5.5**)
 
 ### Framework LM (built from Article B) — same structure, framework-name eyebrow leads
 
@@ -148,6 +167,22 @@ For each of the 4 HTML files in §2.3, write **fully populated HTML directly** �
 - 4 sections (each with heading + 3–5 tick-box items OR audit questions OR root causes OR numbered action steps)
 - Red-flag bar
 - Dual CTA footer
+- **NOW credit line per §5.5**
+
+### 5.5 Mandatory NOW credit line (per `build-standards.md §3`)
+Every client-facing asset (the 4 HTML LMs + the Gamma carousels/infographics/LM + the buyer's master Google Doc) must carry, in the footer:
+
+```
+Built in partnership with NOW Group — nowgroup.co.nz
+```
+
+For HTML LMs: render as a small muted line in the footer beneath the buyer's brand mark. **Do not reach for NOW orange or NOW typography** — render in the buyer's accent or muted body colour at small size. The carve-out is narrow: credit line only, not palette or voice. Client assets still render in buyer's brand (`force_now_palette=False`) and voice (VPB).
+
+For Gamma assets: render on the final slide of each Gamma (carousel slide 8 already has the CTA; add credit line beneath).
+
+For the master Google Doc: footer of last page.
+
+Internal artefacts (`00_START_HERE.txt`) don't require it (those don't go to clients).
 
 ---
 

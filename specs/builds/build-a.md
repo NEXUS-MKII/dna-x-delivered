@@ -1,29 +1,49 @@
 ---
-spec_version: 1.1
-last_updated: 2026-06-08
+spec_version: 2.0
+last_updated: 2026-06-10
 build_letter: A
 build_name: Content Pack Pro
 tier: 1
-tagline: 8 weeks of buyer-voice LinkedIn content in one delivery
+tagline: 8 weeks of buyer-voice LinkedIn content in one delivery — quiz-tier-free, voice-block-anchored
 status: live
-source: nexus_wow_option_a.py (NEXUS MKII canonical builder) + lm_builder/templates/*
+source: nexus_wow_option_a.py (Python pipeline — needs alignment refactor for VPB + drift + NOW footer per specs/builds/build-a-python-alignment.md when scheduled)
+references:
+  - specs/_shared/build-standards.md
+  - skills/dna-x-build-a.md (Claude.ai expression)
+  - https://raw.githubusercontent.com/NEXUS-MKII/nowgroup-skills/main/sources/voice/NOW_Voice_Parameter_System.md (voice authority dependency)
 ---
 
-# Option A — Content Pack Pro (Tier 1)
+# Option A — Content Pack Pro (Tier 1) · v2.0
 
 > A complete 8-week LinkedIn content campaign in the buyer's brand and voice — 4 fortnightly pillar articles + every derivative asset (posts, carousels, videos, infographics, GEO blogs, lead magnets). Built in one delivery; the buyer publishes on schedule.
 >
-> Tier 1 one-shot delivery build. Reference asset structure for Options B and C.
+> Tier 1 one-shot delivery build. Mandatory adherence to `specs/_shared/build-standards.md` (VPB dependency · drift detection · NOW footer · format ask · filter rubrics).
 
 ## 1. Intent
 
-Content Pack Pro produces a complete 8-week LinkedIn content campaign for one buyer in a single delivery. Four pillar articles drive everything; every derivative is built FROM the articles (not invented independently). Output is buyer-branded (palette, fonts, logo, person photo) and buyer-voiced (Voice Parameter Block applied throughout). Buyer publishes fortnightly per the included posting schedule.
+Content Pack Pro produces a complete 8-week LinkedIn content campaign for one buyer in a single delivery. Four pillar articles drive everything; every derivative is built FROM the articles (not invented independently). Output is buyer-branded (palette, fonts, logo, person photo) and buyer-voiced (**VOICE_PARAMETER_BLOCK** applied throughout). Buyer publishes fortnightly per the included posting schedule.
+
+**Architectural note**: Build A does NOT use the MAX PRO + reduction pattern from Build C — Content Pack Pro reaches a buyer's whole client audience at uniform depth. Single audience, single depth, no tier-routing needed.
 
 ## 2. Commercial structure
 
-- **Setup**: $1,997 NZD excl GST · one-off · ~14-day turnaround
+- **Setup**: same one-off Tier 1 fee as Builds B/C · ~14-day turnaround
 - **No ongoing** — pack is a finite deliverable; buyer can re-engage for next pack
 - **Commercial terms** — NZD excl GST · 7-day payment terms (NOW Group standard)
+
+## 2.1 Mandatory build standards
+
+Per `specs/_shared/build-standards.md`, this build implements:
+
+| Standard | Where it applies in Build A |
+|---|---|
+| §1 VPB Dependency | Required input. Build A *consumes* the VPB, does not author it. Pause + flag if absent. |
+| §2 Drift Detection (5 signals) | Run on every prose asset before delivery (articles, posts, video scripts, GEO blog body, LM copy) |
+| §3 NOW Footer Credit | Mandatory on every client-facing asset (4 HTML LMs, 7 Gamma generations, master doc) |
+| §4 MAX PRO + Reduction | **Not used in Build A.** Uniform audience, single depth |
+| §5 Format Ask Per Client | Lead magnets: HTML always (PDF-convertible). Long-form LM: Gamma. No buyer choice today (consider opening for v2.1) |
+| §6 Routing Tables | **Not used in Build A.** No segmentation |
+| §7 Internal Management Sequence | **Not used in Build A.** Buyer publishes per posting schedule; no system to run over time |
 
 ## 3. Deliverables (one delivery)
 
