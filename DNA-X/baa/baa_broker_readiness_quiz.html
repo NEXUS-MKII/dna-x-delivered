@@ -155,24 +155,60 @@ h1, h2, h3 { font-family: 'Francois One', sans-serif; line-height: 1.15; }
   border-radius: 5px;
   background: var(--white);
   cursor: pointer;
-  transition: border-color .15s, background .15s;
+  transition: border-color .15s, background .15s, color .15s;
   font-size: 15px; line-height: 1.5;
   color: var(--body);
+  position: relative;
+  user-select: none;
 }
-.opt:hover { border-color: var(--primary); background: var(--cream); }
+.opt:hover {
+  border-color: var(--rule-strong);
+  background: var(--cream);
+}
 .opt.selected {
   border-color: var(--primary);
-  background: var(--cream);
+  background: var(--primary);
+  color: var(--white);
 }
 .opt-letter {
   font-family: 'Francois One', sans-serif;
   font-size: 13px; letter-spacing: .1em;
   color: var(--primary);
   flex-shrink: 0; padding-top: 1px;
-  min-width: 18px;
+  min-width: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 22px; width: 22px;
+  border: 1.5px solid var(--rule-strong);
+  border-radius: 50%;
+  background: var(--white);
+  transition: all .15s;
 }
-.opt.selected .opt-letter { color: var(--ink); }
-.opt input { display: none; }
+.opt.selected .opt-letter {
+  color: var(--primary);
+  background: var(--white);
+  border-color: var(--white);
+}
+.opt-text-body { flex: 1; }
+.opt.selected .opt-text-body { color: var(--white); }
+.opt-tick {
+  display: none;
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  color: var(--white);
+  font-weight: 700;
+  align-self: center;
+}
+.opt.selected .opt-tick { display: inline-flex; align-items: center; justify-content: center; }
+.opt input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px; height: 1px;
+}
+.opt:focus-within {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
 
 textarea.opt-text {
   width: 100%;
@@ -373,10 +409,10 @@ textarea.opt-text:focus { outline: none; border-color: var(--primary); }
     <span class="q-num">Question 1 of 10 · Scored</span>
     <h2 class="q-text">What share of your active clients are investors, or aspiring investors, rather than first home buyers and owner-occupiers?</h2>
     <div class="options">
-      <label class="opt"><input type="radio" name="q1" value="A"><span class="opt-letter">A</span><span>More than half of my book. Investors are my core focus.</span></label>
-      <label class="opt"><input type="radio" name="q1" value="B"><span class="opt-letter">B</span><span>About a third. A meaningful, growing segment.</span></label>
-      <label class="opt"><input type="radio" name="q1" value="C"><span class="opt-letter">C</span><span>Some investors, but they aren't where the book is concentrated.</span></label>
-      <label class="opt"><input type="radio" name="q1" value="D"><span class="opt-letter">D</span><span>Almost none. My book is mostly owner-occupier and first home buyer.</span></label>
+      <label class="opt"><input type="radio" name="q1" value="A"><span class="opt-letter">A</span><span class="opt-text-body">More than half of my book. Investors are my core focus.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q1" value="B"><span class="opt-letter">B</span><span class="opt-text-body">About a third. A meaningful, growing segment.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q1" value="C"><span class="opt-letter">C</span><span class="opt-text-body">Some investors, but they aren't where the book is concentrated.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q1" value="D"><span class="opt-letter">D</span><span class="opt-text-body">Almost none. My book is mostly owner-occupier and first home buyer.</span><span class="opt-tick">✓</span></label>
     </div>
   </div>
 
@@ -385,10 +421,10 @@ textarea.opt-text:focus { outline: none; border-color: var(--primary); }
     <span class="q-num">Question 2 of 10 · Scored</span>
     <h2 class="q-text">How many clients in your database right now have pre-approval in hand AND are actively looking for an investment property?</h2>
     <div class="options">
-      <label class="opt"><input type="radio" name="q2" value="A"><span class="opt-letter">A</span><span>Five or more. I could list them by name.</span></label>
-      <label class="opt"><input type="radio" name="q2" value="B"><span class="opt-letter">B</span><span>Two to four. A small but real cohort.</span></label>
-      <label class="opt"><input type="radio" name="q2" value="C"><span class="opt-letter">C</span><span>One that I'm aware of.</span></label>
-      <label class="opt"><input type="radio" name="q2" value="D"><span class="opt-letter">D</span><span>None I can name today.</span></label>
+      <label class="opt"><input type="radio" name="q2" value="A"><span class="opt-letter">A</span><span class="opt-text-body">Five or more. I could list them by name.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q2" value="B"><span class="opt-letter">B</span><span class="opt-text-body">Two to four. A small but real cohort.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q2" value="C"><span class="opt-letter">C</span><span class="opt-text-body">One that I'm aware of.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q2" value="D"><span class="opt-letter">D</span><span class="opt-text-body">None I can name today.</span><span class="opt-tick">✓</span></label>
     </div>
   </div>
 
@@ -397,10 +433,10 @@ textarea.opt-text:focus { outline: none; border-color: var(--primary); }
     <span class="q-num">Question 3 of 10 · Scored</span>
     <h2 class="q-text">When an investor client asks you "where should I buy?" or "is this a good property?", what typically happens?</h2>
     <div class="options">
-      <label class="opt"><input type="radio" name="q3" value="A"><span class="opt-letter">A</span><span>I refer them to an external buyer's agent and then lose visibility on the rest of the journey.</span></label>
-      <label class="opt"><input type="radio" name="q3" value="B"><span class="opt-letter">B</span><span>I give them informal guidance from what I know, but there's no structure to it.</span></label>
-      <label class="opt"><input type="radio" name="q3" value="C"><span class="opt-letter">C</span><span>I tell them I'm a finance person and steer them to figure the property side out themselves.</span></label>
-      <label class="opt"><input type="radio" name="q3" value="D"><span class="opt-letter">D</span><span>I haven't been asked this recently. It just isn't coming up.</span></label>
+      <label class="opt"><input type="radio" name="q3" value="A"><span class="opt-letter">A</span><span class="opt-text-body">I refer them to an external buyer's agent and then lose visibility on the rest of the journey.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q3" value="B"><span class="opt-letter">B</span><span class="opt-text-body">I give them informal guidance from what I know, but there's no structure to it.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q3" value="C"><span class="opt-letter">C</span><span class="opt-text-body">I tell them I'm a finance person and steer them to figure the property side out themselves.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q3" value="D"><span class="opt-letter">D</span><span class="opt-text-body">I haven't been asked this recently. It just isn't coming up.</span><span class="opt-tick">✓</span></label>
     </div>
   </div>
 
@@ -409,10 +445,10 @@ textarea.opt-text:focus { outline: none; border-color: var(--primary); }
     <span class="q-num">Question 4 of 10 · Scored</span>
     <h2 class="q-text">How often are you giving property advice (suburb opinions, comparison takes, investment strategy) to clients without being paid for it?</h2>
     <div class="options">
-      <label class="opt"><input type="radio" name="q4" value="A"><span class="opt-letter">A</span><span>Every week. It's a regular part of the work and I'm already halfway a buyer's agent.</span></label>
-      <label class="opt"><input type="radio" name="q4" value="B"><span class="opt-letter">B</span><span>A few times a month, usually with the more engaged clients.</span></label>
-      <label class="opt"><input type="radio" name="q4" value="C"><span class="opt-letter">C</span><span>Occasionally, if asked directly.</span></label>
-      <label class="opt"><input type="radio" name="q4" value="D"><span class="opt-letter">D</span><span>Almost never. I keep my conversations to finance.</span></label>
+      <label class="opt"><input type="radio" name="q4" value="A"><span class="opt-letter">A</span><span class="opt-text-body">Every week. It's a regular part of the work and I'm already halfway a buyer's agent.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q4" value="B"><span class="opt-letter">B</span><span class="opt-text-body">A few times a month, usually with the more engaged clients.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q4" value="C"><span class="opt-letter">C</span><span class="opt-text-body">Occasionally, if asked directly.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q4" value="D"><span class="opt-letter">D</span><span class="opt-text-body">Almost never. I keep my conversations to finance.</span><span class="opt-tick">✓</span></label>
     </div>
   </div>
 
@@ -421,10 +457,10 @@ textarea.opt-text:focus { outline: none; border-color: var(--primary); }
     <span class="q-num">Question 5 of 10 · Scored</span>
     <h2 class="q-text">When did you last run a structured re-engagement campaign through your existing client database, outside of standard refinance reminders?</h2>
     <div class="options">
-      <label class="opt"><input type="radio" name="q5" value="A"><span class="opt-letter">A</span><span>In the last 30 days. It's part of how the business runs.</span></label>
-      <label class="opt"><input type="radio" name="q5" value="B"><span class="opt-letter">B</span><span>In the last quarter. We do it, just not as a rhythm.</span></label>
-      <label class="opt"><input type="radio" name="q5" value="C"><span class="opt-letter">C</span><span>In the last 12 months. It's an annual thing at best.</span></label>
-      <label class="opt"><input type="radio" name="q5" value="D"><span class="opt-letter">D</span><span>I haven't run one. The database mostly sits there.</span></label>
+      <label class="opt"><input type="radio" name="q5" value="A"><span class="opt-letter">A</span><span class="opt-text-body">In the last 30 days. It's part of how the business runs.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q5" value="B"><span class="opt-letter">B</span><span class="opt-text-body">In the last quarter. We do it, just not as a rhythm.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q5" value="C"><span class="opt-letter">C</span><span class="opt-text-body">In the last 12 months. It's an annual thing at best.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q5" value="D"><span class="opt-letter">D</span><span class="opt-text-body">I haven't run one. The database mostly sits there.</span><span class="opt-tick">✓</span></label>
     </div>
   </div>
 
@@ -433,10 +469,10 @@ textarea.opt-text:focus { outline: none; border-color: var(--primary); }
     <span class="q-num">Question 6 of 10 · Scored</span>
     <h2 class="q-text">Referral fees on settled property purchases (typically $5K to $15K per deal). How does that fit into your business thinking right now?</h2>
     <div class="options">
-      <label class="opt"><input type="radio" name="q6" value="A"><span class="opt-letter">A</span><span>It's already a meaningful revenue line and I want to grow it intentionally.</span></label>
-      <label class="opt"><input type="radio" name="q6" value="B"><span class="opt-letter">B</span><span>I take referral fees when they come up, but it isn't a strategy.</span></label>
-      <label class="opt"><input type="radio" name="q6" value="C"><span class="opt-letter">C</span><span>I've thought about adding it, but haven't structured how.</span></label>
-      <label class="opt"><input type="radio" name="q6" value="D"><span class="opt-letter">D</span><span>Honestly, not something I've considered.</span></label>
+      <label class="opt"><input type="radio" name="q6" value="A"><span class="opt-letter">A</span><span class="opt-text-body">It's already a meaningful revenue line and I want to grow it intentionally.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q6" value="B"><span class="opt-letter">B</span><span class="opt-text-body">I take referral fees when they come up, but it isn't a strategy.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q6" value="C"><span class="opt-letter">C</span><span class="opt-text-body">I've thought about adding it, but haven't structured how.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q6" value="D"><span class="opt-letter">D</span><span class="opt-text-body">Honestly, not something I've considered.</span><span class="opt-tick">✓</span></label>
     </div>
   </div>
 
@@ -445,10 +481,10 @@ textarea.opt-text:focus { outline: none; border-color: var(--primary); }
     <span class="q-num">Question 7 of 10 · Scored</span>
     <h2 class="q-text">If you decided today that BAA was the right partner, when could you realistically make your first introduction to an actual client?</h2>
     <div class="options">
-      <label class="opt"><input type="radio" name="q7" value="A"><span class="opt-letter">A</span><span>This week. I know exactly who I'd call.</span></label>
-      <label class="opt"><input type="radio" name="q7" value="B"><span class="opt-letter">B</span><span>Inside the month. I'd want to prep the conversation first.</span></label>
-      <label class="opt"><input type="radio" name="q7" value="C"><span class="opt-letter">C</span><span>Inside the quarter. I'd need to rebuild the relationship first.</span></label>
-      <label class="opt"><input type="radio" name="q7" value="D"><span class="opt-letter">D</span><span>I'm not sure I have the right client in the book yet.</span></label>
+      <label class="opt"><input type="radio" name="q7" value="A"><span class="opt-letter">A</span><span class="opt-text-body">This week. I know exactly who I'd call.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q7" value="B"><span class="opt-letter">B</span><span class="opt-text-body">Inside the month. I'd want to prep the conversation first.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q7" value="C"><span class="opt-letter">C</span><span class="opt-text-body">Inside the quarter. I'd need to rebuild the relationship first.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q7" value="D"><span class="opt-letter">D</span><span class="opt-text-body">I'm not sure I have the right client in the book yet.</span><span class="opt-tick">✓</span></label>
     </div>
   </div>
 
@@ -457,10 +493,10 @@ textarea.opt-text:focus { outline: none; border-color: var(--primary); }
     <span class="q-num">Question 8 of 10 · Scored</span>
     <h2 class="q-text">What's actually driving you to look at this now, rather than 12 months ago, or 12 months from now?</h2>
     <div class="options">
-      <label class="opt"><input type="radio" name="q8" value="A"><span class="opt-letter">A</span><span>Specific clients asking me. I have demand I'm not serving.</span></label>
-      <label class="opt"><input type="radio" name="q8" value="B"><span class="opt-letter">B</span><span>Margin pressure on finance. I want a second revenue line.</span></label>
-      <label class="opt"><input type="radio" name="q8" value="C"><span class="opt-letter">C</span><span>Industry shift. I can see where this is going and want to position early.</span></label>
-      <label class="opt"><input type="radio" name="q8" value="D"><span class="opt-letter">D</span><span>Just curious. Exploring options at this stage.</span></label>
+      <label class="opt"><input type="radio" name="q8" value="A"><span class="opt-letter">A</span><span class="opt-text-body">Specific clients asking me. I have demand I'm not serving.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q8" value="B"><span class="opt-letter">B</span><span class="opt-text-body">Margin pressure on finance. I want a second revenue line.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q8" value="C"><span class="opt-letter">C</span><span class="opt-text-body">Industry shift. I can see where this is going and want to position early.</span><span class="opt-tick">✓</span></label>
+      <label class="opt"><input type="radio" name="q8" value="D"><span class="opt-letter">D</span><span class="opt-text-body">Just curious. Exploring options at this stage.</span><span class="opt-tick">✓</span></label>
     </div>
   </div>
 
@@ -546,19 +582,20 @@ textarea.opt-text:focus { outline: none; border-color: var(--primary); }
   const resultEl = document.getElementById('result');
   const actions = document.querySelector('.q-actions');
 
-  // Option click handlers (scored)
-  document.querySelectorAll('.opt').forEach(opt => {
-    opt.addEventListener('click', (e) => {
-      if (e.target.tagName === 'INPUT') return;
-      const input = opt.querySelector('input[type="radio"]');
-      if (!input) return;
+  // Radio change handler — fires once on actual state change, bulletproof on touch + desktop.
+  // Label-click natively toggles the wrapped input which fires change.
+  document.querySelectorAll('.opt input[type="radio"]').forEach(input => {
+    input.addEventListener('change', () => {
+      if (!input.checked) return;
       const name = input.name;
+      // Clear .selected on all siblings in the same radio group
       document.querySelectorAll('input[name="' + name + '"]').forEach(i => {
-        i.checked = false;
-        i.closest('.opt').classList.remove('selected');
+        const opt = i.closest('.opt');
+        if (opt) opt.classList.remove('selected');
       });
-      input.checked = true;
-      opt.classList.add('selected');
+      // Mark THIS one selected
+      const opt = input.closest('.opt');
+      if (opt) opt.classList.add('selected');
       answers[name] = input.value;
       updateNextState();
     });
