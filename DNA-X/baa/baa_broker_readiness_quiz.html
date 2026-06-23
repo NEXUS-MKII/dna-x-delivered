@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Broker Readiness Quiz · Buyers Agents Academy</title>
+<meta name="description" content="Eight questions on your investor book. Tells both sides whether a referral partnership with the Property Acquisitions Desk will produce deals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #13AA9F;
+  --secondary: #0D8A80;
+  --accent: #E6B531;
+  --ink: #0F172A;
+  --body: #374151;
+  --cream: #F2FBFA;
+  --mozzarella: #F5F5F4;
+  --rule: #D1FAF7;
+  --rule-strong: #9CE5DE;
+  --red-flag: #DC2626;
+  --white: #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  color: var(--body);
+  background: var(--mozzarella);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+h1, h2, h3 { font-family: 'Francois One', sans-serif; line-height: 1.15; }
+
+/* ── NAV ── */
+.nav {
+  background: var(--ink);
+  padding: 14px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 2px solid var(--primary);
+}
+.nav-logo {
+  font-family: 'Francois One', sans-serif;
+  font-size: 15px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--accent); }
+.nav-back {
+  color: rgba(255,255,255,.55);
+  font-family: 'Josefin Sans', sans-serif; font-weight: 500;
+  font-size: 13px; letter-spacing: .06em;
+  text-decoration: none;
+}
+.nav-back:hover { color: var(--white); }
+
+/* ── HEADER ── */
+.head {
+  background: var(--ink);
+  padding: 56px 40px 64px;
+  position: relative; overflow: hidden;
+}
+.head::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent, transparent 30px,
+    rgba(19,170,159,.04) 30px, rgba(19,170,159,.04) 31px
+  );
+  pointer-events: none;
+}
+.head-inner { max-width: 760px; margin: 0 auto; position: relative; }
+.eyebrow {
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--primary); margin-bottom: 16px; display: block;
+}
+.head h1 {
+  font-size: clamp(28px, 4.5vw, 44px);
+  color: var(--white);
+  margin-bottom: 14px; line-height: 1.1;
+}
+.head p {
+  font-size: 17px; line-height: 1.65;
+  color: rgba(255,255,255,.7);
+  max-width: 620px;
+}
+
+/* ── PROGRESS ── */
+.progress {
+  background: var(--white);
+  padding: 18px 40px;
+  border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0; z-index: 50;
+}
+.progress-inner {
+  max-width: 760px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 24px;
+}
+.progress-text {
+  font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--ink); font-weight: 600;
+  white-space: nowrap;
+}
+.progress-bar {
+  flex: 1; height: 6px;
+  background: var(--rule);
+  border-radius: 3px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: var(--primary);
+  width: 0%; transition: width .35s ease;
+}
+
+/* ── QUIZ BODY ── */
+.quiz-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 40px 80px;
+}
+.question {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 36px 36px 30px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(15,23,42,.04), 0 1px 2px rgba(15,23,42,.06);
+  display: none;
+}
+.question.active { display: block; }
+.q-num {
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--primary); margin-bottom: 10px; display: block;
+  font-weight: 600;
+}
+.q-text {
+  font-family: 'Francois One', sans-serif;
+  font-size: clamp(20px, 3vw, 26px);
+  color: var(--ink); line-height: 1.25;
+  margin-bottom: 22px;
+}
+.q-sub {
+  font-size: 14px; line-height: 1.6; color: var(--body);
+  margin-bottom: 22px;
+  border-left: 3px solid var(--rule-strong);
+  padding-left: 14px;
+}
+.options { display: flex; flex-direction: column; gap: 10px; }
+.opt {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px 18px;
+  border: 1.5px solid var(--rule);
+  border-radius: 5px;
+  background: var(--white);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  font-size: 15px; line-height: 1.5;
+  color: var(--body);
+}
+.opt:hover { border-color: var(--primary); background: var(--cream); }
+.opt.selected {
+  border-color: var(--primary);
+  background: var(--cream);
+}
+.opt-letter {
+  font-family: 'Francois One', sans-serif;
+  font-size: 13px; letter-spacing: .1em;
+  color: var(--primary);
+  flex-shrink: 0; padding-top: 1px;
+  min-width: 18px;
+}
+.opt.selected .opt-letter { color: var(--ink); }
+.opt input { display: none; }
+
+textarea.opt-text {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1.5px solid var(--rule);
+  border-radius: 5px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 15px; line-height: 1.55;
+  color: var(--ink);
+  resize: vertical;
+  min-height: 100px;
+  background: var(--white);
+}
+textarea.opt-text:focus { outline: none; border-color: var(--primary); }
+
+/* ── NAV BUTTONS ── */
+.q-actions {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 26px; gap: 16px;
+}
+.btn {
+  font-family: 'Josefin Sans', sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+  padding: 13px 28px; border-radius: 3px;
+  cursor: pointer; border: none;
+  transition: opacity .2s, background .2s;
+}
+.btn-primary {
+  background: var(--accent); color: var(--ink);
+}
+.btn-primary:hover { opacity: .9; }
+.btn-primary:disabled {
+  background: var(--rule); color: rgba(15,23,42,.4); cursor: not-allowed;
+}
+.btn-ghost {
+  background: transparent; color: var(--body);
+  border: 1.5px solid var(--rule-strong);
+}
+.btn-ghost:hover { background: var(--white); border-color: var(--ink); color: var(--ink); }
+.btn-ghost:disabled {
+  opacity: .35; cursor: not-allowed;
+}
+
+/* ── CAPTURE ── */
+.capture {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 36px 36px;
+  display: none;
+  box-shadow: 0 1px 3px rgba(15,23,42,.04), 0 1px 2px rgba(15,23,42,.06);
+}
+.capture.active { display: block; }
+.capture h2 {
+  font-size: clamp(22px, 3vw, 28px);
+  color: var(--ink); margin-bottom: 10px;
+}
+.capture p {
+  font-size: 15px; line-height: 1.65; color: var(--body);
+  margin-bottom: 24px;
+}
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; font-size: 12px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--ink);
+  font-weight: 600; margin-bottom: 6px;
+}
+.field input {
+  width: 100%; padding: 12px 16px;
+  border: 1.5px solid var(--rule);
+  border-radius: 4px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 15px; color: var(--ink);
+}
+.field input:focus { outline: none; border-color: var(--primary); }
+
+/* ── RESULT ── */
+.result {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 0;
+  display: none;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(15,23,42,.04), 0 1px 2px rgba(15,23,42,.06);
+}
+.result.active { display: block; }
+.result-head {
+  background: var(--ink); color: var(--white);
+  padding: 36px 36px 32px;
+}
+.result-tier-label {
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 12px; display: block;
+}
+.result-tier {
+  font-family: 'Francois One', sans-serif;
+  font-size: clamp(28px, 5vw, 42px);
+  margin-bottom: 12px; line-height: 1.05;
+}
+.result-strap {
+  font-size: 16px; line-height: 1.6;
+  color: rgba(255,255,255,.78);
+}
+.result-body {
+  padding: 36px 36px 8px;
+}
+.result-body p {
+  font-size: 16px; line-height: 1.7; color: var(--body);
+  margin-bottom: 18px;
+}
+.result-next {
+  background: var(--cream);
+  border-left: 4px solid var(--primary);
+  padding: 22px 26px;
+  margin-bottom: 24px;
+  border-radius: 0 4px 4px 0;
+}
+.result-next-label {
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--primary); font-weight: 700; margin-bottom: 8px; display: block;
+}
+.result-next h3 {
+  font-family: 'Francois One', sans-serif;
+  font-size: 19px; color: var(--ink); margin-bottom: 8px;
+}
+.result-next p {
+  font-size: 15px; color: var(--body); margin-bottom: 0;
+}
+.result-cta-row {
+  padding: 8px 36px 36px;
+  display: flex; gap: 14px; flex-wrap: wrap;
+}
+.btn-link {
+  display: inline-block; text-decoration: none;
+  font-family: 'Josefin Sans', sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+  padding: 14px 28px; border-radius: 3px;
+}
+.btn-link.primary { background: var(--accent); color: var(--ink); }
+.btn-link.primary:hover { opacity: .9; }
+.btn-link.outline {
+  border: 1.5px solid var(--primary); color: var(--primary); background: transparent;
+}
+.btn-link.outline:hover { background: var(--primary); color: var(--white); }
+
+/* ── FOOTER ── */
+.footer {
+  background: #060E18;
+  padding: 28px 40px;
+  text-align: center;
+  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+}
+.footer a { color: var(--primary); text-decoration: none; }
+
+@media (max-width: 720px) {
+  .nav, .head, .progress, .footer { padding-left: 20px; padding-right: 20px; }
+  .head { padding-top: 40px; padding-bottom: 48px; }
+  .quiz-wrap { padding: 32px 20px 56px; }
+  .question, .capture { padding: 26px 22px; }
+  .result-head, .result-body, .result-cta-row { padding-left: 22px; padding-right: 22px; }
+  .q-actions { flex-direction: column-reverse; gap: 12px; }
+  .q-actions .btn { width: 100%; }
+  .result-cta-row { flex-direction: column; }
+  .result-cta-row .btn-link { width: 100%; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="baa_partner.html" class="nav-logo">Buyers Agents <span>Academy</span></a>
+  <a href="baa_partner.html" class="nav-back">← Back to overview</a>
+</nav>
+
+<!-- HEADER -->
+<section class="head">
+  <div class="head-inner">
+    <span class="eyebrow">Broker Readiness Quiz · 8 questions · ~5 minutes</span>
+    <h1>How ready is your investor book for a referral partnership?</h1>
+    <p>Eight quick questions on the clients you already have. There aren't right or wrong answers, just honest ones. John reads every result personally and reaches out inside 24 hours with a specific next step matched to where you actually are.</p>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<div class="progress">
+  <div class="progress-inner">
+    <span class="progress-text" id="progressText">Question 1 of 10</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="quiz-wrap">
+
+  <!-- Q1 — Investor concentration -->
+  <div class="question active" data-q="1">
+    <span class="q-num">Question 1 of 10 · Scored</span>
+    <h2 class="q-text">What share of your active clients are investors, or aspiring investors, rather than first home buyers and owner-occupiers?</h2>
+    <div class="options">
+      <label class="opt"><input type="radio" name="q1" value="A"><span class="opt-letter">A</span><span>More than half of my book. Investors are my core focus.</span></label>
+      <label class="opt"><input type="radio" name="q1" value="B"><span class="opt-letter">B</span><span>About a third. A meaningful, growing segment.</span></label>
+      <label class="opt"><input type="radio" name="q1" value="C"><span class="opt-letter">C</span><span>Some investors, but they aren't where the book is concentrated.</span></label>
+      <label class="opt"><input type="radio" name="q1" value="D"><span class="opt-letter">D</span><span>Almost none. My book is mostly owner-occupier and first home buyer.</span></label>
+    </div>
+  </div>
+
+  <!-- Q2 — Pre-approval pipeline -->
+  <div class="question" data-q="2">
+    <span class="q-num">Question 2 of 10 · Scored</span>
+    <h2 class="q-text">How many clients in your database right now have pre-approval in hand AND are actively looking for an investment property?</h2>
+    <div class="options">
+      <label class="opt"><input type="radio" name="q2" value="A"><span class="opt-letter">A</span><span>Five or more. I could list them by name.</span></label>
+      <label class="opt"><input type="radio" name="q2" value="B"><span class="opt-letter">B</span><span>Two to four. A small but real cohort.</span></label>
+      <label class="opt"><input type="radio" name="q2" value="C"><span class="opt-letter">C</span><span>One that I'm aware of.</span></label>
+      <label class="opt"><input type="radio" name="q2" value="D"><span class="opt-letter">D</span><span>None I can name today.</span></label>
+    </div>
+  </div>
+
+  <!-- Q3 — Current referral path -->
+  <div class="question" data-q="3">
+    <span class="q-num">Question 3 of 10 · Scored</span>
+    <h2 class="q-text">When an investor client asks you "where should I buy?" or "is this a good property?", what typically happens?</h2>
+    <div class="options">
+      <label class="opt"><input type="radio" name="q3" value="A"><span class="opt-letter">A</span><span>I refer them to an external buyer's agent and then lose visibility on the rest of the journey.</span></label>
+      <label class="opt"><input type="radio" name="q3" value="B"><span class="opt-letter">B</span><span>I give them informal guidance from what I know, but there's no structure to it.</span></label>
+      <label class="opt"><input type="radio" name="q3" value="C"><span class="opt-letter">C</span><span>I tell them I'm a finance person and steer them to figure the property side out themselves.</span></label>
+      <label class="opt"><input type="radio" name="q3" value="D"><span class="opt-letter">D</span><span>I haven't been asked this recently. It just isn't coming up.</span></label>
+    </div>
+  </div>
+
+  <!-- Q4 — Advisory work happening unpaid -->
+  <div class="question" data-q="4">
+    <span class="q-num">Question 4 of 10 · Scored</span>
+    <h2 class="q-text">How often are you giving property advice (suburb opinions, comparison takes, investment strategy) to clients without being paid for it?</h2>
+    <div class="options">
+      <label class="opt"><input type="radio" name="q4" value="A"><span class="opt-letter">A</span><span>Every week. It's a regular part of the work and I'm already halfway a buyer's agent.</span></label>
+      <label class="opt"><input type="radio" name="q4" value="B"><span class="opt-letter">B</span><span>A few times a month, usually with the more engaged clients.</span></label>
+      <label class="opt"><input type="radio" name="q4" value="C"><span class="opt-letter">C</span><span>Occasionally, if asked directly.</span></label>
+      <label class="opt"><input type="radio" name="q4" value="D"><span class="opt-letter">D</span><span>Almost never. I keep my conversations to finance.</span></label>
+    </div>
+  </div>
+
+  <!-- Q5 — Database activation discipline -->
+  <div class="question" data-q="5">
+    <span class="q-num">Question 5 of 10 · Scored</span>
+    <h2 class="q-text">When did you last run a structured re-engagement campaign through your existing client database, outside of standard refinance reminders?</h2>
+    <div class="options">
+      <label class="opt"><input type="radio" name="q5" value="A"><span class="opt-letter">A</span><span>In the last 30 days. It's part of how the business runs.</span></label>
+      <label class="opt"><input type="radio" name="q5" value="B"><span class="opt-letter">B</span><span>In the last quarter. We do it, just not as a rhythm.</span></label>
+      <label class="opt"><input type="radio" name="q5" value="C"><span class="opt-letter">C</span><span>In the last 12 months. It's an annual thing at best.</span></label>
+      <label class="opt"><input type="radio" name="q5" value="D"><span class="opt-letter">D</span><span>I haven't run one. The database mostly sits there.</span></label>
+    </div>
+  </div>
+
+  <!-- Q6 — Referral income mindset -->
+  <div class="question" data-q="6">
+    <span class="q-num">Question 6 of 10 · Scored</span>
+    <h2 class="q-text">Referral fees on settled property purchases (typically $5K to $15K per deal). How does that fit into your business thinking right now?</h2>
+    <div class="options">
+      <label class="opt"><input type="radio" name="q6" value="A"><span class="opt-letter">A</span><span>It's already a meaningful revenue line and I want to grow it intentionally.</span></label>
+      <label class="opt"><input type="radio" name="q6" value="B"><span class="opt-letter">B</span><span>I take referral fees when they come up, but it isn't a strategy.</span></label>
+      <label class="opt"><input type="radio" name="q6" value="C"><span class="opt-letter">C</span><span>I've thought about adding it, but haven't structured how.</span></label>
+      <label class="opt"><input type="radio" name="q6" value="D"><span class="opt-letter">D</span><span>Honestly, not something I've considered.</span></label>
+    </div>
+  </div>
+
+  <!-- Q7 — Time to first introduction -->
+  <div class="question" data-q="7">
+    <span class="q-num">Question 7 of 10 · Scored</span>
+    <h2 class="q-text">If you decided today that BAA was the right partner, when could you realistically make your first introduction to an actual client?</h2>
+    <div class="options">
+      <label class="opt"><input type="radio" name="q7" value="A"><span class="opt-letter">A</span><span>This week. I know exactly who I'd call.</span></label>
+      <label class="opt"><input type="radio" name="q7" value="B"><span class="opt-letter">B</span><span>Inside the month. I'd want to prep the conversation first.</span></label>
+      <label class="opt"><input type="radio" name="q7" value="C"><span class="opt-letter">C</span><span>Inside the quarter. I'd need to rebuild the relationship first.</span></label>
+      <label class="opt"><input type="radio" name="q7" value="D"><span class="opt-letter">D</span><span>I'm not sure I have the right client in the book yet.</span></label>
+    </div>
+  </div>
+
+  <!-- Q8 — Why now -->
+  <div class="question" data-q="8">
+    <span class="q-num">Question 8 of 10 · Scored</span>
+    <h2 class="q-text">What's actually driving you to look at this now, rather than 12 months ago, or 12 months from now?</h2>
+    <div class="options">
+      <label class="opt"><input type="radio" name="q8" value="A"><span class="opt-letter">A</span><span>Specific clients asking me. I have demand I'm not serving.</span></label>
+      <label class="opt"><input type="radio" name="q8" value="B"><span class="opt-letter">B</span><span>Margin pressure on finance. I want a second revenue line.</span></label>
+      <label class="opt"><input type="radio" name="q8" value="C"><span class="opt-letter">C</span><span>Industry shift. I can see where this is going and want to position early.</span></label>
+      <label class="opt"><input type="radio" name="q8" value="D"><span class="opt-letter">D</span><span>Just curious. Exploring options at this stage.</span></label>
+    </div>
+  </div>
+
+  <!-- Q9 — Open text: client situation -->
+  <div class="question" data-q="9">
+    <span class="q-num">Question 9 of 10 · Open · No scoring</span>
+    <h2 class="q-text">Tell John about one investor client situation you have right now.</h2>
+    <p class="q-sub">Not their name. Just the situation. Pre-approval amount, where they want to buy, what's stopping them moving. One or two sentences is plenty. This is the conversation starter for the intro call.</p>
+    <textarea class="opt-text" name="q9" placeholder="For example: I have a client pre-approved for $720K, wants to invest in southeast Queensland, keeps asking me which suburb to look at but I haven't had a clear answer for him."></textarea>
+  </div>
+
+  <!-- Q10 — Open text: 12 months from now -->
+  <div class="question" data-q="10">
+    <span class="q-num">Question 10 of 10 · Open · No scoring</span>
+    <h2 class="q-text">If this partnership produced exactly what you wanted, what would 12 months from now look like for your business?</h2>
+    <p class="q-sub">Be specific if you can. Number of referrals. Revenue change. Type of clients you're attracting. Or just the feeling. Either is useful.</p>
+    <textarea class="opt-text" name="q10" placeholder="For example: One introduction a month, a second revenue line worth $60K to $100K, and my investor clients staying with me through the property side instead of going elsewhere."></textarea>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="q-actions">
+    <button class="btn btn-ghost" id="prevBtn" disabled>← Back</button>
+    <button class="btn btn-primary" id="nextBtn" disabled>Next question →</button>
+  </div>
+
+  <!-- CAPTURE -->
+  <div class="capture" id="capture">
+    <h2>Almost done. Where should John send your result?</h2>
+    <p>John reviews every result personally inside 24 hours. He replies with a specific next step matched to where you actually are. Not a marketing sequence. A real reply.</p>
+    <div class="field">
+      <label for="capName">Your name</label>
+      <input type="text" id="capName" placeholder="First and last">
+    </div>
+    <div class="field">
+      <label for="capEmail">Your email</label>
+      <input type="email" id="capEmail" placeholder="you@yourbrokerage.com.au">
+    </div>
+    <div class="field">
+      <label for="capBrokerage">Your brokerage (optional)</label>
+      <input type="text" id="capBrokerage" placeholder="Hunterwood Finance, for example">
+    </div>
+    <div class="q-actions" style="margin-top: 8px;">
+      <button class="btn btn-ghost" id="captureBackBtn">← Back</button>
+      <button class="btn btn-primary" id="submitBtn">See my result →</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result" id="result">
+    <div class="result-head">
+      <span class="result-tier-label" id="resultTierLabel">Your readiness band</span>
+      <h2 class="result-tier" id="resultTier">Result</h2>
+      <p class="result-strap" id="resultStrap">Strap line.</p>
+    </div>
+    <div class="result-body" id="resultBody">
+      <!-- populated by JS -->
+    </div>
+    <div class="result-cta-row" id="resultCtaRow">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>Built in partnership with <a href="https://nowgroup.co.nz">NOW Group</a> · nowgroup.co.nz</p>
+</footer>
+
+<script>
+(function() {
+  const TOTAL = 10;
+  let current = 1;
+  const answers = {};
+
+  const progressText = document.getElementById('progressText');
+  const progressFill = document.getElementById('progressFill');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const captureEl = document.getElementById('capture');
+  const captureBackBtn = document.getElementById('captureBackBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const resultEl = document.getElementById('result');
+  const actions = document.querySelector('.q-actions');
+
+  // Option click handlers (scored)
+  document.querySelectorAll('.opt').forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      const input = opt.querySelector('input[type="radio"]');
+      if (!input) return;
+      const name = input.name;
+      document.querySelectorAll('input[name="' + name + '"]').forEach(i => {
+        i.checked = false;
+        i.closest('.opt').classList.remove('selected');
+      });
+      input.checked = true;
+      opt.classList.add('selected');
+      answers[name] = input.value;
+      updateNextState();
+    });
+  });
+
+  // Textarea handlers (open)
+  document.querySelectorAll('textarea.opt-text').forEach(t => {
+    t.addEventListener('input', () => {
+      answers[t.name] = t.value.trim();
+      updateNextState();
+    });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (current > 1) {
+      goTo(current - 1);
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (current < TOTAL) {
+      goTo(current + 1);
+    } else {
+      // Open text Q10 is the last quiz step. Show capture.
+      showCapture();
+    }
+  });
+
+  captureBackBtn.addEventListener('click', () => {
+    captureEl.classList.remove('active');
+    document.querySelector('.question[data-q="' + TOTAL + '"]').classList.add('active');
+    actions.style.display = 'flex';
+    updateProgress();
+  });
+
+  submitBtn.addEventListener('click', () => {
+    const name = document.getElementById('capName').value.trim();
+    const email = document.getElementById('capEmail').value.trim();
+    if (!name || !email) {
+      alert('Name and email please. So John can actually reply.');
+      return;
+    }
+    answers.name = name;
+    answers.email = email;
+    answers.brokerage = document.getElementById('capBrokerage').value.trim();
+    submitResult();
+  });
+
+  function goTo(n) {
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+    document.querySelector('.question[data-q="' + n + '"]').classList.add('active');
+    current = n;
+    updateProgress();
+    updateNavButtons();
+    updateNextState();
+  }
+
+  function updateProgress() {
+    progressText.textContent = 'Question ' + current + ' of ' + TOTAL;
+    progressFill.style.width = ((current / TOTAL) * 100) + '%';
+  }
+
+  function updateNavButtons() {
+    prevBtn.disabled = current === 1;
+    nextBtn.textContent = current === TOTAL ? 'Continue →' : 'Next question →';
+  }
+
+  function updateNextState() {
+    const q = current;
+    const v = answers['q' + q];
+    if (q >= 9) {
+      // Open text — optional but encouraged. Allow continue without.
+      nextBtn.disabled = false;
+    } else {
+      nextBtn.disabled = !v;
+    }
+  }
+
+  function showCapture() {
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+    actions.style.display = 'none';
+    captureEl.classList.add('active');
+    progressText.textContent = 'Almost done';
+    progressFill.style.width = '95%';
+  }
+
+  function scoreBand() {
+    const counts = { A: 0, B: 0, C: 0, D: 0 };
+    for (let i = 1; i <= 8; i++) {
+      const v = answers['q' + i];
+      if (v && counts.hasOwnProperty(v)) counts[v]++;
+    }
+    // Tie-break: highest readiness wins. A > B > C > D.
+    const order = ['A', 'B', 'C', 'D'];
+    let top = 'D', topCount = -1;
+    for (const letter of order) {
+      if (counts[letter] > topCount) {
+        topCount = counts[letter];
+        top = letter;
+      }
+    }
+    const map = {
+      A: 'READY_NOW',
+      B: 'WARMING',
+      C: 'BUILDING',
+      D: 'NOT_YET_FIT'
+    };
+    return { band: map[top], counts: counts };
+  }
+
+  function submitResult() {
+    const { band, counts } = scoreBand();
+    answers.band = band;
+    answers.counts = counts;
+    captureEl.classList.remove('active');
+    renderResult(band);
+    resultEl.classList.add('active');
+    progressText.textContent = 'Result';
+    progressFill.style.width = '100%';
+    // Persist locally for John's review when he gets the email.
+    try { localStorage.setItem('baa_quiz_result', JSON.stringify(answers)); } catch (e) {}
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  const RESULTS = {
+    READY_NOW: {
+      tier: 'Ready Now',
+      strap: 'You have the clients, the advisory instinct, and the timing. The first introduction should happen this month.',
+      paras: [
+        "Your answers show a broker with an active investor segment, a pre-approval pipeline you can actually name, and a clear sense of why a partnership matters right now. That's the profile John works best with. There isn't a long warming up phase needed here.",
+        "For example: the difference between a Ready Now broker and a Warming one is usually how fast that first introduction happens. Ready Now brokers tend to send the first one inside 21 days. After that, the system runs itself.",
+        "Your next step is the 20-minute intro Zoom. John runs it personally. He'll walk you through the deal flow, talk through the open text you shared, and confirm the fit. No pitch. No obligation. A clear picture of whether this fits your business."
+      ],
+      next: {
+        label: 'Your next step',
+        title: 'Book the 20-minute intro Zoom this week',
+        body: "John has limited partner numbers. The earlier the call, the better the chance of being onboarded before the next cohort window closes."
+      },
+      ctas: [
+        { label: 'Book the intro Zoom', href: 'https://www.buyersagentsacademy.com.au/baa-call', kind: 'primary' },
+        { label: 'Email John directly', href: 'mailto:john@hunterwood.com.au?subject=Partner%20-%20Ready%20Now', kind: 'outline' }
+      ]
+    },
+    WARMING: {
+      tier: 'Warming',
+      strap: 'The book is there. The instinct is there. There's a piece of the activation that hasn't clicked yet, and that piece is the easiest part of this to fix.',
+      paras: [
+        "Your answers show a broker with real investor potential in the database, but the activation rhythm isn't running yet. You're doing advisory work without being paid for it, and the clients are there, but the conversation that turns that into a referral hasn't been scripted into your week.",
+        "For example: most Warming brokers find their first introduction inside 30 to 45 days once they have the ADD ONE checklist on their desk and the conversation opener written word for word. The hold-up isn't capability. It's having the exact language to use.",
+        "Your next step is the ADD ONE Broker Referral Activation Checklist. One page. Five-minute readiness check on any client in your database. Then the 20-minute call with John to confirm fit and map the first introduction."
+      ],
+      next: {
+        label: 'Your next step',
+        title: 'Get the ADD ONE checklist + book the intro Zoom',
+        body: "John will send the ADD ONE checklist on reply. Print it. Use it once on a client this week. Then we'll talk."
+      },
+      ctas: [
+        { label: 'Book the intro Zoom', href: 'https://www.buyersagentsacademy.com.au/baa-call', kind: 'primary' },
+        { label: 'Email John directly', href: 'mailto:john@hunterwood.com.au?subject=Partner%20-%20Warming%20-%20ADD%20ONE%20request', kind: 'outline' }
+      ]
+    },
+    BUILDING: {
+      tier: 'Building',
+      strap: 'The fit is real, but the timing isn\'t quite right today. The work to do is database-side, not partnership-side.',
+      paras: [
+        "Your answers show a broker whose book isn't currently weighted to investors, or whose database hasn't been activated recently enough to know who's actually ready. That isn't a character flaw. That's just where the business is today.",
+        "For example: a Building broker who runs one structured re-engagement campaign in the next 60 days often surfaces two or three investor clients they didn't realise were sitting there. That changes the picture quickly.",
+        "Your next step isn't the intro call yet. It's the ADD ONE checklist plus a database scan. When you have one client who scores 4 or 5 on the readiness check, that's the conversation worth having. John would rather have one good call in 90 days than three vague ones now."
+      ],
+      next: {
+        label: 'Your next step',
+        title: 'Run the database scan + check back in 60 to 90 days',
+        body: "John will send the ADD ONE checklist on reply. Use it as a desk scan. When you find a client who scores 4 or 5, that's the moment to book the call."
+      },
+      ctas: [
+        { label: 'Email John for the checklist', href: 'mailto:john@hunterwood.com.au?subject=Partner%20-%20Building%20-%20database%20scan', kind: 'primary' },
+        { label: 'Back to overview', href: 'baa_partner.html', kind: 'outline' }
+      ]
+    },
+    NOT_YET_FIT: {
+      tier: 'Not Yet a Fit',
+      strap: 'Honest answer is honest. The book and the focus aren\'t there today, and partnering before that\'s true wouldn\'t serve either side.',
+      paras: [
+        "Your answers show a broker whose current focus is mostly owner-occupier and first home buyer, or whose interest in this is still at the exploring stage. That's a clear answer. It's worth more than a polite maybe.",
+        "For example: brokers whose focus shifts toward investor work over the next 6 to 12 months often come back at exactly the right time. There's no pressure to fit something that isn't yet the shape of your business.",
+        "John won't run a follow-up sequence on you. If the focus shifts, or you start seeing more investor activity in your book, come back. Take the quiz again. The door stays open. No timeline from this side."
+      ],
+      next: {
+        label: 'Your next step',
+        title: 'Come back when the focus shifts',
+        body: "Save this page. Re-take the quiz when your investor segment grows or your interest sharpens. John reads every result personally."
+      },
+      ctas: [
+        { label: 'Back to overview', href: 'baa_partner.html', kind: 'primary' },
+        { label: 'Email John anyway', href: 'mailto:john@hunterwood.com.au?subject=Partner%20-%20Exploring', kind: 'outline' }
+      ]
+    }
+  };
+
+  function renderResult(band) {
+    const r = RESULTS[band];
+    document.getElementById('resultTier').textContent = r.tier;
+    document.getElementById('resultStrap').textContent = r.strap;
+    const body = document.getElementById('resultBody');
+    body.innerHTML = r.paras.map(p => '<p>' + p + '</p>').join('') +
+      '<div class="result-next">' +
+        '<span class="result-next-label">' + r.next.label + '</span>' +
+        '<h3>' + r.next.title + '</h3>' +
+        '<p>' + r.next.body + '</p>' +
+      '</div>';
+    const ctaRow = document.getElementById('resultCtaRow');
+    ctaRow.innerHTML = r.ctas.map(c =>
+      '<a class="btn-link ' + c.kind + '" href="' + c.href + '">' + c.label + '</a>'
+    ).join('');
+  }
+
+  // Init
+  updateProgress();
+  updateNavButtons();
+})();
+</script>
+
+</body>
+</html>
