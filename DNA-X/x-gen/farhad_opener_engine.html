@@ -1,0 +1,678 @@
+<h2 class="sr-only">Dream Websites opener engine (Farhad Malegam) &#8212; paste NOW Group leads or free text, auto-find the key person, generate personalised email openers and LinkedIn connection notes via Claude API. Additive build over the Marksmen engine; voice anchored to Chris White / NOW Group.</h2>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+:root{--font-mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace;--bg:#0e0e10;--surface-0:#17171a;--surface-1:#1e1e22;--surface-2:#24242a;--text-primary:#f2f2ee;--text-secondary:#a6a6ae;--text-muted:#6d6d76;--border:#34343c;--bg-accent:#16283a;--radius:8px;--accent:#ff914d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text-primary);padding:18px;min-height:100vh}
+body,div,span,textarea,input,select,button{font-family:var(--font-mono,'JetBrains Mono',monospace)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.topbar{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--surface-0);border:0.5px solid var(--border);border-radius:12px;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--text-primary)}
+.brand .mk{width:20px;height:20px;border-radius:5px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#241200;font-size:11px;font-weight:800}
+.brand .sub{color:var(--accent)}
+.brand .client{font-size:11px;font-weight:500;color:var(--text-secondary);border-left:0.5px solid var(--border);padding-left:9px;margin-left:3px}
+.topbar-r{margin-left:auto;display:flex;align-items:center;gap:12px}
+.tb-status{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+.tb-clear{font-family:inherit;font-size:11px;cursor:pointer;background:transparent;border:0.5px solid var(--border);border-radius:6px;padding:4px 11px;color:var(--text-secondary)}
+.tb-clear:hover{border-color:var(--accent);color:var(--accent)}
+.footer{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:10px;font-size:10px;color:var(--text-muted);letter-spacing:.04em}
+.footer .mk{width:15px;height:15px;border-radius:4px;background:var(--accent);display:inline-flex;align-items:center;justify-content:center;color:#241200;font-size:9px;font-weight:800}
+.footer b{color:var(--text-secondary);font-weight:700}
+.wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:600px;border:0.5px solid var(--border);border-radius:12px;overflow:hidden}
+.col{display:flex;flex-direction:column;min-height:0}
+.col-left{border-right:0.5px solid var(--border)}
+.col-head{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--surface-1);border-bottom:0.5px solid var(--border);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);flex-shrink:0}
+.col-head .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-blue{background:#3fb6e0}
+.dot-orange{background:#ff914d}
+.dot-green{background:#3fb950}
+.col-scroll{flex:1;overflow-y:auto;padding:14px}
+.tab-nav{display:flex;gap:4px;background:var(--surface-0,#f1f0e8);border:0.5px solid var(--border);border-radius:8px;padding:3px;margin-bottom:14px}
+.tab-nav button{font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--text-secondary);border:none;border-radius:6px;padding:5px 10px;white-space:nowrap}
+.tab-nav button.on{background:var(--text-primary);color:var(--surface-2,#fff)}
+.pane-sec{display:none}.pane-sec.on{display:block}
+.field{margin-bottom:12px}
+.lbl{display:block;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:4px}
+.hint{font-size:10px;color:var(--text-muted);margin-top:3px;line-height:1.5}
+textarea,input,select{width:100%;font-family:inherit;font-size:12px;background:var(--surface-1);color:var(--text-primary);border:0.5px solid var(--border);border-radius:var(--radius,8px);padding:7px 9px;outline:none;transition:border-color .15s}
+textarea{resize:vertical;line-height:1.6}
+textarea:focus,input:focus,select:focus{border-color:#3fb6e0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chk{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-secondary);margin-bottom:10px;cursor:pointer}
+.chk input{width:auto}
+.pills{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+.pill{font-family:inherit;font-size:10px;font-weight:600;cursor:pointer;background:var(--surface-1);color:var(--text-secondary);border:0.5px solid var(--border);border-radius:20px;padding:3px 10px;transition:all .15s}
+.pill:hover,.pill.on{background:var(--bg-accent,#e6f1fb);border-color:#3fb6e0;color:#0c447c}
+.expand{display:none;margin-top:6px;padding:10px;background:var(--surface-1);border:0.5px solid var(--border);border-radius:8px}
+.expand.on{display:block}
+.upload-zone{border:1.5px dashed var(--border);border-radius:8px;padding:14px;text-align:center;cursor:pointer;position:relative;transition:all .15s;margin-bottom:8px}
+.upload-zone:hover,.upload-zone.drag{border-color:#ff914d;background:rgba(255,145,77,.04)}
+.upload-zone.ok{border-color:#3fb950;background:rgba(63,185,80,.04)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.uz-icon{font-size:18px;color:var(--text-muted);margin-bottom:4px}
+.uz-txt{font-size:10px;color:var(--text-secondary)}
+.uz-txt span{color:#3fb6e0}
+.file-status{font-size:10px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.file-status.ok{color:#3fb950}.file-status.err{color:#f85149}
+.gen-btn{width:100%;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;background:#ff914d;color:#241200;border:none;border-radius:8px;padding:10px;margin-top:4px;letter-spacing:.02em;transition:all .15s}
+.gen-btn:hover{background:#ffaa6e}
+.gen-btn:disabled{opacity:.45;cursor:not-allowed}
+.seq-block{border:0.5px solid var(--border);border-radius:8px;overflow:hidden;margin-top:10px}
+.seq-row{display:flex;gap:10px;padding:7px 12px;font-size:11px;border-bottom:0.5px solid var(--border)}
+.seq-row:last-child{border:none}
+.seq-day{font-weight:700;color:#ff914d;min-width:48px;flex-shrink:0}
+.rule-card{background:var(--surface-1);border:0.5px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px}
+.rule-title{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px}
+.rule-title.ok{color:#3fb950}.rule-title.err{color:#f85149}.rule-title.dim{color:var(--text-secondary)}
+.rule-item{font-size:11px;line-height:1.9}
+.rule-item.ok{color:#3fb950}.rule-item.err{color:#f85149}
+.p3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:6px}
+.p3-card{background:var(--surface-0,#f1f0e8);border:0.5px solid var(--border);border-radius:8px;padding:8px}
+.p3-num{font-size:10px;font-weight:700;color:#ff914d;margin-bottom:2px}
+.p3-name{font-size:11px;font-weight:500;margin-bottom:3px}
+.p3-desc{font-size:10px;color:var(--text-secondary);line-height:1.4}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;min-height:400px;gap:10px;color:var(--text-muted);text-align:center;padding:2rem}
+.empty-state svg{opacity:.25}
+.empty-state p{font-size:12px;max-width:26ch;line-height:1.6}
+.lead-block{margin-bottom:20px}
+.lead-hdr{display:flex;align-items:center;gap:8px;background:var(--text-primary);color:var(--surface-2,#fff);padding:8px 12px;border-radius:8px 8px 0 0}
+.lead-num{font-size:10px;font-weight:700;color:#241200;background:#ff914d;border-radius:4px;padding:1px 6px}
+.lead-name{font-size:12px;font-weight:500}
+.lead-meta{font-size:10px;opacity:.6;margin-left:auto}
+.lead-body{background:var(--surface-2,#fff);border:0.5px solid var(--border);border-radius:0 0 8px 8px;padding:14px}
+.rbar-wrap{margin-bottom:10px}
+.rbar-lbl{font-size:10px;color:var(--text-secondary);margin-bottom:3px}
+.rbar-track{height:3px;background:var(--border);border-radius:2px}
+.rbar-fill{height:3px;border-radius:2px;background:#3fb6e0}
+.kp{display:flex;align-items:center;gap:7px;font-size:11px;padding:6px 9px;border-radius:6px;margin-bottom:10px;line-height:1.4}
+.kp.found{background:#eaf3de;border:0.5px solid #c0dd97;color:#27500a}
+.kp.none{background:#faeeda;border:0.5px solid #fac775;color:#633806}
+.kp b{font-weight:700}
+.chip-row{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px}
+.chip{font-size:10px;padding:2px 8px;border-radius:20px}
+.chip.sig{background:#eaf3de;border:0.5px solid #c0dd97;color:#27500a}
+.chip.gap{background:#faeeda;border:0.5px solid #fac775;color:#633806}
+.vlabel{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-secondary);margin:12px 0 4px;display:flex;align-items:center;gap:6px}
+.vbadge{font-size:9px;color:#241200;background:#ff914d;border-radius:4px;padding:1px 5px}
+.vbody{background:var(--surface-1);border:0.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.8;color:var(--text-primary);white-space:pre-wrap;word-break:break-word;margin-bottom:4px}
+.rat{border-left:2px solid #3fb6e0;padding:5px 8px;font-size:11px;line-height:1.5;color:#185fa5;background:#e6f1fb;border-radius:0 6px 6px 0;margin-bottom:5px}
+.copy-row{display:flex;gap:6px;flex-wrap:wrap}
+.btn-copy{font-family:inherit;font-size:10px;cursor:pointer;background:transparent;border:0.5px solid var(--border);border-radius:6px;padding:3px 9px;color:var(--text-secondary)}
+.btn-copy:hover{border-color:#3fb950;color:#3fb950}
+.divider{border:none;border-top:0.5px solid var(--border);margin:10px 0}
+.qgate-title{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:5px}
+.qrow{display:flex;align-items:center;gap:6px;padding:2px 0;font-size:11px;color:var(--text-secondary)}
+.qok{color:#3fb950}.qfail{color:#f85149}
+.loading{display:flex;align-items:center;justify-content:center;gap:8px;padding:2rem;color:var(--text-secondary);font-size:12px}
+.spin{width:13px;height:13px;border:2px solid var(--border);border-top-color:#3fb6e0;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err-card{background:#fcebeb;border:0.5px solid #f09595;border-radius:8px;padding:12px;font-size:12px;color:#791f1f;margin-bottom:12px}
+.summary-bar{font-size:11px;color:var(--text-secondary);padding:8px 12px;background:var(--surface-1);border:0.5px solid var(--border);border-radius:8px;margin-bottom:14px}
+.banner{font-size:10px;color:var(--text-secondary);background:var(--surface-0,#f1f0e8);border:0.5px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:12px;line-height:1.6}
+.banner b{color:var(--text-primary)}
+</style>
+
+<div class="topbar">
+  <div class="brand"><span class="mk">N</span>NOW Group <span class="sub">Opener Engine</span><span class="client">Dream Websites &#8212; Farhad Malegam</span></div>
+  <div class="topbar-r"><span class="tb-status" id="tb-status">ready</span><button class="tb-clear" onclick="clearAll()">Clear</button></div>
+</div>
+<div class="wrap">
+
+<div class="col col-left">
+  <div class="col-head">
+    <span class="dot dot-blue"></span> inputs &#8212; Dream Websites
+    <span style="margin-left:auto;font-size:10px" id="lead-count"></span>
+  </div>
+  <div class="col-scroll">
+    <div class="banner">Client: <b>Farhad Malegam &#8212; Dream Websites</b> &#183; custom-built sites for service SMBs. Voice: <b>Chris White / NOW Group</b> (rapport + accessibility). Paste NOW Group engine rows or free-text leads.</div>
+    <div class="tab-nav">
+      <button class="on" onclick="swTab('batch',this)">Batch</button>
+      <button onclick="swTab('single',this)">Single</button>
+      <button onclick="swTab('linkedin',this)">LinkedIn</button>
+      <button onclick="swTab('rules',this)">Voice rules</button>
+    </div>
+
+    <div class="pane-sec on" id="tab-batch">
+      <div class="field">
+        <label class="lbl">Paste today's leads &#8212; one per line</label>
+        <textarea id="batch-raw" rows="9" oninput="countLeads()"
+          placeholder="Paste NOW Group engine rows (full CSV lines) OR free text, one lead per line. Engine rows are auto-detected &#8212; the tool reads the why-now hook and site signals already scored, and auto-finds the owner if the key-person column is blank.
+
+Free-text example:
+Mr Splash Plumbing, plumber, Sydney, info@mrsplashplumbing.com.au, site loads in 11s no online booking"></textarea>
+        <p class="hint">Engine rows (40+ columns) use their built-in signals. Short free-text lines are treated as-is.</p>
+      </div>
+      <label class="chk"><input type="checkbox" id="batch-enrich" checked> Auto-find the owner when the key-person is missing (web search)</label>
+      <div class="row2">
+        <div class="field">
+          <label class="lbl">Angle</label>
+          <select id="batch-type">
+            <option value="site">Website rebuild &#8212; direct</option>
+            <option value="audit">Soft &#8212; lead with a site observation</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl">Sender</label>
+          <input type="text" id="batch-sender" value="Farhad">
+        </div>
+      </div>
+      <button class="gen-btn" id="batch-btn" onclick="runBatch()">Generate openers for all leads &#8594;</button>
+    </div>
+
+    <div class="pane-sec" id="tab-single">
+      <div class="field">
+        <label class="lbl">Prospect data</label>
+        <textarea id="single-raw" rows="3"
+          placeholder="Business name, trade/type, suburb, website, phone/email, any site notes. Or paste a full NOW Group engine row."></textarea>
+      </div>
+      <label class="chk"><input type="checkbox" id="single-enrich" checked> Auto-find the owner when the key-person is missing (web search)</label>
+      <div class="row2" style="margin-bottom:12px">
+        <div class="field" style="margin:0">
+          <label class="lbl">Angle</label>
+          <select id="single-type">
+            <option value="site">Website rebuild</option>
+            <option value="audit">Soft observation</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0">
+          <label class="lbl">Sender</label>
+          <input type="text" id="single-sender" value="Farhad">
+        </div>
+      </div>
+      <div class="field">
+        <div class="lbl" style="margin-bottom:6px">Upgrade enrichment</div>
+        <div class="pills">
+          <span class="pill" id="pill-li" onclick="togPill('li')">LinkedIn PDF / text</span>
+          <span class="pill" id="pill-posts" onclick="togPill('posts')">Recent posts</span>
+          <span class="pill" id="pill-web" onclick="togPill('web')">Website</span>
+          <span class="pill" id="pill-notes" onclick="togPill('notes')">Notes</span>
+        </div>
+        <div class="expand" id="exp-li">
+          <div class="lbl" style="margin-bottom:6px">LinkedIn profile &#8212; upload PDF or paste text</div>
+          <div class="upload-zone" id="uz"
+               ondragover="uzDrag(event,true)" ondragleave="uzDrag(event,false)" ondrop="uzDrop(event)">
+            <input type="file" id="li-file" accept=".pdf,.txt" onchange="handleFile(this.files[0])">
+            <div class="uz-icon"><i class="ti ti-upload" aria-hidden="true"></i></div>
+            <div class="uz-txt">Drop LinkedIn PDF here or <span>click to upload</span><br><span style="opacity:.6;font-size:9px">.pdf &nbsp;.txt</span></div>
+          </div>
+          <div class="file-status" id="file-status" style="display:none"></div>
+          <label class="lbl" style="margin-top:8px;margin-bottom:4px">Or paste profile text</label>
+          <textarea id="li-text" rows="4" placeholder="Paste LinkedIn profile text &#8212; headline, About, experience."></textarea>
+        </div>
+        <div class="expand" id="exp-posts">
+          <label class="lbl">Recent posts / comments</label>
+          <textarea id="posts-text" rows="4" placeholder="Paste 1-3 recent posts or comments."></textarea>
+        </div>
+        <div class="expand" id="exp-web">
+          <label class="lbl">Website URL</label>
+          <input type="text" id="web-url" placeholder="https://theirsite.com.au">
+        </div>
+        <div class="expand" id="exp-notes">
+          <label class="lbl">Notes</label>
+          <textarea id="notes-text" rows="2" placeholder="Mutual connections, referral source, anything useful."></textarea>
+        </div>
+      </div>
+      <button class="gen-btn" onclick="runSingle()">Generate openers &#8594;</button>
+    </div>
+
+    <div class="pane-sec" id="tab-linkedin">
+      <div class="field">
+        <label class="lbl">Prospect context</label>
+        <textarea id="li-ctx" rows="2" placeholder="Business name, trade/type, suburb, owner name if known"></textarea>
+      </div>
+      <div class="field">
+        <label class="lbl">Something visible on their LinkedIn / online</label>
+        <textarea id="li-signal" rows="2" placeholder="e.g. Recent post, currently hiring, About mentions they run the business"></textarea>
+      </div>
+      <div class="field">
+        <label class="lbl">Sender</label>
+        <input type="text" id="li-sender" value="Farhad">
+      </div>
+      <button class="gen-btn" onclick="genLinkedIn()">Generate connection note &#8594;</button>
+      <div class="divider"></div>
+      <div class="lbl" style="margin-bottom:6px">Channel sequence</div>
+      <div class="seq-block">
+        <div class="seq-row"><span class="seq-day">Day 0</span><span>Send personalised email</span></div>
+        <div class="seq-row"><span class="seq-day">Day 0-1</span><span>Send LinkedIn connection note &#8212; different from the email</span></div>
+        <div class="seq-row"><span class="seq-day">Day 5</span><span>LinkedIn DM if accepted &#8212; one question, no pitch</span></div>
+        <div class="seq-row"><span class="seq-day">Day 10</span><span>Email follow-up &#8212; one sentence, reopen the door</span></div>
+        <div class="seq-row"><span class="seq-day">Day 21</span><span>Final soft close on whichever channel last had activity</span></div>
+      </div>
+    </div>
+
+    <div class="pane-sec" id="tab-rules">
+      <div class="rule-card">
+        <div class="rule-title ok">Say this</div>
+        <div class="rule-item ok">&#8594; Plain sentences. One question max.</div>
+        <div class="rule-item ok">&#8594; Specific to them and their site. Under 120 words.</div>
+        <div class="rule-item ok">&#8594; Warm, low pressure. Easy yes. Transparent sign-off.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-title err">Never say this</div>
+        <div class="rule-item err">&#10007; "I hope this email finds you well"</div>
+        <div class="rule-item err">&#10007; "I wanted to reach out"</div>
+        <div class="rule-item err">&#10007; Em dashes &#8212; plain hyphens with spaces only</div>
+        <div class="rule-item err">&#10007; game-changer / transform / leverage / synergy / revolutionary</div>
+        <div class="rule-item err">&#10007; "Book a call" in the first email</div>
+        <div class="rule-item err">&#10007; Tech jargon &#8212; these are tradies and salon owners</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-title dim">Voice &#8212; Chris White / NOW Group</div>
+        <div class="p3">
+          <div class="p3-card"><div class="p3-num">01</div><div class="p3-name">Rapport first</div><div class="p3-desc">Human, warm, on their level.</div></div>
+          <div class="p3-card"><div class="p3-num">02</div><div class="p3-name">Accessible</div><div class="p3-desc">Plain English, no jargon.</div></div>
+          <div class="p3-card"><div class="p3-num">03</div><div class="p3-name">Micro-compliance</div><div class="p3-desc">Lowest friction. Easy yes.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="col">
+  <div class="col-head">
+    <span class="dot dot-orange"></span> output
+    <span style="margin-left:auto;font-size:10px;color:var(--text-muted)" id="out-status">waiting</span>
+  </div>
+  <div class="col-scroll" id="out-scroll">
+    <div class="empty-state" id="empty">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <p>Paste leads on the left and generate. Openers appear here.</p>
+    </div>
+    <div id="out-area" style="display:none"></div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer"><span class="mk">N</span>Built by <b>NOW&nbsp;Group</b> &#183; lead sourcing + opener software</div>
+
+<script>
+if(window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+// Model — matches the proven Marksmen runtime. Bump to 'claude-sonnet-5' once confirmed in your artifact runtime.
+const MODEL='claude-sonnet-4-6';
+// web_search server tool. Basic variant = widest runtime compatibility.
+const SEARCH_TOOL='web_search_20250305';
+
+// NOW Group engine export header (CANONICAL_COLUMNS). Used to detect + map engine rows.
+const ENGINE_COLS=['business_name','category','subcategory','suburb','city','region','country','website','general_phone','general_email','decision_maker_name','decision_maker_email','decision_maker_phone','linkedin','facebook','instagram','fb_followers','fb_reviews','fb_rating','fb_last_post','ig_followers','ig_posts','ig_last_post','psi_performance','psi_seo','psi_a11y','psi_best_prac','has_https','is_mobile_responsive','lcp_seconds','website_quality_bucket','call_priority','warmth_tier','warmth_reason','size_estimate','size_signals','why_now_hook','talking_points','objection_anticipated','sold_to','lead_id','last_enriched'];
+
+const SYS=`You are an outbound email writer for Dream Websites — a web studio (founder Farhad Malegam) that builds custom, from-scratch websites for service SMBs in Australia. Not templates, not page-builders. Fully custom, managed hosting, owned outright by the client. Starting around $2,500 AUD.
+ICP: service-based small businesses whose current website is hurting them - tradies (plumbers, electricians, builders) and beauty/aesthetics operators (salons, spas, clinics). Signals: outdated design, slow load, not mobile-friendly, no SSL, no online booking, weak SEO, stock photos. The real cost to them: their next customer is searching on a phone and bouncing off a broken or slow site.
+VOICE — write in the voice of Chris White, NOW Group: warm, plain-spoken, genuinely human, optimised for rapport and accessibility. Talk to a tradie or salon owner like a person, not a marketer. No jargon.
+HARD RULES — never violate: No em dashes (plain hyphens with spaces only). Never open with "I hope this email finds you well" or similar. Never use "I wanted to reach out". No hype words: game-changer, transform, revolutionary, leverage, synergy. No premature CTA - never ask for a call in the first email. One question max per variant. Under 120 words per variant. Must be specific to this prospect and what is wrong with their current site. No tech jargon. Transparent sign-off every time.
+PRINCIPLES: 1. Rapport first (human, on their level). 2. Consultative (understand before pitching). 3. Micro-compliance (lowest-friction ask).
+OUTPUT: valid JSON only. No markdown. No text outside JSON.`;
+
+// ---- engine-row detection + mapping ----
+function splitCsvLine(line){
+  const out=[];let f='',q=false;
+  for(let i=0;i<line.length;i++){const c=line[i];
+    if(q){if(c==='"'){if(line[i+1]==='"'){f+='"';i++;}else q=false;}else f+=c;}
+    else if(c==='"')q=true;else if(c===','){out.push(f);f='';}else f+=c;}
+  out.push(f);return out;
+}
+function asEngineRow(line){
+  let cells=splitCsvLine(line);
+  // Rows copied from Google Sheets arrive TAB-separated, not comma-separated.
+  if(cells.length<30 && line.indexOf('\t')>-1) cells=line.split('\t');
+  if(cells.length<30) return null; // free-text line, not an engine row
+  const o={};ENGINE_COLS.forEach((h,i)=>o[h]=(cells[i]||'').trim());
+  return o;
+}
+function hasKeyPerson(o){return !!(o.decision_maker_name||o.dm1_name);}
+// Build the human-readable lead block fed to the writer, using engine signals when present.
+function leadDataFor(rowObj,personName){
+  if(!rowObj) return null;
+  const L=[];
+  L.push(`Business: ${rowObj.business_name||''}`);
+  if(personName) L.push(`Owner / key contact: ${personName}`);
+  else if(rowObj.decision_maker_name) L.push(`Owner / key contact: ${rowObj.decision_maker_name}`);
+  const loc=[rowObj.suburb,rowObj.city,rowObj.region].filter(Boolean).join(', ');
+  if(loc) L.push(`Location: ${loc}`);
+  if(rowObj.subcategory||rowObj.category) L.push(`Type: ${rowObj.subcategory||rowObj.category}`);
+  if(rowObj.website) L.push(`Website: ${rowObj.website}`);
+  if(rowObj.general_email) L.push(`Email: ${rowObj.general_email}`);
+  if(rowObj.general_phone) L.push(`Phone: ${rowObj.general_phone}`);
+  const site=[];
+  if(rowObj.lcp_seconds) site.push(`loads in ${rowObj.lcp_seconds}s`);
+  if(rowObj.is_mobile_responsive==='false') site.push('not mobile-friendly');
+  if(rowObj.has_https==='false') site.push('no SSL/HTTPS');
+  if(rowObj.psi_performance) site.push(`performance score ${rowObj.psi_performance}/100`);
+  if(rowObj.website_quality_bucket) site.push(`bucket: ${rowObj.website_quality_bucket}`);
+  if(site.length) L.push(`Site signals: ${site.join(', ')}`);
+  if(rowObj.why_now_hook) L.push(`Why-now hook (use as raw material, rewrite in voice): ${rowObj.why_now_hook}`);
+  if(rowObj.talking_points) L.push(`Talking points: ${rowObj.talking_points}`);
+  return L.join('\n');
+}
+
+function buildP(row,type,sender,ex,personName){
+  const tl=type==='audit'?'Soft - lead with a specific observation about their current site, no pitch':'Website rebuild - open the conversation about their site costing them customers';
+  // row may be a raw string (free text) or a pre-built lead block (engine row)
+  let m=`ANGLE: ${tl}\nSENDER: ${sender} on behalf of Farhad Malegam, Dream Websites\nLEAD DATA:\n${row}\n`;
+  if(personName) m+=`\nADDRESS THE EMAIL TO: ${personName} (use their first name naturally).\n`;
+  if(ex?.li) m+=`\nLINKEDIN PROFILE:\n${ex.li}\n`;
+  if(ex?.posts) m+=`\nRECENT POSTS:\n${ex.posts}\n`;
+  if(ex?.web) m+=`\nWEBSITE: ${ex.web}\n`;
+  if(ex?.notes) m+=`\nNOTES:\n${ex.notes}\n`;
+  m+=`\nParse all data. Find the strongest, most specific personalisation signal (usually what is wrong with their current site). Flag what is missing.
+Write THREE email openers - each specific, under 120 words, no em dashes, no premature CTA, in Chris White / NOW Group voice, signed from ${sender} on behalf of Dream Websites.
+Write a LinkedIn connection note under 50 words - different from the email, references something visible about their work.
+Return ONLY this JSON:
+{"parsed":{"name":"","full_name":"","role":"","company":"","sector":"","size":"","email":""},"signals":[],"gaps":[],"richness":50,"variant_a":{"subject":"","body":"","rationale":""},"variant_b":{"subject":"","body":"","rationale":""},"variant_c":{"subject":"","body":"","rationale":""},"linkedin_note":"","extra_subjects":[]}`;
+  return m;
+}
+
+// ---- raw API call (matches the Marksmen fetch pattern; runtime injects auth) ----
+async function callAPI(body){
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)
+  });
+  const d=await r.json();
+  if(d.error) throw new Error(d.error.message||'API error');
+  return d;
+}
+function textOf(d){return (d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');}
+function parseJson(t){
+  if(!t) return null;
+  let s=String(t).replace(/```json|```/g,'').trim();
+  try{return JSON.parse(s);}catch{}
+  const i=s.indexOf('{');
+  if(i<0) return null;
+  s=s.slice(i);
+  try{return JSON.parse(s);}catch{}
+  const lastClose=s.lastIndexOf('}');
+  if(lastClose>0){try{return JSON.parse(s.slice(0,lastClose+1));}catch{}}
+  // Repair a truncated response: close any open string, arrays and objects.
+  try{
+    let inStr=false,esc=false,curly=0,square=0;
+    for(let k=0;k<s.length;k++){
+      const c=s[k];
+      if(esc){esc=false;continue;}
+      if(c==='\\'){esc=true;continue;}
+      if(c==='"'){inStr=!inStr;continue;}
+      if(inStr) continue;
+      if(c==='{')curly++;else if(c==='}')curly--;
+      else if(c==='[')square++;else if(c===']')square--;
+    }
+    let fix=s.replace(/,\s*$/,'');
+    if(inStr) fix+='"';
+    while(square-->0) fix+=']';
+    while(curly-->0) fix+='}';
+    return JSON.parse(fix);
+  }catch{}
+  return null;
+}
+
+async function callClaude(msg){
+  const d=await callAPI({model:MODEL,max_tokens:4096,system:SYS,messages:[{role:'user',content:msg}]});
+  const o=parseJson(textOf(d));
+  if(!o) throw new Error('Could not parse response');
+  return o;
+}
+
+// ---- gap -> enrich: find the owner via web_search (fails gracefully) ----
+async function enrichKeyPerson(rowObj){
+  const facts=[`Business: ${rowObj.business_name}`,rowObj.website?`Website: ${rowObj.website}`:'',
+    [rowObj.suburb,rowObj.city,rowObj.region].filter(Boolean).length?`Location: ${[rowObj.suburb,rowObj.city,rowObj.region].filter(Boolean).join(', ')}`:'',
+    rowObj.subcategory?`Type: ${rowObj.subcategory}`:''].filter(Boolean).join('\n');
+  const sys=`You are a B2B researcher. Use web_search to find the OWNER / PRINCIPAL / DIRECTOR of the business (the person who decides on the website). Check their site (About/Team/Contact), LinkedIn, and business registers. Be conservative: a wrong name is worse than none.
+Output ONLY a JSON object, no prose: {"name":"","title":"","linkedin":"","confidence":"high|medium|low","source":""}. Leave name blank if not confidently found.`;
+  const body={model:MODEL,max_tokens:1500,system:sys,tools:[{type:SEARCH_TOOL,name:'web_search',max_uses:3}],messages:[{role:'user',content:`Find the owner/principal of this business:\n${facts}`}]};
+  let messages=body.messages,d;
+  for(let hop=0;hop<5;hop++){
+    d=await callAPI({...body,messages});
+    if(d.stop_reason==='pause_turn'){messages=[messages[0],{role:'assistant',content:d.content}];continue;}
+    break;
+  }
+  const o=parseJson(textOf(d))||{};
+  return {name:o.name||'',title:o.title||'',linkedin:o.linkedin||'',confidence:o.confidence||'low',source:o.source||''};
+}
+
+// Resolve a single pasted line into {rowObj, leadData, person, kpHtml}
+async function resolveLead(line,doEnrich){
+  const rowObj=asEngineRow(line);
+  if(!rowObj){ // free text — behave like the original engine
+    return {leadData:line,person:'',kpHtml:''};
+  }
+  let person=rowObj.decision_maker_name||'';
+  let kpHtml='';
+  if(!person && doEnrich){
+    try{
+      const e=await enrichKeyPerson(rowObj);
+      if(e.name && e.confidence!=='low'){
+        person=e.name;
+        kpHtml=`<div class="kp found"><span>◆</span><span>Owner found: <b>${esc(e.name)}</b>${e.title?', '+esc(e.title):''} · ${esc(e.confidence)} confidence${e.source?' · '+esc(e.source):''}</span></div>`;
+      }else{
+        kpHtml=`<div class="kp none"><span>○</span><span>No confident owner found - company-level opener (no name invented).</span></div>`;
+      }
+    }catch(err){
+      kpHtml=`<div class="kp none"><span>○</span><span>Enrichment unavailable in this runtime (${esc(err.message)}) - company-level opener. Use the manual LinkedIn/Website fields, or the headless enricher.</span></div>`;
+    }
+  }else if(person){
+    kpHtml=`<div class="kp found"><span>◆</span><span>Owner (from lead data): <b>${esc(person)}</b></span></div>`;
+  }
+  return {rowObj,leadData:leadDataFor(rowObj,person),person,kpHtml};
+}
+
+function qGate(a,b,c){
+  const all=[a,b,c].join(' ');
+  return[
+    {l:'No em dashes',p:!all.includes('—')},
+    {l:'Under 120 words',p:Math.max(...[a,b,c].map(v=>v.split(/\s+/).length))<=125},
+    {l:'No premature call CTA',p:!/book a call|schedule a call|hop on/i.test(all)},
+    {l:'No hype language',p:!/game.chang|transform|revolutio|leverage|synergy/i.test(all)},
+    {l:'No banned opener',p:!/i hope this email|i wanted to reach out|i am reaching out/i.test(all)},
+  ];
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function copyEl(id){
+  const el=document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.textContent).then(()=>{
+    const b=document.querySelector(`[data-copy="${id}"]`);
+    if(b){const t=b.textContent;b.textContent='Copied';setTimeout(()=>b.textContent=t,1400);}
+  });
+}
+
+function renderCard(r,idx,kpHtml){
+  const bA=r.variant_a?.body||'', bB=r.variant_b?.body||'', bC=r.variant_c?.body||'';
+  const checks=qGate(bA,bB,bC);
+  const rich=Math.min(100,Math.max(0,r.richness||40));
+  const sigs=(r.signals||[]).map(s=>`<span class="chip sig">${esc(s)}</span>`).join('');
+  const gaps=(r.gaps||[]).map(g=>`<span class="chip gap">+ ${esc(g)}</span>`).join('');
+  const subjs=[r.variant_a?.subject,r.variant_b?.subject,r.variant_c?.subject,...(r.extra_subjects||[])].filter(Boolean).map((s,i)=>`${i+1}. ${esc(s)}`).join('\n');
+
+  const vBlock=(code,badge,label,body,rat)=>`
+<div class="vlabel"><span class="vbadge">${badge}</span>${label}</div>
+<div class="vbody" id="${code}${idx}">${esc(body)}</div>
+<div class="rat">${esc(rat)}</div>
+<div class="copy-row"><button class="btn-copy" data-copy="${code}${idx}" onclick="copyEl('${code}${idx}')">Copy ${badge}</button></div>`;
+
+  return `<div class="lead-block">
+<div class="lead-hdr">
+  <span class="lead-num">#${idx+1}</span>
+  <span class="lead-name">${esc(r.parsed?.full_name||r.parsed?.company||'Lead '+(idx+1))}</span>
+  <span class="lead-meta">${esc([r.parsed?.role,r.parsed?.company].filter(Boolean).join(' — '))}</span>
+</div>
+<div class="lead-body">
+  ${kpHtml||''}
+  <div class="rbar-wrap">
+    <div class="rbar-lbl">Context richness: ${rich}% ${rich<40?'— add LinkedIn PDF or posts to sharpen':rich<70?'— solid':'— strong'}</div>
+    <div class="rbar-track"><div class="rbar-fill" style="width:${rich}%"></div></div>
+  </div>
+  <div class="chip-row">${sigs}${gaps}</div>
+  ${vBlock('vA','A','Variant A — lead with relevance',bA,r.variant_a?.rationale||'')}
+  ${vBlock('vB','B','Variant B — lead with question',bB,r.variant_b?.rationale||'')}
+  ${vBlock('vC','C','Variant C — softest',bC,r.variant_c?.rationale||'')}
+  <div class="divider"></div>
+  <div class="vlabel">LinkedIn connection note</div>
+  <div class="vbody" id="vL${idx}">${esc(r.linkedin_note||'')}</div>
+  <div class="copy-row"><button class="btn-copy" data-copy="vL${idx}" onclick="copyEl('vL${idx}')">Copy note</button></div>
+  <div class="divider"></div>
+  <div class="vlabel">Subject lines</div>
+  <div class="vbody" id="vS${idx}">${subjs}</div>
+  <div class="copy-row"><button class="btn-copy" data-copy="vS${idx}" onclick="copyEl('vS${idx}')">Copy subjects</button></div>
+  <div class="divider"></div>
+  <div class="qgate-title">Quality gate</div>
+  ${checks.map(c=>`<div class="qrow"><span class="${c.p?'qok':'qfail'}">${c.p?'✓':'✗'}</span><span style="color:${c.p?'var(--text-secondary)':'#f85149'}">${c.l}</span></div>`).join('')}
+</div>
+</div>`;
+}
+
+function setOut(html){
+  document.getElementById('empty').style.display='none';
+  const oa=document.getElementById('out-area');
+  oa.style.display='block';
+  oa.innerHTML=html;
+}
+function setStat(t){document.getElementById('out-status').textContent=t;var tb=document.getElementById('tb-status');if(tb)tb.textContent=t;}
+function clearAll(){
+  ['batch-raw','single-raw','li-ctx','li-signal','li-text','posts-text','web-url','notes-text'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  const oa=document.getElementById('out-area');oa.style.display='none';oa.innerHTML='';
+  document.getElementById('empty').style.display='flex';
+  setStat('ready');document.getElementById('lead-count').textContent='';
+}
+
+async function runBatch(){
+  const raw=document.getElementById('batch-raw').value.trim();
+  const type=document.getElementById('batch-type').value;
+  const sender=document.getElementById('batch-sender').value||'Farhad';
+  const doEnrich=document.getElementById('batch-enrich').checked;
+  if(!raw){alert('Paste some lead data first.');return;}
+  const rows=raw.split('\n').map(r=>r.trim()).filter(r=>r.length>5);
+  if(!rows.length){alert('No leads detected — one lead per line.');return;}
+  const btn=document.getElementById('batch-btn');
+  btn.disabled=true;
+  setStat('generating...');
+  const results=[];
+  for(let i=0;i<rows.length;i++){
+    setOut(`<div class="loading"><div class="spin"></div>Lead ${i+1} of ${rows.length}${doEnrich?' — finding owner + writing':' — writing'}...</div>`);
+    try{
+      const res=await resolveLead(rows[i],doEnrich);
+      const r=await callClaude(buildP(res.leadData,type,sender,null,res.person));
+      results.push({ok:true,r,idx:i,kpHtml:res.kpHtml});
+    }catch(e){results.push({ok:false,err:e.message,raw:rows[i],idx:i});}
+  }
+  const ok=results.filter(x=>x.ok).length;
+  setStat(`${ok} of ${rows.length} done`);
+  let html=`<div class="summary-bar">Generated openers for <strong>${ok}</strong> of <strong>${rows.length}</strong> leads</div>`;
+  results.forEach(({ok,r,err,raw,idx,kpHtml})=>{
+    if(ok) html+=renderCard(r,idx,kpHtml);
+    else html+=`<div class="err-card"><strong>Lead ${idx+1} error:</strong> ${esc(err)}<br><span style="opacity:.7;font-size:10px">${esc(raw)}</span></div>`;
+  });
+  setOut(html);
+  btn.disabled=false;
+}
+
+async function runSingle(){
+  const raw=document.getElementById('single-raw').value.trim();
+  if(!raw){alert('Paste prospect data first.');return;}
+  const doEnrich=document.getElementById('single-enrich').checked;
+  const extras={
+    li:document.getElementById('li-text').value.trim(),
+    posts:document.getElementById('posts-text').value.trim(),
+    web:document.getElementById('web-url').value.trim(),
+    notes:document.getElementById('notes-text').value.trim()
+  };
+  setStat('generating...');
+  setOut(`<div class="loading"><div class="spin"></div>${doEnrich?'Finding owner, enriching and writing...':'Enriching and writing openers...'}</div>`);
+  try{
+    const res=await resolveLead(raw,doEnrich);
+    const r=await callClaude(buildP(res.leadData,document.getElementById('single-type').value,document.getElementById('single-sender').value||'Farhad',extras,res.person));
+    setOut(renderCard(r,0,res.kpHtml));
+    setStat('done');
+  }catch(e){
+    setOut(`<div class="err-card">${esc(e.message)}</div>`);
+    setStat('error');
+  }
+}
+
+async function genLinkedIn(){
+  const ctx=document.getElementById('li-ctx').value.trim();
+  const signal=document.getElementById('li-signal').value.trim();
+  const sender=document.getElementById('li-sender').value||'Farhad';
+  if(!ctx){alert('Paste prospect context first.');return;}
+  setStat('generating...');
+  setOut(`<div class="loading"><div class="spin"></div>Writing connection note...</div>`);
+  try{
+    const d=await callAPI({model:MODEL,max_tokens:600,system:SYS,messages:[{role:'user',content:`Write a LinkedIn connection note.
+Sender: ${sender} on behalf of Farhad Malegam, Dream Websites.
+Prospect: ${ctx}
+Visible signal: ${signal||'infer from their trade and location'}
+Rules: under 50 words, not a repeat of any email, references something visible about their work, warm and human (Chris White / NOW Group voice), transparent, no pitch, no CTA, no em dashes.
+Return ONLY JSON: {"note":"...","rationale":"one sentence"}`}]});
+    const r=parseJson(textOf(d))||{};
+    setOut(`<div class="lead-block">
+<div class="lead-hdr"><span class="lead-num">LI</span><span class="lead-name">LinkedIn connection note</span></div>
+<div class="lead-body">
+<div class="vbody" id="li-out">${esc(r.note||'')}</div>
+<div class="rat">${esc(r.rationale||'')}</div>
+<div class="copy-row" style="margin-top:6px"><button class="btn-copy" onclick="copyEl('li-out')">Copy note</button></div>
+</div></div>`);
+    setStat('done');
+  }catch(e){
+    setOut(`<div class="err-card">${esc(e.message)}</div>`);
+    setStat('error');
+  }
+}
+
+function swTab(id,btn){
+  document.querySelectorAll('.pane-sec').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab-nav button').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+function togPill(id){
+  const pill=document.getElementById('pill-'+id);
+  const exp=document.getElementById('exp-'+id);
+  const on=pill.classList.toggle('on');
+  exp.classList.toggle('on',on);
+}
+
+function countLeads(){
+  const n=document.getElementById('batch-raw').value.trim().split('\n').filter(r=>r.trim().length>5).length;
+  document.getElementById('lead-count').textContent=n?`${n} lead${n>1?'s':''} detected`:'';
+}
+
+function uzDrag(e,on){e.preventDefault();document.getElementById('uz').classList.toggle('drag',on);}
+function uzDrop(e){e.preventDefault();document.getElementById('uz').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)handleFile(f);}
+
+async function handleFile(file){
+  if(!file) return;
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(!['pdf','txt'].includes(ext)){setFStat('err',`Unsupported: .${ext} — use .pdf or .txt`);return;}
+  setFStat('loading',`Reading ${file.name}...`);
+  try{
+    let text='';
+    if(ext==='pdf'){
+      if(!window.pdfjsLib) throw new Error('PDF reader not loaded — paste text directly');
+      const buf=await file.arrayBuffer();
+      const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+      for(let i=1;i<=pdf.numPages;i++){
+        const pg=await pdf.getPage(i);
+        const ct=await pg.getTextContent();
+        text+=ct.items.map(x=>x.str).join(' ')+'\n';
+      }
+      text=text.replace(/^\s*Page \d+ of \d+\s*$/gm,'').replace(/\s{3,}/g,'\n\n').trim();
+    } else {
+      text=await new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>res(e.target.result);r.onerror=()=>rej(new Error('Read failed'));r.readAsText(file);});
+    }
+    if(!text.trim()){setFStat('err','No text found — paste the profile text directly.');return;}
+    document.getElementById('li-text').value=text;
+    document.getElementById('uz').classList.add('ok');
+    setFStat('ok',`${file.name} — ${text.split(/\s+/).length} words extracted`);
+  }catch(e){setFStat('err',e.message);}
+}
+
+function setFStat(type,msg){
+  const el=document.getElementById('file-status');
+  el.style.display='flex';
+  el.className='file-status'+(type==='ok'?' ok':type==='err'?' err':'');
+  el.innerHTML=type==='loading'?`<div class="spin"></div>${msg}`:msg;
+}
+</script>
