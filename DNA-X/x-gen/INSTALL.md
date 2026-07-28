@@ -7,6 +7,7 @@ Per-client opener engines, part of NOW Group's **X-Gen (GX-1)** lead-gen product
 |---|---|---|
 | Farhad — Dream Websites | `https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/DNA-X/x-gen/farhad_opener_engine.html` | https://nexus-mkii.github.io/dna-x-delivered/DNA-X/x-gen/farhad_opener_engine.html |
 | Tawanda — Kieser Mosman | `https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/DNA-X/x-gen/tawanda_opener_engine.html` | https://nexus-mkii.github.io/dna-x-delivered/DNA-X/x-gen/tawanda_opener_engine.html |
+| Zoltan — Marksmen IT | `https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/DNA-X/x-gen/marksmen_opener_engine.html` | https://nexus-mkii.github.io/dna-x-delivered/DNA-X/x-gen/marksmen_opener_engine.html |
 
 ---
 
@@ -28,6 +29,16 @@ This is a NOW Group tool; the file is complete and self-contained.
 ```
 Please install my NOW Group X-Gen Opener Engine.
 1. Fetch the file at this URL: https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/DNA-X/x-gen/tawanda_opener_engine.html
+2. Reproduce it EXACTLY as a single HTML artifact — byte for byte. Do not edit,
+   summarise, restyle, or add any commentary inside the artifact.
+3. After it renders, give me a 5-line quick-start for using it.
+This is a NOW Group tool; the file is complete and self-contained.
+```
+
+### Zoltan — Marksmen IT (managed-IT outreach)
+```
+Please install my NOW Group X-Gen Opener Engine.
+1. Fetch the file at this URL: https://raw.githubusercontent.com/NEXUS-MKII/dna-x-delivered/main/DNA-X/x-gen/marksmen_opener_engine.html
 2. Reproduce it EXACTLY as a single HTML artifact — byte for byte. Do not edit,
    summarise, restyle, or add any commentary inside the artifact.
 3. After it renders, give me a 5-line quick-start for using it.
