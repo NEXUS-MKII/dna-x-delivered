@@ -512,6 +512,59 @@
   .qz-spin{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.18em;
     text-transform:uppercase;color:var(--gold);opacity:.85;}
 
+  /* ── v · THE ENGINE — the case opened. Gold linework on steel, a real gear
+        train whose ratios and directions are correct, and figures that are the
+        ones the engine actually runs. Competence is shown, not claimed. ── */
+  .engine{padding:clamp(76px,9vw,124px) clamp(32px,6vw,88px);position:relative;color:var(--white);
+    border-top:1px solid rgba(230,190,106,.14);}
+  .eng-wrap{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+  .eng-h{font-size:clamp(30px,5vw,58px);color:var(--white);line-height:1.06;}
+  .eng-sub{color:var(--mut-dark);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;
+    font-size:15.5px;margin-top:18px;max-width:62ch;line-height:1.65;}
+  .eng-sub b{color:var(--gold);font-weight:400;letter-spacing:.02em;}
+
+  .movement{margin:44px 0 8px;position:relative;}
+  .movement svg{width:100%;height:auto;max-height:290px;display:block;overflow:visible;}
+  .gear-ring{fill:none;stroke:rgba(230,190,106,.55);stroke-width:1.6;stroke-linejoin:round;}
+  .gear-body{fill:rgba(230,190,106,.05);stroke:rgba(230,190,106,.22);stroke-width:1;}
+  .gear-spoke{stroke:rgba(230,190,106,.3);stroke-width:1.4;stroke-linecap:round;}
+  .gear-hub{fill:#17110a;stroke:rgba(230,190,106,.5);stroke-width:1.4;}
+  .gear-pitch{fill:none;stroke:rgba(201,207,214,.14);stroke-width:.8;stroke-dasharray:3 5;}
+  .gear-cap{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9px;letter-spacing:.18em;
+    fill:var(--mut-dark);text-transform:uppercase;}
+  .gear-n{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;fill:var(--gold);}
+  .gear-t{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:7.5px;letter-spacing:.1em;fill:var(--mut-dark);}
+  .mesh-note{margin-top:2px;text-align:center;font-family:'JetBrains Mono',ui-monospace,monospace;
+    font-size:10px;letter-spacing:.1em;color:var(--mut-dark);opacity:.65;}
+
+  /* the spec plate — engraved, not a row of marketing tiles */
+  .plate{margin-top:44px;border-top:1px solid rgba(230,190,106,.32);
+    border-bottom:1px solid rgba(230,190,106,.14);
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));}
+  .spec{padding:22px 20px 20px;border-right:1px solid rgba(230,190,106,.12);}
+  .spec:last-child{border-right:none;}
+  .spec .s-n{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(26px,3.4vw,38px);
+    line-height:1;color:var(--gold);font-variant-numeric:tabular-nums;letter-spacing:.01em;}
+  .spec .s-d{margin-top:9px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;
+    letter-spacing:.08em;line-height:1.55;color:var(--mut-dark);text-transform:uppercase;}
+  @media(max-width:620px){.spec{border-right:none;border-bottom:1px solid rgba(230,190,106,.12);}}
+
+  .stages{margin-top:52px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:34px 40px;}
+  .stage{position:relative;padding-left:44px;}
+  .stage .st-n{position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:50%;
+    border:1px solid rgba(230,190,106,.4);display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:var(--gold);}
+  .stage h3{font-family:'Oswald',sans-serif;font-weight:500;font-size:17px;text-transform:uppercase;
+    letter-spacing:.03em;color:var(--white);margin-bottom:9px;}
+  .stage p{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;
+    line-height:1.62;color:var(--mut-dark);}
+  .stage p em{font-style:normal;color:var(--silver);}
+  .eng-honest{margin-top:48px;border-left:2px solid var(--gold);padding:6px 0 6px 22px;max-width:64ch;}
+  .eng-honest p{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(17px,2.3vw,24px);
+    line-height:1.4;color:var(--white);}
+  .eng-honest .eh-s{margin-top:12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;
+    letter-spacing:.06em;color:var(--gold);opacity:.8;}
+
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;}
     /* everything that waits on motion must still resolve to its finished state */
@@ -523,6 +576,7 @@
     .collapse-band{height:100vh;}
     .cb-stage{position:relative;}
     .ax-spectrum{transition:none!important;}
+    .movement svg{opacity:1;}
   }
 </style>
 </head>
@@ -679,6 +733,63 @@
         </div>
       </div>
       <div class="inst-wink mono">We call it a showcase of what we build. <i>It is also, quietly, the funnel.</i></div>
+    </div>
+  </section>
+
+  <!-- v · THE ENGINE — the case opened -->
+  <section class="engine steel" data-phase="MECHANISM|INSPECTING" id="engine">
+    <div class="eng-wrap">
+      <div class="qlabel mono">v &middot; the engine</div>
+      <h2 class="disp eng-h">Open the case.</h2>
+      <p class="eng-sub">The read runs on <b>QOLLAPSIS</b> &mdash; the measurement engine under PsikiQ. Not a scoring sheet with a good front end. This is the movement, and every figure below is the one it is running right now.</p>
+
+      <div class="movement">
+        <svg id="gearTrain" viewBox="-118 -122 448 262" role="img"
+             aria-label="The Qollapsis gear train: catalogue, markers and comparator in mesh"></svg>
+      </div>
+      <div class="mesh-note mono">28 : 18 : 12 &middot; in mesh &middot; ratios and directions are true</div>
+
+      <div class="plate">
+        <div class="spec"><div class="s-n">138</div><div class="s-d mono">business types<br>in the catalogue</div></div>
+        <div class="spec"><div class="s-n">25</div><div class="s-d mono">verticals they<br>resolve to</div></div>
+        <div class="spec"><div class="s-n">12</div><div class="s-d mono">universal markers<br>asked of everyone</div></div>
+        <div class="spec"><div class="s-n">24</div><div class="s-d mono">reveals &mdash; one<br>for every question</div></div>
+        <div class="spec"><div class="s-n">S1&ndash;S5</div><div class="s-d mono">developmental<br>bands</div></div>
+        <div class="spec"><div class="s-n">2</div><div class="s-d mono">independent reads,<br>cross-checked</div></div>
+      </div>
+
+      <div class="stages">
+        <div class="stage">
+          <div class="st-n mono">01</div>
+          <h3>The catalogue</h3>
+          <p>138 trades resolve to 25 verticals. What you do decides which instruments get fitted &mdash; a plumber and a law firm are not read with the same ruler.</p>
+        </div>
+        <div class="stage">
+          <div class="st-n mono">02</div>
+          <h3>Universal markers</h3>
+          <p>Twelve questions read developmental stage independent of trade. <em>Does structure exist outside your head. Do decisions escalate. Does delivery run without you.</em> Stage isn&rsquo;t size &mdash; these are what separate them.</p>
+        </div>
+        <div class="stage">
+          <div class="st-n mono">03</div>
+          <h3>The sector overlay</h3>
+          <p>Where a sector model exists, three more read tooling maturity in that trade&rsquo;s own language &mdash; <em>workpapers, matter management, quoting discipline.</em> Not a generic question with the noun swapped.</p>
+        </div>
+        <div class="stage">
+          <div class="st-n mono">04</div>
+          <h3>The comparator</h3>
+          <p>The two reads are scored separately, then cross-validated against each other. Agreement raises confidence. <em>Disagreement is not noise &mdash; it is the finding.</em></p>
+        </div>
+        <div class="stage">
+          <div class="st-n mono">05</div>
+          <h3>Divergence</h3>
+          <p>When general maturity outruns the tooling beneath it, that gap is the crisis already forming. The engine names it, sizes it, and flags the business as at the edge &mdash; the moment it is cheapest to act.</p>
+        </div>
+      </div>
+
+      <div class="eng-honest">
+        <p>Every read returns its own confidence, and says so when it can only give you the coarse one.</p>
+        <div class="eh-s mono">an instrument that hides its uncertainty isn&rsquo;t an instrument</div>
+      </div>
     </div>
   </section>
 
@@ -1298,6 +1409,95 @@
     el.setAttribute('href',HOSTED);
     el.addEventListener('click',function(ev){ ev.preventDefault(); open(); });
   });
+})();
+
+/* ══ THE GEAR TRAIN ════════════════════════════════════════════════════════
+   Three gears in real mesh. Pitch radius = module x teeth / 2, so the centres
+   sit exactly tangent; angular velocity is inversely proportional to tooth
+   count and the sign alternates. Gears that don't mesh read as decoration —
+   these do the arithmetic, which is the whole point of the section.          */
+(function(){
+  'use strict';
+  var svg=document.getElementById('gearTrain');
+  if(!svg) return;
+  var NS='http://www.w3.org/2000/svg';
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var MODULE=7, DEPTH=7, W0=7;           /* deg/sec on the first wheel */
+  var TRAIN=[
+    {n:28, cap:'catalogue',  hub:23},
+    {n:18, cap:'markers',    hub:18},
+    {n:12, cap:'comparator', hub:15}
+  ];
+
+  function el(t,a){ var e=document.createElementNS(NS,t); for(var k in a) e.setAttribute(k,a[k]); return e; }
+  function pt(r,a){ return [ +(r*Math.cos(a)).toFixed(2), +(r*Math.sin(a)).toFixed(2) ]; }
+
+  /* one tooth cycle: rise, outer arc, fall, root arc */
+  function gearPath(n,rp,depth){
+    var ro=rp+depth, ri=rp-depth, step=Math.PI*2/n, d='', i, a, p;
+    for(i=0;i<n;i++){
+      a=i*step;
+      if(i===0){ p=pt(ri,a); d+='M'+p[0]+','+p[1]; }
+      p=pt(ro,a+step*0.10); d+='L'+p[0]+','+p[1];
+      p=pt(ro,a+step*0.44); d+='A'+ro+','+ro+' 0 0 1 '+p[0]+','+p[1];
+      p=pt(ri,a+step*0.54); d+='L'+p[0]+','+p[1];
+      p=pt(ri,a+step);      d+='A'+ri+','+ri+' 0 0 1 '+p[0]+','+p[1];
+    }
+    return d+'Z';
+  }
+
+  var cx=0, rotors=[], prev=null;
+  TRAIN.forEach(function(g,i){
+    g.rp = MODULE*g.n/2;
+    if(prev) cx += prev.rp + g.rp;        /* tangent pitch circles = true mesh */
+    g.cx = cx;
+    g.w  = W0 * (TRAIN[0].n/g.n) * (i%2 ? -1 : 1);
+    prev = g;
+
+    var wrap=el('g',{transform:'translate('+g.cx+',0)'});
+    wrap.appendChild(el('circle',{class:'gear-pitch', r:g.rp}));
+
+    var rot=el('g',{});
+    rot.appendChild(el('path',{class:'gear-ring', d:gearPath(g.n,g.rp,DEPTH)}));
+    rot.appendChild(el('circle',{class:'gear-body', r:g.rp*0.6}));
+    for(var k=0;k<5;k++){
+      var a=k*Math.PI*2/5, p1=pt(g.hub,a), p2=pt(g.rp*0.6,a);
+      rot.appendChild(el('line',{class:'gear-spoke', x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1]}));
+    }
+    wrap.appendChild(rot);
+    rotors.push({el:rot, w:g.w});
+
+    /* the hub stays still, so its figures stay readable while the wheel turns */
+    wrap.appendChild(el('circle',{class:'gear-hub', r:g.hub}));
+    var n=el('text',{class:'gear-n','text-anchor':'middle', y:1}); n.textContent=g.n;
+    var t=el('text',{class:'gear-t','text-anchor':'middle', y:12}); t.textContent='TEETH';
+    var c=el('text',{class:'gear-cap','text-anchor':'middle', y:g.rp+DEPTH+24}); c.textContent=g.cap;
+    wrap.appendChild(n); wrap.appendChild(t); wrap.appendChild(c);
+    svg.appendChild(wrap);
+  });
+
+  /* park it at a pleasing angle; only turn while it is actually on screen */
+  rotors.forEach(function(r,i){ r.a = i*4; r.el.setAttribute('transform','rotate('+r.a+')'); });
+  if(reduce) return;
+
+  var running=false, last=0;
+  function frame(ts){
+    if(!running) return;
+    var dt = last ? Math.min((ts-last)/1000, 0.05) : 0;
+    last = ts;
+    for(var i=0;i<rotors.length;i++){
+      rotors[i].a = (rotors[i].a + rotors[i].w*dt) % 360;
+      rotors[i].el.setAttribute('transform','rotate('+rotors[i].a.toFixed(2)+')');
+    }
+    requestAnimationFrame(frame);
+  }
+  new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      if(e.isIntersecting && !running){ running=true; last=0; requestAnimationFrame(frame); }
+      else if(!e.isIntersecting){ running=false; }
+    });
+  },{threshold:.15}).observe(svg);
 })();
 </script>
 </body>
