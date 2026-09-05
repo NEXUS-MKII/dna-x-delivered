@@ -252,9 +252,9 @@
   /* ── THE INSTRUMENT — the diagnostic, positioned ── */
   .instrument{padding:clamp(76px,9vw,124px) clamp(32px,6vw,88px);position:relative;color:var(--white);}
   .inst-wrap{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
-  .inst-head{max-width:760px;}
+  .inst-head{max-width:760px;margin:0 auto;text-align:center;}
   .inst-h{font-size:clamp(28px,4.6vw,54px);color:var(--white);line-height:1.08;text-wrap:balance;}
-  .inst-sub{color:var(--mut-dark);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:15.5px;margin-top:18px;max-width:60ch;line-height:1.65;}
+  .inst-sub{color:var(--mut-dark);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:15.5px;margin:18px auto 0;max-width:60ch;line-height:1.65;}
   .inst-sub b{color:var(--silver);font-weight:400;}
 
   /* ── THE CYCLE — Greiner's phases are not a ladder, they are a wheel: every
@@ -305,16 +305,16 @@
   .inst-col h3{font-family:'Oswald',sans-serif;font-weight:500;font-size:17px;text-transform:uppercase;letter-spacing:.03em;color:var(--gold);margin-bottom:9px;}
   .inst-col p{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;line-height:1.62;color:var(--mut-dark);}
 
-  .inst-cta{margin-top:56px;display:flex;align-items:center;gap:26px 30px;flex-wrap:wrap;}
+  .inst-cta{margin-top:56px;display:flex;align-items:center;justify-content:center;gap:26px 30px;flex-wrap:wrap;text-align:left;}
   .inst-meta{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.09em;color:var(--mut-dark);line-height:1.9;}
   .inst-meta b{color:var(--silver-2);font-weight:400;}
-  .inst-bridge{margin-top:36px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;
-    font-size:15.5px;line-height:1.66;color:var(--mut-dark);max-width:62ch;}
+  .inst-bridge{margin:36px auto 0;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;
+    font-size:15.5px;line-height:1.66;color:var(--mut-dark);max-width:62ch;text-align:center;}
   .inst-bridge b{color:var(--gold);font-weight:400;}
   .inst-bridge a{color:var(--gold);text-decoration:none;white-space:nowrap;
     border-bottom:1px solid rgba(230,190,106,.4);padding-bottom:2px;transition:color .2s,border-color .2s;}
   .inst-bridge a:hover{color:var(--white);border-color:var(--gold);}
-  .inst-wink{margin-top:22px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;color:var(--gold);opacity:.72;}
+  .inst-wink{margin-top:22px;text-align:center;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;color:var(--gold);opacity:.72;}
   .inst-wink i{color:var(--silver);}
 
   /* ── THE BOOK OF PROOF — a bound spread with a spine, pages that turn ── */
@@ -618,42 +618,27 @@
   /* ── THE ROLLER — the transition device. A scroll rod that turns as you
         pass it: horizontal striations sweeping vertically across a cylinder,
         machined caps turning at each end. Ancient object, digital edge. ── */
-  .roller{position:relative;height:clamp(104px,13vw,158px);overflow:hidden;--turn:0deg;--shift:0px;}
+  .roller{position:relative;height:clamp(104px,13vw,158px);overflow:hidden;--shift:0px;}
   .roller-dark{background:var(--void);}
   .rod{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
-    height:clamp(38px,4.8vw,60px);overflow:hidden;
-    border-top:1px solid rgba(255,240,200,.5);border-bottom:1px solid rgba(0,0,0,.6);
-    box-shadow:0 16px 40px rgba(0,0,0,.5);
+    height:clamp(46px,5.6vw,70px);overflow:hidden;
+    /* a cylinder that belongs to the ground it sits on — the thing the page
+       runs on, not an ornament laid across it */
     background:linear-gradient(180deg,
-      rgba(0,0,0,.78) 0%, rgba(184,145,47,.5) 10%, rgba(230,190,106,.85) 28%,
-      rgba(255,244,214,.95) 40%, rgba(230,190,106,.7) 54%,
-      rgba(120,92,30,.75) 74%, rgba(0,0,0,.72) 92%, rgba(0,0,0,.9) 100%);}
-  /* the surface: lines along the rod, sweeping vertically as it turns */
+      #0b0805 0%, #150f08 12%, #241a0e 34%, #33260f 50%,
+      #241a0e 66%, #130d07 86%, #090604 100%);
+    box-shadow:inset 0 1px 0 rgba(230,190,106,.16),
+               inset 0 -1px 0 rgba(0,0,0,.75),
+               0 14px 36px rgba(0,0,0,.5);}
+  /* light vertical ribbing, running horizontally as it turns. Masked at the
+     top and bottom so the ribs fall away where the cylinder curves off. */
   .rod-skin{position:absolute;inset:0;
     background-image:repeating-linear-gradient(90deg,
-      rgba(255,248,224,.34) 0px, rgba(255,248,224,.34) 1px,
-      rgba(0,0,0,.14) 1px, rgba(0,0,0,.14) 2px,
-      transparent 2px, transparent 11px);
-    background-position:var(--shift) 0;mix-blend-mode:overlay;}
-  /* the digital edge: a data line riding the same surface */
-  .rod-data{position:absolute;left:0;right:0;top:50%;height:2px;transform:translateY(-50%);
-    background-image:repeating-linear-gradient(90deg,
-      rgba(23,17,10,.8) 0 3px, transparent 3px 26px);
-    background-position:var(--shift) 0;opacity:.5;}
-  .rod-glint{position:absolute;left:0;right:0;top:34%;height:2px;
-    background:linear-gradient(90deg,transparent,rgba(255,252,240,.85) 30%,rgba(255,252,240,.85) 70%,transparent);
-    opacity:.7;}
-  .cap{position:absolute;top:50%;width:clamp(54px,6.6vw,82px);height:clamp(54px,6.6vw,82px);
-    transform:translateY(-50%);z-index:3;filter:drop-shadow(0 8px 20px rgba(0,0,0,.6));}
-  .cap-l{left:clamp(8px,2vw,30px);} .cap-r{right:clamp(8px,2vw,30px);}
-  .cap svg{width:100%;height:100%;display:block;}
-  .cap .spin{transform-origin:50% 50%;transform:rotate(var(--turn));}
-  .cap .rim{fill:#1b140c;stroke:rgba(230,190,106,.7);stroke-width:2.5;}
-  .cap .tick{stroke:rgba(230,190,106,.65);stroke-width:2;stroke-linecap:round;}
-  .cap .ticks{fill:none;stroke:rgba(230,190,106,.6);stroke-width:9;stroke-dasharray:4.5 11.73;}
-  .cap .hub{fill:none;stroke:rgba(255,244,214,.75);stroke-width:2;}
-  .cap .core{fill:rgba(230,190,106,.85);}
-  @media(max-width:640px){.cap{display:none;}}
+      rgba(230,190,106,.20) 0px, rgba(230,190,106,.20) 1px,
+      transparent 1px, transparent 15px);
+    background-position:var(--shift) 0;opacity:.5;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 24%,#000 76%,transparent 100%);
+            mask-image:linear-gradient(180deg,transparent 0%,#000 24%,#000 76%,transparent 100%);}
 
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;}
@@ -707,27 +692,7 @@
   </section>
 
   <div class="roller roller-dark" aria-hidden="true">
-    <div class="rod"><div class="rod-skin"></div><div class="rod-glint"></div><div class="rod-data"></div></div>
-    <div class="cap cap-l"><svg viewBox="-50 -50 100 100" aria-hidden="true">
-          <circle class="rim" r="44"/>
-          <g class="spin">
-            <circle class="ticks" r="31"/>
-            <circle class="hub" r="15"/>
-            <line class="tick" x1="-15" y1="0" x2="15" y2="0"/>
-            <line class="tick" x1="0" y1="-15" x2="0" y2="15"/>
-          </g>
-          <circle class="core" r="4.5"/>
-        </svg></div>
-    <div class="cap cap-r"><svg viewBox="-50 -50 100 100" aria-hidden="true">
-          <circle class="rim" r="44"/>
-          <g class="spin">
-            <circle class="ticks" r="31"/>
-            <circle class="hub" r="15"/>
-            <line class="tick" x1="-15" y1="0" x2="15" y2="0"/>
-            <line class="tick" x1="0" y1="-15" x2="0" y2="15"/>
-          </g>
-          <circle class="core" r="4.5"/>
-        </svg></div>
+    <div class="rod"><div class="rod-skin"></div></div>
   </div>
 
   <section class="beat beat-dark steel" data-phase="SUPERPOSITION|UNRESOLVED">
@@ -805,27 +770,7 @@
   </section>
 
   <div class="roller roller-dark" aria-hidden="true">
-    <div class="rod"><div class="rod-skin"></div><div class="rod-glint"></div><div class="rod-data"></div></div>
-    <div class="cap cap-l"><svg viewBox="-50 -50 100 100" aria-hidden="true">
-          <circle class="rim" r="44"/>
-          <g class="spin">
-            <circle class="ticks" r="31"/>
-            <circle class="hub" r="15"/>
-            <line class="tick" x1="-15" y1="0" x2="15" y2="0"/>
-            <line class="tick" x1="0" y1="-15" x2="0" y2="15"/>
-          </g>
-          <circle class="core" r="4.5"/>
-        </svg></div>
-    <div class="cap cap-r"><svg viewBox="-50 -50 100 100" aria-hidden="true">
-          <circle class="rim" r="44"/>
-          <g class="spin">
-            <circle class="ticks" r="31"/>
-            <circle class="hub" r="15"/>
-            <line class="tick" x1="-15" y1="0" x2="15" y2="0"/>
-            <line class="tick" x1="0" y1="-15" x2="0" y2="15"/>
-          </g>
-          <circle class="core" r="4.5"/>
-        </svg></div>
+    <div class="rod"><div class="rod-skin"></div></div>
   </div>
 
   <!-- THE INSTRUMENT — the diagnostic itself, positioned -->
@@ -1071,7 +1016,6 @@
       var el=rollers[i], r=el.getBoundingClientRect(), span=window.innerHeight+r.height;
       var p = span>0 ? (window.innerHeight-r.top)/span : 0;
       p = Math.max(0,Math.min(1,p));
-      el.style.setProperty('--turn',(p*760).toFixed(1)+'deg');
       el.style.setProperty('--shift',(p*Math.max(700,window.innerWidth*0.8)).toFixed(0)+'px');
     }
   }
