@@ -34,6 +34,7 @@
     --mut-dark:#727E8E;
     --mut-light:#8A93A0;
     --ink:#17110A;
+    --orb:1;                      /* Q-orb scale — grows as the viewport shrinks */
     /* BRUSHED STEEL — coarser, visible: vertical striations + strong diagonal sheen */
     --steel-stripes:repeating-linear-gradient(90deg,
         #17110a 0px,#20180e 2px,#191108 4px,#241b0f 6px,#150f08 8px);
@@ -221,10 +222,10 @@
   /* ── THE SEEKER ── */
   .seeker{position:fixed;top:0;left:0;width:80px;height:48px;z-index:60;pointer-events:none;
     transform:translate(-100px,-100px);will-change:transform;}
-  .seeker-glow{position:absolute;left:50%;top:50%;width:120px;height:120px;transform:translate(-50%,-50%);
+  .seeker-glow{position:absolute;left:50%;top:50%;width:120px;height:120px;transform:translate(-50%,-50%) scale(var(--orb));
     background:radial-gradient(circle,rgba(230,190,106,.45),rgba(255,90,31,.12) 40%,transparent 70%);
     filter:blur(4px);}
-  .seeker-body{position:absolute;left:50%;top:50%;width:80px;height:48px;transform:translate(-50%,-50%);overflow:visible;}
+  .seeker-body{position:absolute;left:50%;top:50%;width:80px;height:48px;transform:translate(-50%,-50%) scale(var(--orb));overflow:visible;}
   .seeker .core{fill:#FFF3D6;filter:drop-shadow(0 0 8px #E6BE6A);}
   .seeker .q-ring{fill:none;stroke:#FFE9B0;stroke-width:2.4;filter:drop-shadow(0 0 8px #E6BE6A);}
   .seeker .q-tail{stroke:#FFE9B0;stroke-width:2.4;stroke-linecap:round;filter:drop-shadow(0 0 6px #E6BE6A);}
@@ -233,12 +234,16 @@
   .seeker .wr{animation:flapR .28s ease-in-out infinite alternate;}
   @keyframes flapL{from{transform:scaleY(1) rotate(0deg);}to{transform:scaleY(.35) rotate(-6deg);}}
   @keyframes flapR{from{transform:scaleY(1) rotate(0deg);}to{transform:scaleY(.35) rotate(6deg);}}
-  .dust{position:fixed;width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#FFE9B0,#E6BE6A 50%,transparent 70%);
+  .dust{position:fixed;width:calc(5px * var(--orb));height:calc(5px * var(--orb));border-radius:50%;background:radial-gradient(circle,#FFE9B0,#E6BE6A 50%,transparent 70%);
     z-index:59;pointer-events:none;transform:translate(-50%,-50%);}
-  .torch{position:fixed;width:180px;height:180px;border-radius:50%;z-index:58;pointer-events:none;transform:translate(-50%,-50%);
+  .torch{position:fixed;width:calc(180px * var(--orb));height:calc(180px * var(--orb));border-radius:50%;z-index:58;pointer-events:none;transform:translate(-50%,-50%);
     background:radial-gradient(circle,rgba(230,190,106,.18),rgba(255,90,31,.06) 45%,transparent 70%);mix-blend-mode:screen;}
   @media(prefers-reduced-motion:reduce){.seeker{display:none;}}
-  @media(max-width:640px){.seeker{display:none;}} /* keep it desktop; mobile perf */
+  /* the smaller the screen, the bigger the seeker reads — it is the brand creature,
+     not a decoration, so it scales up rather than being hidden away on phones.
+     Trail emission is thinned on small screens to pay for it. */
+  @media(max-width:1024px){:root{--orb:1.75;}}
+  @media(max-width:640px){:root{--orb:2;}}
 
   /* ── SECTION BLEEDS — soft grounds between hard changes of state ── */
   .bleed{height:clamp(90px,11vw,170px);position:relative;z-index:1;}
@@ -620,6 +625,17 @@
   'use strict';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ── WIRING ── the only two lines to change when the destinations exist.
+     Leave a value empty and that CTA stays inert rather than linking nowhere.
+     NOTE: the quiz must be reachable on a PUBLIC host — a 127.0.0.1 address
+     resolves to the visitor's own machine, so it works for nobody but you. */
+  var QUIZ_URL = '';   /* e.g. https://<public host>/prognosis */
+  var BOOK_URL = '';   /* GHL calendar / booking link          */
+  [['quiz',QUIZ_URL],['book',BOOK_URL]].forEach(function(pair){
+    var el=document.querySelector('[data-cta="'+pair[0]+'"]');
+    if(el && pair[1]){ el.setAttribute('href',pair[1]); }
+  });
+
   /* ── HUD: progress rail + phase readout ─────────────────────────── */
   var pf=document.getElementById('pf'), rd=document.getElementById('rd'), st=document.getElementById('st');
   var band=document.getElementById('collapseBand'), cbPct=document.getElementById('cbPct');
@@ -712,20 +728,22 @@
     var W=window.innerWidth, H=window.innerHeight;
     window.addEventListener('resize',function(){W=window.innerWidth;H=window.innerHeight;});
     var t=0, lastDust=0, lastTorch=0, px=W*0.5, py=H*0.5;
+    var small=window.innerWidth<=640;
+    window.addEventListener('resize',function(){small=window.innerWidth<=640;});
     function frame(ts){
       t+=0.012;
       var cx = W*(0.5 + 0.34*Math.sin(t*0.8) + 0.10*Math.sin(t*1.9));
       var cy = H*(0.30 + 0.18*Math.sin(t*1.3));
       px += (cx-px)*0.06; py += (cy-py)*0.06;
       seeker.style.transform='translate('+(px-40)+'px,'+(py-24)+'px)';
-      if(ts-lastDust>60){
+      if(ts-lastDust>(small?120:60)){
         lastDust=ts;
         var d=document.createElement('div'); d.className='dust';
         d.style.left=px+'px'; d.style.top=py+'px'; document.body.appendChild(d);
         d.animate([{opacity:.9,transform:'translate(-50%,-50%) scale(1)'},{opacity:0,transform:'translate(-50%,-50%) scale(.2) translateY(10px)'}],{duration:900,easing:'ease-out',fill:'forwards'});
         setTimeout(function(){d.remove();},950);
       }
-      if(ts-lastTorch>140){
+      if(ts-lastTorch>(small?270:140)){
         lastTorch=ts;
         var tr=document.createElement('div'); tr.className='torch';
         tr.style.left=px+'px'; tr.style.top=py+'px'; document.body.appendChild(tr);
