@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PsikiQ — we see what your market can't</title>
+<meta name="description" content="We see what your market can't. One diagnostic on your market — the demand you've been missing, made visible.">
+<meta name="theme-color" content="#17110A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PsikiQ — we see what your market can't">
+<meta property="og:description" content="One diagnostic on your market. The blue ocean hiding inside your red one — the gap, made visible.">
+<meta property="og:site_name" content="PsikiQ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PsikiQ — we see what your market can't">
+<meta name="twitter:description" content="One diagnostic on your market. The blue ocean hiding inside your red one — the gap, made visible.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Michroma&family=Chakra+Petch:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+  /* PRIMARY: Oswald (tall, condensed, tight — Impact-but-premium). SECONDARY display: Michroma (wide). BODY: Chakra Petch light. DATA: JetBrains Mono. */
+  :root{
+    --void:#17110A;
+    --white:#FFFFFF;
+    --white-2:#EEF0F3;
+    /* gold + silver primary, orange secondary/warm-accent (cyan removed) */
+    --gold:#E6BE6A;
+    --gold-deep:#B8912F;
+    --silver:#C9CFD6;
+    --silver-2:#9AA3AD;
+    --accent:#E6BE6A;              /* primary accent = gold */
+    --accent-ink:#A8801E;
+    --accent-glow:rgba(230,190,106,.28);
+    --warm:#E8912E;               /* orange = secondary warm accent */
+    --line-dark:#1C232D;
+    --line-light:#E1E4E9;
+    --mut-dark:#727E8E;
+    --mut-light:#8A93A0;
+    --ink:#17110A;
+    /* BRUSHED STEEL — coarser, visible: vertical striations + strong diagonal sheen */
+    --steel-stripes:repeating-linear-gradient(90deg,
+        #17110a 0px,#20180e 2px,#191108 4px,#241b0f 6px,#150f08 8px);
+    --steel-sheen:linear-gradient(105deg,
+        rgba(230,190,106,.10) 0%,
+        rgba(230,190,106,.18) 12%,
+        rgba(201,207,214,.06) 26%,
+        transparent 42%,
+        rgba(230,190,106,.10) 62%,
+        transparent 84%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:300;background:var(--void);color:var(--white);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .disp{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.01em;line-height:1.0;text-transform:uppercase;}
+  .wide{font-family:'Michroma',sans-serif;}
+  .mono{font-family:'JetBrains Mono',monospace;letter-spacing:0;}
+
+  /* brushed steel that ACTUALLY shows */
+  .steel{position:relative;background-color:#17110a;
+    background-image:var(--steel-sheen),var(--steel-stripes);
+    background-blend-mode:screen,normal;}
+  .steel::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(201,207,214,.05),transparent 20%,transparent 82%,rgba(0,0,0,.35));
+    pointer-events:none;}
+
+  .hud{position:fixed;inset:0;pointer-events:none;z-index:100;}
+  .hud .corner{position:absolute;width:24px;height:24px;border-color:var(--gold);opacity:.6;}
+  .hud .tl{top:18px;left:18px;border-top:1.5px solid;border-left:1.5px solid;}
+  .hud .tr{top:18px;right:18px;border-top:1.5px solid;border-right:1.5px solid;}
+  .hud .bl{bottom:18px;left:18px;border-bottom:1.5px solid;border-left:1.5px solid;}
+  .hud .br{bottom:18px;right:18px;border-bottom:1.5px solid;border-right:1.5px solid;}
+  .hud .readout{position:absolute;top:22px;left:52px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:var(--gold);opacity:.8;}
+  .hud .readout .w{color:var(--warm);}
+  .hud .progress{position:absolute;bottom:24px;left:52px;right:52px;height:1px;background:rgba(201,207,214,.12);}
+  .hud .progress .fill{position:absolute;left:0;top:0;height:100%;width:0%;background:linear-gradient(90deg,var(--warm),var(--gold));}
+  .hud .state{position:absolute;bottom:18px;right:52px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:var(--silver-2);opacity:.85;}
+  @media(max-width:640px){.hud .readout,.hud .state{display:none;}.hud .progress{left:18px;right:18px;}}
+
+  .hero{position:relative;height:100vh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;}
+  .hero .light{background:var(--white);}
+  .hero .seam{position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:100%;background:var(--gold);z-index:5;box-shadow:0 0 22px 1px var(--accent-glow);}
+  .hero-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;text-align:center;width:min(92vw,780px);}
+  /* PSI in Oswald? No — psi glyph best in a clean face; keep Michroma for the psi symbol only (it renders the glyph well), wordmark in Oswald */
+  .psi-mark{position:relative;font-family:'Michroma',sans-serif;font-size:clamp(104px,19vw,210px);line-height:.84;height:.94em;}
+  .psi-mark .h{position:absolute;top:0;left:0;width:100%;}
+  .psi-mark .h.dk{color:var(--silver);clip-path:inset(0 50% 0 0);}
+  .psi-mark .h.lt{color:var(--gold-deep);clip-path:inset(0 0 0 50%);}
+  /* WORDMARK in Oswald — tall condensed */
+  .wordmark{position:relative;font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(44px,8.5vw,90px);letter-spacing:.03em;text-transform:uppercase;height:1.15em;margin-top:.08em;}
+  .wordmark .h{position:absolute;top:0;left:0;width:100%;}
+  .wordmark .h.dk{color:var(--white);clip-path:inset(0 50% 0 0);}
+  .wordmark .h.lt{color:var(--ink);clip-path:inset(0 0 0 50%);}
+  .wordmark .q{color:var(--gold-deep);}
+  .wordmark .h.dk .q{color:var(--gold);}
+  .tag{position:relative;font-family:'JetBrains Mono';font-size:clamp(10.5px,1.8vw,13px);letter-spacing:.14em;margin-top:22px;text-transform:uppercase;height:1.4em;}
+  .tag .h{position:absolute;top:0;left:0;width:100%;}
+  .tag .h.dk{color:var(--silver-2);clip-path:inset(0 50% 0 0);}
+  .tag .h.lt{color:var(--mut-light);clip-path:inset(0 0 0 50%);}
+  .scrollcue{position:absolute;bottom:58px;left:50%;transform:translateX(-50%);z-index:10;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.18em;color:var(--warm);text-transform:uppercase;animation:bob 2s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translate(-50%,0);opacity:.6;}50%{transform:translate(-50%,7px);opacity:1;}}
+
+  .beat{min-height:100vh;display:flex;align-items:center;padding:clamp(56px,7vw,96px) clamp(32px,6vw,88px);position:relative;}
+  .beat-dark{justify-content:flex-start;}
+  .beat-dark .box{max-width:720px;position:relative;z-index:2;}
+  .qlabel{font-family:'JetBrains Mono';font-weight:500;font-size:11.5px;letter-spacing:.14em;color:var(--warm);text-transform:uppercase;margin-bottom:28px;}
+  .beat h2{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(30px,5.2vw,62px);line-height:1.08;text-transform:uppercase;letter-spacing:.005em;color:var(--white);}
+  .beat-dark h2 .dim{color:var(--mut-dark);}
+  .noise{margin-top:34px;display:flex;flex-wrap:wrap;gap:9px 14px;max-width:560px;}
+  .noise span{font-family:'JetBrains Mono';font-size:11.5px;color:var(--mut-dark);opacity:.5;white-space:nowrap;}
+  .noise span:nth-child(3n){color:#39434f;}
+
+  .beat-mid{padding:0;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;}
+  .beat-mid .m-light{background:var(--white);}
+  .beat-mid .m-seam{position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:100%;background:var(--gold);z-index:5;box-shadow:0 0 22px 1px var(--accent-glow);}
+  .beat-mid .m-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;text-align:center;width:min(90vw,740px);}
+  .op{font-family:'JetBrains Mono';font-weight:500;font-size:11.5px;letter-spacing:.14em;color:var(--warm);text-transform:uppercase;margin-bottom:26px;}
+  .split-h{position:relative;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(28px,5vw,56px);line-height:1.1;text-transform:uppercase;letter-spacing:.005em;}
+  .split-h .h{position:absolute;top:0;left:0;width:100%;}
+  .split-h .base{visibility:hidden;}
+  .split-h .h.dk{color:var(--white);clip-path:inset(0 50% 0 0);}
+  .split-h .h.lt{color:var(--ink);clip-path:inset(0 0 0 50%);}
+  .split-h .em{color:var(--accent-ink)!important;}
+  .split-h .h.dk .em{color:var(--gold)!important;}
+  .wave{margin:38px auto 0;max-width:520px;height:64px;position:relative;}
+  .wave svg{width:100%;height:100%;overflow:visible;}
+  .m-sub{position:relative;margin-top:30px;font-size:14.5px;max-width:52ch;margin-left:auto;margin-right:auto;font-family:'Chakra Petch';font-weight:400;}
+  .m-sub .h{position:absolute;top:0;left:0;width:100%;}
+  .m-sub .base{visibility:hidden;}
+  .m-sub .h.dk{color:var(--mut-dark);clip-path:inset(0 50% 0 0);}
+  .m-sub .h.lt{color:var(--mut-light);clip-path:inset(0 0 0 50%);}
+
+  .beat-light{background:var(--white);color:var(--ink);justify-content:flex-end;text-align:right;}
+  .beat-light .box{max-width:720px;}
+  .alabel{font-family:'JetBrains Mono';font-weight:500;font-size:11.5px;letter-spacing:.14em;color:var(--warm);text-transform:uppercase;margin-bottom:30px;}
+  .beat-light h2{color:var(--ink);}
+  .beat-light h2 .em{color:var(--accent-ink);}
+  .resolved{margin-top:40px;display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;}
+  .chip{font-family:'JetBrains Mono';font-size:11.5px;color:#39404a;border:1px solid var(--line-light);border-radius:4px;padding:9px 15px;background:var(--white-2);}
+  .chip b{color:var(--accent-ink);}
+
+
+  /* animated resolution sliders */
+  .sliders{margin-top:40px;display:flex;flex-direction:column;gap:16px;max-width:420px;margin-left:auto;}
+  .slider{display:grid;grid-template-columns:64px 1fr 34px;align-items:center;gap:14px;}
+  .slider .s-label{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;color:#5a616b;text-transform:uppercase;text-align:left;}
+  .slider .s-track{height:6px;border-radius:6px;background:var(--white-2);border:1px solid var(--line-light);overflow:hidden;position:relative;}
+  .slider .s-fill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--warm),var(--gold));box-shadow:0 0 12px var(--accent-glow);}
+  .slider .s-val{font-family:'JetBrains Mono';font-size:13px;color:var(--accent-ink);text-align:right;font-weight:500;}
+  .beat-light.in .slider .s-fill{width:var(--fill);transition:width 1.1s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d);}
+
+
+  /* the animation pane that rises out */
+  .animpane{margin:36px auto 0;max-width:560px;border:1px solid rgba(201,207,214,.22);border-radius:12px;
+    background:linear-gradient(160deg,rgba(20,25,33,.6),rgba(10,13,18,.7));backdrop-filter:blur(6px);
+    overflow:hidden;position:relative;transform:translateY(40px) scale(.96);opacity:0;
+    box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(230,190,106,.08);}
+  .beat-mid.in .animpane{transform:translateY(0) scale(1);opacity:1;transition:transform 1s cubic-bezier(.2,.8,.2,1),opacity .8s ease;}
+  .animpane .pane-hud{display:flex;justify-content:space-between;padding:12px 16px;font-size:10px;letter-spacing:.1em;color:var(--gold);border-bottom:1px solid rgba(201,207,214,.14);opacity:.85;}
+  .animpane .pane-hud span:last-child{color:var(--warm);}
+  .animpane .pane-media{position:relative;aspect-ratio:16/7;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 100% at 50% 50%,rgba(230,190,106,.05),transparent 70%);}
+  .animpane .pane-media video,.animpane .pane-media img{width:100%;height:100%;object-fit:cover;display:block;}
+  .animpane .pane-svg{width:88%;height:auto;}
+  .animpane .pane-caption{padding:10px 16px;text-align:center;font-size:10px;letter-spacing:.08em;color:var(--mut-dark);border-top:1px solid rgba(201,207,214,.14);}
+
+
+  /* ── THE SEEKER ── */
+  .seeker{position:fixed;top:0;left:0;width:80px;height:48px;z-index:60;pointer-events:none;
+    transform:translate(-100px,-100px);will-change:transform;}
+  .seeker-glow{position:absolute;left:50%;top:50%;width:120px;height:120px;transform:translate(-50%,-50%);
+    background:radial-gradient(circle,rgba(230,190,106,.45),rgba(255,90,31,.12) 40%,transparent 70%);
+    filter:blur(4px);}
+  .seeker-body{position:absolute;left:50%;top:50%;width:80px;height:48px;transform:translate(-50%,-50%);overflow:visible;}
+  .seeker .core{fill:#FFF3D6;filter:drop-shadow(0 0 8px #E6BE6A);}
+  .seeker .q-ring{fill:none;stroke:#FFE9B0;stroke-width:2.4;filter:drop-shadow(0 0 8px #E6BE6A);}
+  .seeker .q-tail{stroke:#FFE9B0;stroke-width:2.4;stroke-linecap:round;filter:drop-shadow(0 0 6px #E6BE6A);}
+  .seeker .wing{fill:rgba(230,190,106,.28);stroke:rgba(255,240,200,.6);stroke-width:.8;transform-origin:center;transform-box:fill-box;}
+  .seeker .wl{animation:flapL .28s ease-in-out infinite alternate;}
+  .seeker .wr{animation:flapR .28s ease-in-out infinite alternate;}
+  @keyframes flapL{from{transform:scaleY(1) rotate(0deg);}to{transform:scaleY(.35) rotate(-6deg);}}
+  @keyframes flapR{from{transform:scaleY(1) rotate(0deg);}to{transform:scaleY(.35) rotate(6deg);}}
+  .seeker-trail{position:absolute;left:50%;top:50%;width:6px;height:6px;transform:translate(-50%,-50%);}
+  /* trail dust particles are created in JS */
+  .dust{position:fixed;width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#FFE9B0,#E6BE6A 50%,transparent 70%);
+    z-index:59;pointer-events:none;transform:translate(-50%,-50%);}
+  /* torch: brief illumination bloom where seeker passes on dark areas */
+  .torch{position:fixed;width:180px;height:180px;border-radius:50%;z-index:58;pointer-events:none;transform:translate(-50%,-50%);
+    background:radial-gradient(circle,rgba(230,190,106,.18),rgba(255,90,31,.06) 45%,transparent 70%);mix-blend-mode:screen;}
+  @media(prefers-reduced-motion:reduce){.seeker{display:none;}}
+  @media(max-width:640px){.seeker{display:none;}} /* keep it desktop; mobile perf */
+
+
+  /* ── THE BOOK OF PROOF ── */
+  .book-sec{padding:clamp(72px,9vw,120px) clamp(32px,6vw,88px);position:relative;color:var(--white);}
+  .book-head{position:relative;z-index:2;text-align:center;max-width:640px;margin:0 auto 48px;}
+  .book-title{font-size:clamp(32px,5vw,58px);color:var(--white);margin-top:6px;}
+  .book-sub{color:var(--mut-dark);font-family:'Chakra Petch';font-weight:400;font-size:15px;margin-top:14px;line-height:1.6;}
+  .book{position:relative;z-index:2;max-width:620px;margin:0 auto;}
+  .page-stack{position:relative;perspective:2000px;min-height:340px;}
+  .page{position:absolute;inset:0;border:1px solid rgba(230,190,106,.22);border-radius:10px;
+    background:linear-gradient(160deg,rgba(35,27,16,.92),rgba(23,17,10,.96));
+    padding:clamp(28px,4vw,44px);box-shadow:0 30px 70px rgba(0,0,0,.5);
+    transform-origin:left center;transform:rotateY(-110deg);opacity:0;pointer-events:none;
+    transition:transform .8s cubic-bezier(.4,0,.2,1),opacity .5s ease;backface-visibility:hidden;}
+  .page.active{transform:rotateY(0deg);opacity:1;pointer-events:auto;}
+  .page.turned{transform:rotateY(110deg);opacity:0;}
+  .pg-num{position:absolute;top:20px;right:26px;font-size:12px;color:var(--gold);opacity:.6;letter-spacing:.1em;}
+  .pg-quote{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(18px,2.6vw,26px);line-height:1.32;color:var(--white);letter-spacing:.005em;margin-top:20px;}
+  .pg-quote i{color:var(--gold);font-style:italic;}
+  .pg-who{margin-top:26px;display:flex;flex-direction:column;gap:3px;}
+  .pg-who b{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--gold);font-size:15px;}
+  .pg-who span{font-family:'JetBrains Mono';font-size:11px;color:var(--mut-dark);letter-spacing:.04em;}
+  .book-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:28px;}
+  .pg-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(230,190,106,.3);background:transparent;color:var(--gold);font-size:18px;cursor:pointer;transition:background .2s,transform .15s;font-family:'JetBrains Mono';}
+  .pg-btn:hover{background:rgba(230,190,106,.1);transform:translateY(-2px);}
+  .pg-dots{display:flex;gap:8px;}
+  .pg-dots .dot{width:7px;height:7px;border-radius:50%;background:rgba(230,190,106,.25);cursor:pointer;transition:background .2s,transform .2s;}
+  .pg-dots .dot.on{background:var(--gold);transform:scale(1.3);}
+  .book-note{text-align:center;margin-top:22px;font-size:10.5px;letter-spacing:.08em;color:var(--mut-dark);opacity:.7;}
+
+  .cut-note{position:relative;margin-top:22px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;color:var(--gold);opacity:.75;text-align:center;}
+  .cut-note i{color:var(--silver);}
+  .qrd-labels{display:flex;justify-content:space-between;max-width:520px;margin:6px auto 0;font-size:10px;letter-spacing:.14em;text-transform:uppercase;}
+  .qrd-labels .unaware{color:#FF5A1F;} .qrd-labels .aware{color:#5AA9FF;}
+  .proof{background:var(--white);color:var(--ink);padding:clamp(72px,9vw,120px) clamp(32px,6vw,88px);border-top:1px solid var(--line-light);}
+  .proof .panel{max-width:920px;margin:0 auto;border:1px solid var(--line-light);border-radius:8px;background:var(--white-2);padding:clamp(32px,5vw,56px);position:relative;border-top:2px solid var(--gold);}
+  .proof .panel::before{content:"\03C8 // OBSERVER MODULE";position:absolute;top:16px;right:22px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;color:var(--mut-light);}
+  .proof .big{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(24px,4.2vw,46px);line-height:1.12;text-transform:uppercase;letter-spacing:.005em;max-width:22ch;color:var(--ink);}
+  .proof .big .em{color:var(--accent-ink);}
+  .proof .small{color:var(--mut-light);margin-top:26px;max-width:58ch;font-size:15px;font-family:'Chakra Petch';font-weight:400;line-height:1.65;}
+
+  .cta{color:var(--white);text-align:center;padding:clamp(80px,10vw,140px) clamp(32px,6vw,88px);position:relative;overflow:hidden;}
+  .cta .inner{position:relative;z-index:2;}
+  .cta .kicker{font-family:'JetBrains Mono';font-weight:500;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--warm);margin-bottom:24px;}
+  .cta h2{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(32px,6vw,68px);line-height:1.04;text-transform:uppercase;letter-spacing:.01em;color:var(--white);max-width:15ch;margin:0 auto 24px;}
+  .cta p{color:var(--mut-dark);max-width:46ch;margin:0 auto 42px;font-size:16px;font-family:'Chakra Petch';font-weight:400;line-height:1.6;}
+  .btn{display:inline-flex;align-items:center;gap:12px;background:var(--gold);color:var(--ink);font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.06em;padding:18px 42px;border-radius:6px;text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s,filter .15s;box-shadow:0 8px 30px var(--accent-glow);}
+  .btn:hover{filter:brightness(1.06);transform:translateY(-2px);box-shadow:0 12px 42px var(--accent-glow);}
+
+  footer{padding:40px clamp(24px,6vw,80px);border-top:1px solid var(--line-dark);position:relative;}
+  footer .inner2{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;width:100%;}
+  footer .fmk{display:inline-flex;align-items:center;gap:.35em;font-family:'Oswald',sans-serif;font-weight:600;font-size:22px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);}
+  footer .fmk .psi{font-family:'Michroma',sans-serif;font-size:.85em;}
+  footer .fmk .q{color:var(--gold);}
+  footer .fine{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.03em;color:var(--mut-dark);}
+  footer .fine b{color:var(--silver-2);font-weight:400;}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+  <!-- THE SEEKER — living golden winged orb that flies the page & illuminates -->
+  <div class="seeker" id="seeker" aria-hidden="true">
+    <div class="seeker-glow"></div>
+    <svg class="seeker-body" viewBox="-40 -28 80 56">
+      <!-- wings: made of wave-light -->
+      <path class="wing wl" d="M-8,-2 C-20,-16 -36,-12 -40,-2 C-36,8 -20,12 -8,-2 Z"/>
+      <path class="wing wr" d="M8,-2 C20,-16 36,-12 40,-2 C36,8 20,12 8,-2 Z"/>
+      <!-- the living Q: ring + tail -->
+      <circle class="q-ring" r="8.5" cx="0" cy="-2"/>
+      <path class="q-tail" d="M4.5,3.5 L12,12"/>
+      <circle class="core" r="4.2" cx="0" cy="-2"/>
+    </svg>
+    <div class="seeker-trail" id="trail"></div>
+  </div>
+
+  <div class="hud">
+    <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+    <div class="readout mono">&#968;&nbsp;PSIKIQ&nbsp;<span class="w">//</span>&nbsp;<span id="rd">SUPERPOSITION</span></div>
+    <div class="state mono" id="st">STATE&nbsp;&middot;&nbsp;UNRESOLVED</div>
+    <div class="progress"><div class="fill" id="pf"></div></div>
+  </div>
+
+  <section class="hero">
+    <div class="steel"></div><div class="light"></div><div class="seam"></div>
+    <div class="hero-center">
+      <div class="psi-mark"><span class="h dk">&#968;</span><span class="h lt">&#968;</span><span style="visibility:hidden">&#968;</span></div>
+      <div class="wordmark"><span class="h dk">Psiki<span class="q">Q</span></span><span class="h lt">Psiki<span class="q">Q</span></span><span style="visibility:hidden">PSIKIQ</span></div>
+      <div class="tag"><span class="h dk">we see what your market can&rsquo;t</span><span class="h lt">we see what your market can&rsquo;t</span><span style="visibility:hidden">we see what your market can&rsquo;t</span></div>
+    </div>
+    <div class="scrollcue mono">scroll to collapse &darr;</div>
+  </section>
+
+  <section class="beat beat-dark steel">
+    <div class="box">
+      <div class="qlabel mono">i &middot; the question</div>
+      <h2>There&rsquo;s a market you can&rsquo;t see. <span class="dim">Buyers who want what you have, drifting past, never saying so.</span></h2>
+      <div class="noise"><span>maybe later</span><span>just looking</span><span>not sure yet</span><span>no budget</span><span>need to think</span><span>ask my partner</span><span>ghosted</span><span>too early</span><span>where do I start</span><span>not ready</span><span>send info</span><span>circle back</span><span>unqualified</span><span>cold</span><span>unaware</span><span>lost in the noise</span></div>
+    </div>
+  </section>
+
+  <section class="beat-mid">
+    <div class="steel"></div><div class="m-light"></div><div class="m-seam"></div>
+    <div class="m-center">
+      <div class="op mono">ii &middot; the measurement</div>
+      <div class="split-h">
+        <span class="h dk">The right questions <span class="em">collapse potential</span> into a decision.</span>
+        <span class="h lt">The right questions <span class="em">collapse potential</span> into a decision.</span>
+        <span class="base">The right questions collapse potential into a decision.</span>
+      </div>
+      <div class="animpane" id="animpane">
+        <div class="pane-hud mono"><span>&#968; OBSERVER</span><span id="paneState">// WAVE</span></div>
+        <div class="pane-media">
+          <!-- DROP YOUR FAL / PIKA ANIMATION HERE: replace this <svg> fallback with <video autoplay muted loop playsinline> -->
+          <svg class="pane-svg" viewBox="0 0 520 200" preserveAspectRatio="xMidYMid meet">
+            <path id="wavePath" d="M0,100 Q32,40 65,100 T130,100 T195,100 T260,100 T325,100 T390,100 T455,100 T520,100" fill="none" stroke="#C9CFD6" stroke-width="2" opacity="0.75"/>
+            <g id="particles"></g>
+          </svg>
+        </div>
+        <div class="pane-caption mono">wave &rarr; particle &middot; possibility &rarr; decision</div>
+      </div>
+      <div class="m-sub">
+        <span class="h dk">Not a survey &mdash; a designed sequence that reads what a prospect can&rsquo;t articulate. Wave becomes particle. Maybe becomes yes.</span>
+        <span class="h lt">Not a survey &mdash; a designed sequence that reads what a prospect can&rsquo;t articulate. Wave becomes particle. Maybe becomes yes.</span>
+        <span class="base">Not a survey a designed sequence that reads what a prospect cant articulate. Wave becomes particle. Maybe becomes yes.</span>
+      </div>
+      <div class="cut-note mono">de&middot;ci&middot;sion &mdash; from <i>caedere</i>, to cut. Every decision cuts away what doesn&rsquo;t serve.</div>
+    </div>
+  </section>
+
+  <section class="beat beat-light">
+    <div class="box">
+      <div class="alabel mono">iii &middot; the answer</div>
+      <h2 class="disp">Named. Qualified. Ready. <span class="em">The market you couldn&rsquo;t see &mdash; now a pipeline you can.</span></h2>
+      <div class="sliders">
+        <div class="slider" style="--fill:88%;--d:0s"><div class="s-label mono">intent</div><div class="s-track"><div class="s-fill"></div></div><div class="s-val mono">88</div></div>
+        <div class="slider" style="--fill:72%;--d:.15s"><div class="s-label mono">fit</div><div class="s-track"><div class="s-fill"></div></div><div class="s-val mono">72</div></div>
+        <div class="slider" style="--fill:95%;--d:.3s"><div class="s-label mono">ready</div><div class="s-track"><div class="s-fill"></div></div><div class="s-val mono">95</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="panel">
+      <p class="big">It looks like we read their mind. <span class="em">It&rsquo;s the model reading the data.</span></p>
+      <p class="small">The magic is real and the mechanism is honest. PsikiQ makes you look psychic because the engine surfaces the pattern you&rsquo;d feel but couldn&rsquo;t prove &mdash; then hands you the words, the timing, and the person who&rsquo;s ready to move.</p>
+    </div>
+  </section>
+
+
+  <!-- TESTIMONIALS — the book of proof, pages turning -->
+  <section class="book-sec steel">
+    <div class="book-head">
+      <div class="kicker mono">the book of proof</div>
+      <h2 class="disp book-title">Early pages.</h2>
+      <p class="book-sub">Three diagnostics run. Three collapses. The official versions land within weeks &mdash; in one case, days. Mark our words.</p>
+    </div>
+    <div class="book" id="book">
+      <div class="page-stack">
+        <article class="page pg active">
+          <div class="pg-num mono">i</div>
+          <div class="pg-quote">&ldquo;I ran the diagnostic on my own network. It surfaced the message gap I&rsquo;d been circling for years &mdash; then filled the pipeline faster than I could handle it.&rdquo;</div>
+          <div class="pg-who"><b>NOW Group</b><span>founder diagnostic &middot; networking funnel</span></div>
+        </article>
+        <article class="page pg">
+          <div class="pg-num mono">ii</div>
+          <div class="pg-quote">&ldquo;We had to switch the quiz and ads <i>off</i> &mdash; it was funnelling too fast. We relaunched, and it accelerated again. That&rsquo;s a problem I&rsquo;ll take every day.&rdquo;</div>
+          <div class="pg-who"><b>Lara Maloney</b><span>MyFuture &middot; wealth advisory</span></div>
+        </article>
+        <article class="page pg">
+          <div class="pg-num mono">iii</div>
+          <div class="pg-quote">&ldquo;First engine off the line. It revived a Facebook campaign that had produced two bad leads &mdash; and turned it into ten good ones a month once they took the wheel.&rdquo;</div>
+          <div class="pg-who"><b>Aaron &middot; TMT</b><span>trades &middot; lead generation</span></div>
+        </article>
+      </div>
+      <div class="book-nav">
+        <button class="pg-btn" id="prevPg" aria-label="previous">&larr;</button>
+        <div class="pg-dots" id="dots"></div>
+        <button class="pg-btn" id="nextPg" aria-label="next">&rarr;</button>
+      </div>
+      <div class="book-note mono">official case studies in progress &middot; these are true, or about to be</div>
+    </div>
+  </section>
+
+  <section class="cta steel">
+    <div class="inner">
+      <div class="kicker mono">see your shadow market</div>
+      <h2>Find the demand you&rsquo;ve been missing.</h2>
+      <p>One diagnostic on your market. We&rsquo;ll show you the blue ocean hiding inside your red one &mdash; the gap, made visible. No pitch.</p>
+      <a href="#" class="btn">&#968;&nbsp; Book the diagnostic</a>
+    </div>
+  </section>
+
+  <footer class="steel">
+    <div class="inner2">
+      <div class="fmk"><span class="psi">&#968;</span> Psiki<span class="q">Q</span></div>
+      <div class="fine mono">powered by the <b>QOLLAPSIS</b> engine &middot; built by <b>AUBIT</b> &middot; a <b>NOW GROUP</b> company</div>
+    </div>
+  </footer>
+
+<script>
+  var pf=document.getElementById('pf'),rd=document.getElementById('rd'),st=document.getElementById('st');
+  function onScroll(){var doc=document.documentElement,max=doc.scrollHeight-doc.clientHeight;var p=max>0?Math.min(1,doc.scrollTop/max):0;pf.style.width=(p*100).toFixed(1)+'%';var ph='SUPERPOSITION',stt='UNRESOLVED';if(p>0.28&&p<=0.55){ph='MEASUREMENT';stt='OBSERVING';}else if(p>0.55&&p<=0.82){ph='COLLAPSE';stt='RESOLVING';}else if(p>0.82){ph='RESOLVED';stt='QUALIFIED';}rd.textContent=ph;st.textContent='STATE \u00B7 '+stt;}
+  window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);onScroll();
+  var pg=document.getElementById('particles'),wavePath=document.getElementById('wavePath'),built=false;
+  function bp(){if(built)return;built=true;for(var i=0;i<8;i++){var c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',25+i*67);c.setAttribute('cy',32);c.setAttribute('r',0);c.setAttribute('fill','#E6BE6A');pg.appendChild(c);}}
+  var mo=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){bp();wavePath.animate([{opacity:.8},{opacity:.1}],{duration:1400,fill:'forwards',easing:'ease-in'});pg.querySelectorAll('circle').forEach(function(c,i){c.animate([{r:0,opacity:0},{r:5,opacity:1}],{duration:600,delay:300+i*90,fill:'forwards',easing:'cubic-bezier(.2,.8,.2,1)'});});}});},{threshold:.5});
+  mo.observe(document.querySelector('.beat-mid'));
+  // reveal triggers for sliders + pane
+  var revO=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');}});},{threshold:.35});
+  revO.observe(document.querySelector('.beat-light'));
+  revO.observe(document.querySelector('.beat-mid'));
+
+  // ── SEEKER flight: loose living path, scroll-linked + idle wander, dust trail, torch-on-dark ──
+  (function(){
+    var seeker=document.getElementById('seeker');
+    if(!seeker) return;
+    var W=window.innerWidth, H=window.innerHeight;
+    window.addEventListener('resize',function(){W=window.innerWidth;H=window.innerHeight;});
+    var t=0, lastDust=0, lastTorch=0, px=W*0.5, py=H*0.5;
+    // dark sections to torch over
+    function overDark(y){
+      // approx: hero left handled globally; treat whole viewport bands — simple: torch always but stronger; keep subtle
+      return true;
+    }
+    function frame(ts){
+      t+=0.012;
+      var doc=document.documentElement;
+      var sp = (doc.scrollHeight-doc.clientHeight)>0 ? doc.scrollTop/(doc.scrollHeight-doc.clientHeight) : 0;
+      // loose lissajous — x wanders full width, y follows scroll + bob
+      var cx = W*(0.5 + 0.34*Math.sin(t*0.8) + 0.10*Math.sin(t*1.9));
+      var cy = H*(0.30 + 0.18*Math.sin(t*1.3) ) ;
+      // ease toward target
+      px += (cx-px)*0.06; py += (cy-py)*0.06;
+      // heading for slight rotation
+      seeker.style.transform='translate('+(px-40)+'px,'+(py-24)+'px)';
+      // dust trail
+      if(ts-lastDust>60){
+        lastDust=ts;
+        var d=document.createElement('div');d.className='dust';
+        d.style.left=px+'px';d.style.top=py+'px';document.body.appendChild(d);
+        d.animate([{opacity:.9,transform:'translate(-50%,-50%) scale(1)'},{opacity:0,transform:'translate(-50%,-50%) scale(.2) translateY(10px)'}],{duration:900,easing:'ease-out',fill:'forwards'});
+        setTimeout(function(){d.remove();},950);
+      }
+      // torch bloom (illuminate where it flies)
+      if(ts-lastTorch>140){
+        lastTorch=ts;
+        var tr=document.createElement('div');tr.className='torch';
+        tr.style.left=px+'px';tr.style.top=py+'px';document.body.appendChild(tr);
+        tr.animate([{opacity:.8,transform:'translate(-50%,-50%) scale(.6)'},{opacity:0,transform:'translate(-50%,-50%) scale(1.3)'}],{duration:1100,easing:'ease-out',fill:'forwards'});
+        setTimeout(function(){tr.remove();},1150);
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+
+
+  // ── THE BOOK: turning pages ──
+  (function(){
+    var pages=[].slice.call(document.querySelectorAll('.page'));
+    if(!pages.length) return;
+    var dotsWrap=document.getElementById('dots');
+    var cur=0, timer=null;
+    pages.forEach(function(_,i){var d=document.createElement('div');d.className='dot'+(i===0?' on':'');d.addEventListener('click',function(){go(i);});dotsWrap.appendChild(d);});
+    var dots=[].slice.call(dotsWrap.children);
+    function render(){
+      pages.forEach(function(p,i){
+        p.classList.remove('active','turned');
+        if(i===cur)p.classList.add('active');
+        else if(i<cur)p.classList.add('turned');
+      });
+      dots.forEach(function(d,i){d.classList.toggle('on',i===cur);});
+    }
+    function go(i){cur=(i+pages.length)%pages.length;render();restart();}
+    function next(){go(cur+1);} function prev(){go(cur-1);}
+    document.getElementById('nextPg').addEventListener('click',next);
+    document.getElementById('prevPg').addEventListener('click',prev);
+    function restart(){clearInterval(timer);timer=setInterval(next,5200);}
+    // start only when in view
+    var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){restart();}else{clearInterval(timer);}});},{threshold:.4});
+    io.observe(document.querySelector('.book-sec'));
+    render();
+  })();
+
+</script>
+</body>
+</html>
