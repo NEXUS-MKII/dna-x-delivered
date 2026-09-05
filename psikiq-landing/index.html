@@ -1141,7 +1141,8 @@
     var tiles = tile('general stage', read.coarse_band||'—', pct(read.coarse_confidence));
     if(hasSector){
       tiles += tile('sector stage', sb, pct(read.sector_confidence));
-      tiles += tile('the gap', (read.divergence>0?'+':'')+read.divergence, 'general vs sector');
+      var dv=Number(read.divergence);
+      tiles += tile('the gap', (dv>0?'+':'')+(isNaN(dv)?'—':dv.toFixed(1)), 'general vs sector');
     }
     var out = '<div class="qz-kind mono">'+(kinds[r.kind]||'the read')+'</div>'
       + '<h2 class="qz-h">'+esc(r.headline)+'</h2>'
