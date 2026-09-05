@@ -380,6 +380,138 @@
   footer .fine{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.03em;color:var(--mut-dark);}
   footer .fine b{color:var(--silver-2);font-weight:400;}
 
+  /* ── THE INSTRUMENT, RUNNING — full takeover. The measurement happens over
+        the page, then collapses back to it. Rendered in our own markup off the
+        headless API so every pixel stays PsikiQ. ── */
+  .qz{position:fixed;inset:0;z-index:200;display:none;background:rgba(9,6,3,.93);
+    backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);}
+  .qz.open{display:block;}
+  body.qz-lock{overflow:hidden;}
+  .qz-shell{position:absolute;inset:clamp(0px,3vh,28px) clamp(0px,4vw,40px);
+    background-color:#17110a;background-image:var(--steel-sheen),var(--steel-stripes);
+    background-blend-mode:screen,normal;border:1px solid rgba(230,190,106,.24);
+    border-radius:clamp(0px,1vw,14px);box-shadow:0 40px 120px rgba(0,0,0,.7);
+    display:flex;flex-direction:column;overflow:hidden;}
+  .qz-top{display:flex;align-items:center;gap:16px;padding:14px clamp(16px,2.6vw,28px);
+    border-bottom:1px solid rgba(230,190,106,.18);flex:none;}
+  .qz-brand{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--gold);opacity:.85;white-space:nowrap;}
+  .qz-brand b{color:var(--warm);font-weight:400;}
+  .qz-x{margin-left:auto;width:34px;height:34px;flex:none;border-radius:50%;cursor:pointer;
+    border:1px solid rgba(230,190,106,.3);background:transparent;color:var(--gold);
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:15px;line-height:1;
+    transition:background .2s,transform .15s;}
+  .qz-x:hover{background:rgba(230,190,106,.12);transform:translateY(-1px);}
+
+  /* the unaware → aware axis. The spectrum is always drawn; progress reveals it. */
+  .qz-axis{padding:12px clamp(16px,2.6vw,28px) 14px;border-bottom:1px solid rgba(230,190,106,.12);flex:none;}
+  .ax-track{position:relative;height:3px;border-radius:3px;background:rgba(201,207,214,.11);overflow:hidden;}
+  .ax-spectrum{position:absolute;inset:0;border-radius:3px;
+    background:linear-gradient(90deg,#C0503C 0%,#B4600F 34%,#E6BE6A 68%,#5B8CB8 100%);
+    clip-path:inset(0 calc(100% - var(--p,0%)) 0 0);
+    transition:clip-path .55s cubic-bezier(.2,.8,.2,1);}
+  .ax-labels{display:flex;justify-content:space-between;margin-top:7px;
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;}
+  .ax-labels .un{color:#C0503C;} .ax-labels .aw{color:#5B8CB8;}
+  .ax-labels .ct{color:var(--mut-dark);letter-spacing:.1em;}
+
+  .qz-body{flex:1;overflow-y:auto;padding:clamp(26px,4.5vh,54px) clamp(20px,4vw,44px);
+    display:flex;flex-direction:column;justify-content:center;}
+  .qz-inner{width:100%;max-width:660px;margin:0 auto;}
+  .qz-step{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--warm);margin-bottom:18px;}
+  .qz-h{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(22px,3.5vw,38px);
+    line-height:1.14;text-transform:uppercase;letter-spacing:.005em;color:var(--white);text-wrap:balance;}
+  .qz-p{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:15px;line-height:1.65;
+    color:var(--mut-dark);margin-top:16px;max-width:58ch;}
+  .qz-p b{color:var(--silver);font-weight:400;}
+
+  .qz-choices{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:620px){.qz-choices{grid-template-columns:1fr;}}
+  .qz-pick{text-align:left;padding:20px 22px;border-radius:8px;cursor:pointer;
+    border:1px solid rgba(230,190,106,.26);background:rgba(230,190,106,.045);
+    font-family:'Oswald',sans-serif;font-weight:400;font-size:17px;letter-spacing:.02em;
+    color:var(--white);transition:border-color .18s,background .18s,transform .15s;}
+  .qz-pick:hover{border-color:var(--gold);background:rgba(230,190,106,.11);transform:translateY(-2px);}
+
+  /* the reveal — the awareness layer, the reason this converts */
+  .qz-reveal{margin-top:8px;border-left:2px solid var(--gold);padding:4px 0 4px 22px;}
+  .qz-reveal .rv-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:12px;}
+  .qz-reveal .rv-t{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(17px,2.4vw,25px);
+    line-height:1.4;color:var(--white);}
+
+  .qz-search{width:100%;margin-top:26px;padding:15px 17px;border-radius:8px;
+    border:1px solid rgba(230,190,106,.3);background:rgba(0,0,0,.32);color:var(--white);
+    font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:16px;}
+  .qz-search::placeholder{color:#6b7280;}
+  .qz-search:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(230,190,106,.12);}
+  .qz-list{margin-top:14px;max-height:min(42vh,340px);overflow-y:auto;display:flex;flex-direction:column;gap:6px;
+    padding-right:4px;}
+  .qz-opt{text-align:left;padding:12px 15px;border-radius:6px;cursor:pointer;
+    border:1px solid rgba(201,207,214,.12);background:rgba(255,255,255,.02);color:var(--silver);
+    font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;
+    transition:border-color .15s,background .15s,color .15s;}
+  .qz-opt:hover{border-color:var(--gold);background:rgba(230,190,106,.09);color:var(--white);}
+  .qz-opt em{font-style:normal;color:var(--gold);}
+  .qz-none{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:var(--mut-dark);padding:14px 2px;}
+
+  .qz-fields{margin-top:26px;display:flex;flex-direction:column;gap:12px;}
+  .qz-fields label{display:flex;flex-direction:column;gap:6px;
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--mut-dark);}
+  .qz-fields input{padding:13px 15px;border-radius:7px;border:1px solid rgba(230,190,106,.24);
+    background:rgba(0,0,0,.32);color:var(--white);font-family:'Chakra Petch',system-ui,sans-serif;font-size:15.5px;}
+  .qz-fields input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(230,190,106,.12);}
+  .qz-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+
+  .qz-actions{margin-top:28px;display:flex;align-items:center;gap:16px 20px;flex-wrap:wrap;}
+  .qz-btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--ink);
+    font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.06em;
+    padding:15px 32px;border-radius:6px;border:none;cursor:pointer;text-decoration:none;
+    transition:filter .15s,transform .15s,box-shadow .15s;box-shadow:0 8px 26px var(--accent-glow);}
+  .qz-btn:hover{filter:brightness(1.06);transform:translateY(-2px);}
+  .qz-btn[disabled]{opacity:.5;cursor:default;transform:none;filter:none;}
+  .qz-skip{background:none;border:none;cursor:pointer;color:var(--mut-dark);
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;letter-spacing:.09em;
+    text-transform:uppercase;text-decoration:underline;text-underline-offset:4px;}
+  .qz-skip:hover{color:var(--gold);}
+  .qz-back{background:none;border:none;cursor:pointer;color:var(--mut-dark);
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;margin-bottom:18px;padding:0;}
+  .qz-back:hover{color:var(--gold);}
+
+  /* the read */
+  .qz-kind{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--warm);margin-bottom:14px;}
+  .qz-tiles{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}
+  .qz-tile{border:1px solid rgba(230,190,106,.22);border-top:2px solid var(--gold);border-radius:8px;
+    padding:18px 20px;background:rgba(230,190,106,.045);}
+  .qz-tile .t-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--mut-dark);}
+  .qz-tile .t-v{font-family:'Oswald',sans-serif;font-weight:600;font-size:32px;line-height:1.1;
+    color:var(--gold);margin-top:8px;font-variant-numeric:tabular-nums;}
+  .qz-tile .t-s{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:var(--mut-dark);margin-top:6px;}
+  .qz-narr{margin-top:22px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;line-height:1.7;
+    color:var(--silver-2);border-left:1px solid rgba(201,207,214,.2);padding-left:16px;}
+  .qz-now{margin-top:30px;border-top:1px solid rgba(230,190,106,.22);padding-top:24px;}
+  .qz-now .n-t{font-family:'Oswald',sans-serif;font-weight:400;font-size:clamp(17px,2.3vw,23px);
+    line-height:1.4;color:var(--white);}
+  .qz-now .n-c{margin-top:14px;font-family:'Chakra Petch',system-ui,sans-serif;font-size:15px;
+    line-height:1.65;color:var(--gold);}
+  .qz-edge{margin-top:26px;border:1px solid rgba(232,145,46,.4);border-radius:8px;padding:20px 22px;
+    background:rgba(232,145,46,.07);}
+  .qz-edge .e-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--warm);margin-bottom:10px;}
+  .qz-edge p{font-family:'Chakra Petch',system-ui,sans-serif;font-size:15px;line-height:1.6;color:var(--silver);}
+  .qz-note{margin-top:20px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;
+    letter-spacing:.06em;color:var(--mut-dark);opacity:.8;}
+  .qz-err{border:1px solid rgba(232,145,46,.45);border-radius:8px;padding:20px 22px;
+    background:rgba(232,145,46,.08);font-family:'Chakra Petch',system-ui,sans-serif;font-size:15px;
+    line-height:1.6;color:var(--silver);}
+  .qz-spin{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--gold);opacity:.85;}
+
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;}
     /* everything that waits on motion must still resolve to its finished state */
@@ -390,6 +522,7 @@
     .noise-lamp{display:none;}
     .collapse-band{height:100vh;}
     .cb-stage{position:relative;}
+    .ax-spectrum{transition:none!important;}
   }
 </style>
 </head>
@@ -620,6 +753,23 @@
     </div>
   </footer>
 
+  <!-- THE INSTRUMENT, RUNNING — rendered here in PsikiQ markup off the headless API -->
+  <div class="qz" id="qz" role="dialog" aria-modal="true" aria-label="The Prognosis diagnostic">
+    <div class="qz-shell">
+      <div class="qz-top">
+        <div class="qz-brand mono">&#968;&nbsp;PSIKIQ&nbsp;<b>//</b>&nbsp;PROGNOSIS</div>
+        <button class="qz-x" id="qzClose" type="button" aria-label="Close the diagnostic">&#10005;</button>
+      </div>
+      <div class="qz-axis" id="qzAxis" style="display:none">
+        <div class="ax-track"><div class="ax-spectrum" id="qzSpectrum"></div></div>
+        <div class="ax-labels mono">
+          <span class="un">unaware</span><span class="ct" id="qzCount"></span><span class="aw">aware</span>
+        </div>
+      </div>
+      <div class="qz-body"><div class="qz-inner" id="qzInner"></div></div>
+    </div>
+  </div>
+
 <script>
 (function(){
   'use strict';
@@ -629,11 +779,10 @@
      Leave a value empty and that CTA stays inert rather than linking nowhere.
      NOTE: the quiz must be reachable on a PUBLIC host — a 127.0.0.1 address
      resolves to the visitor's own machine, so it works for nobody but you. */
-  var QUIZ_URL = '';   /* the business-stage quiz, once publicly hosted, at /prognosis */
-  var BOOK_URL = '';   /* GHL calendar / booking link          */
-  [['quiz',QUIZ_URL],['book',BOOK_URL]].forEach(function(pair){
-    var el=document.querySelector('[data-cta="'+pair[0]+'"]');
-    if(el && pair[1]){ el.setAttribute('href',pair[1]); }
+  var BOOK_URL = '';   /* GHL calendar / booking link — the only one still unset */
+  window.PSIKIQ_BOOK_URL = BOOK_URL;
+  [].forEach.call(document.querySelectorAll('[data-cta="book"]'),function(el){
+    if(BOOK_URL){ el.setAttribute('href',BOOK_URL); }
   });
 
   /* ── HUD: progress rail + phase readout ─────────────────────────── */
@@ -840,6 +989,328 @@
     io.observe(document.querySelector('.book-sec'));
     render();
   })();
+})();
+
+/* ══ THE PROGNOSIS DIAGNOSTIC ══════════════════════════════════════════════
+   Headless integration. The engine scores; we own every pixel. The questions,
+   reveals and bands all come from the live config — nothing is duplicated or
+   reimplemented here, so tuning the instrument never means editing this page. */
+(function(){
+  'use strict';
+
+  /* ── THE ONE CONFIG VALUE ──────────────────────────────────────────────
+     When the quiz moves to a PsikiQ host (quiz.psikick.ai), change this line
+     and nothing else. It is deliberately not scattered through the code.
+     NOTE: the new origin must also be added to the engine's CORS allowlist
+     (lmg/config/quiz_embed.json) or the browser will block every call.      */
+  var QUIZ_BASE = 'https://crisisquiz.nowgroup.co.nz';
+  var QUIZ_KEY  = 'prognosis';
+
+  var API      = QUIZ_BASE + '/quiz/api/' + QUIZ_KEY;
+  var HOSTED   = QUIZ_BASE + '/quiz/' + QUIZ_KEY;
+  var CFG_TTL  = 300000; /* 5 min — reveals get tuned; never snapshot at build */
+
+  var qz = document.getElementById('qz');
+  if(!qz) return;
+  var inner    = document.getElementById('qzInner'),
+      axisWrap = document.getElementById('qzAxis'),
+      spectrum = document.getElementById('qzSpectrum'),
+      counter  = document.getElementById('qzCount');
+
+  var cfg=null, cfgAt=0, lastFocus=null, st=null;
+
+  function esc(t){
+    return String(t==null?'':t).replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function reset(){
+    st={view:'loading',vertical:null,verticalLabel:null,queue:[],qi:0,
+        answers:{},reveal:null,result:null,err:null,query:''};
+  }
+
+  /* ── progress along the unaware → aware axis ── */
+  function prog(){
+    var total = 1 + (st.queue.length || (cfg && cfg.questions ? cfg.questions.length : 12));
+    var done  = (st.vertical?1:0) + Object.keys(st.answers).length;
+    return {done:done,total:total,pct:total?Math.round(done/total*100):0};
+  }
+  function paintAxis(){
+    var hide = (st.view==='loading'||st.view==='intro'||st.view==='error');
+    axisWrap.style.display = hide ? 'none' : '';
+    if(hide) return;
+    var done = st.view==='result' ? 100 : prog().pct;
+    spectrum.style.setProperty('--p', done+'%');
+    counter.textContent = st.view==='result'
+      ? 'read complete'
+      : prog().done + ' / ' + prog().total;
+  }
+
+  /* ── views ── */
+  function vIntro(){
+    var a = cfg.awareness||{};
+    return '<div class="qz-step mono">ii &middot; the measurement</div>'
+      + '<h2 class="qz-h">'+esc(cfg.title)+'</h2>'
+      + '<p class="qz-p"><b>'+esc(cfg.strapline)+'</b></p>'
+      + (a.frame ? '<p class="qz-p">'+esc(a.frame)+'</p>' : '')
+      + (cfg.intro ? '<p class="qz-p">'+esc(cfg.intro)+'</p>' : '')
+      + '<div class="qz-actions"><button class="qz-btn" type="button" data-act="begin">&#968;&nbsp; Begin</button></div>';
+  }
+  function vType(){
+    var vq = cfg.vertical_question||{};
+    return '<div class="qz-step mono">step 1 &middot; what you do</div>'
+      + '<h2 class="qz-h">'+esc(vq.prompt||'What kind of business do you run?')+'</h2>'
+      + '<input class="qz-search" id="qzSearch" type="text" autocomplete="off" spellcheck="false"'
+      + ' placeholder="Start typing &mdash; plumber, law firm, caf&eacute;, engineer&hellip;" value="'+esc(st.query)+'">'
+      + '<div class="qz-list" id="qzList"></div>';
+  }
+  function paintList(){
+    var list=document.getElementById('qzList');
+    if(!list) return;
+    var q=(st.query||'').trim().toLowerCase();
+    var all=cfg.business_types||[];
+    var hits=[];
+    for(var i=0;i<all.length;i++){
+      var label=all[i][0], lo=label.toLowerCase(), at=lo.indexOf(q);
+      if(q==='' || at>-1) hits.push({label:label,key:all[i][1],at:q?at:-1,len:q.length});
+    }
+    if(!hits.length){
+      list.innerHTML='<div class="qz-none mono">Nothing matches that. Try a broader word &mdash; or pick the closest trade.</div>';
+      return;
+    }
+    var out=[];
+    for(var j=0;j<hits.length;j++){
+      var h=hits[j], txt;
+      if(h.at>-1 && h.len){
+        txt = esc(h.label.slice(0,h.at))+'<em>'+esc(h.label.slice(h.at,h.at+h.len))+'</em>'+esc(h.label.slice(h.at+h.len));
+      }else{ txt = esc(h.label); }
+      out.push('<button class="qz-opt" type="button" data-vert="'+esc(h.key)+'" data-label="'+esc(h.label)+'">'+txt+'</button>');
+    }
+    list.innerHTML=out.join('');
+  }
+  function vQuestion(){
+    var q=st.queue[st.qi]||{};
+    return '<button class="qz-back mono" type="button" data-act="back">&larr; back</button>'
+      + '<div class="qz-step mono">question '+(st.qi+1)+' of '+st.queue.length+'</div>'
+      + '<h2 class="qz-h">'+esc(q.prompt)+'</h2>'
+      + '<div class="qz-choices">'
+      +   '<button class="qz-pick" type="button" data-ans="yes">'+esc(q.yes)+'</button>'
+      +   '<button class="qz-pick" type="button" data-ans="no">'+esc(q.no)+'</button>'
+      + '</div>';
+  }
+  /* the reveal is the awareness layer — it renders after EVERY answer */
+  function vReveal(){
+    return '<div class="qz-step mono">what that just told us</div>'
+      + '<div class="qz-reveal"><div class="rv-l mono">reveal</div>'
+      +   '<div class="rv-t">'+esc(st.reveal)+'</div></div>'
+      + '<div class="qz-actions"><button class="qz-btn" type="button" data-act="next">Continue</button></div>';
+  }
+  function vContact(){
+    var c=cfg.contact||{}, fields=c.fields||['poc_name','business_name','email'];
+    var names={poc_name:'Your name',business_name:'Business name',email:'Email'};
+    var types={email:'email'};
+    var f='';
+    for(var i=0;i<fields.length;i++){
+      var k=fields[i];
+      f += '<label>'+esc(names[k]||k)+'<input type="'+(types[k]||'text')+'" data-field="'+esc(k)+'" autocomplete="'
+         + (k==='email'?'email':(k==='poc_name'?'name':'organization'))+'"></label>';
+    }
+    /* honeypot — never labelled, never removed */
+    f += '<div class="qz-hp" aria-hidden="true"><label>Website'
+       + '<input type="text" id="qzHp" name="website_hp" tabindex="-1" autocomplete="off"></label></div>';
+    return '<div class="qz-step mono">last step &middot; optional</div>'
+      + '<h2 class="qz-h">Your read is ready.</h2>'
+      + '<p class="qz-p">'+esc(c.prompt||'Want the full read sent to you?')+'</p>'
+      + '<div class="qz-fields">'+f+'</div>'
+      + '<div class="qz-actions">'
+      +   '<button class="qz-btn" type="button" data-act="send">Send it to me</button>'
+      +   '<button class="qz-skip mono" type="button" data-act="skip">Skip &mdash; just show my read</button>'
+      + '</div>';
+  }
+  function tile(label,value,sub){
+    return '<div class="qz-tile"><div class="t-l mono">'+esc(label)+'</div>'
+      + '<div class="t-v">'+esc(value)+'</div>'
+      + (sub?'<div class="t-s mono">'+esc(sub)+'</div>':'')+'</div>';
+  }
+  function pct(n){ return (n==null)?'':(Math.round(n*100)+'% confidence'); }
+  function vResult(){
+    var r=st.result||{}, read=r.read||{};
+    var kinds={at_edge:'the read &middot; at the edge',agreement:'the read &middot; in agreement',hybrid:'the read &middot; hybrid'};
+    /* most verticals have no sector model — "—" is the common path, not an edge case */
+    var sb=read.sector_band, hasSector = sb && sb!=='—' && sb!=='-' && sb!=='';
+    var tiles = tile('general stage', read.coarse_band||'—', pct(read.coarse_confidence));
+    if(hasSector){
+      tiles += tile('sector stage', sb, pct(read.sector_confidence));
+      tiles += tile('the gap', (read.divergence>0?'+':'')+read.divergence, 'general vs sector');
+    }
+    var out = '<div class="qz-kind mono">'+(kinds[r.kind]||'the read')+'</div>'
+      + '<h2 class="qz-h">'+esc(r.headline)+'</h2>'
+      + '<p class="qz-p">'+esc(r.body)+'</p>'
+      + '<div class="qz-tiles">'+tiles+'</div>'
+      + (hasSector ? '' : '<div class="qz-note mono">Coarse read only &mdash; no sector model for '
+          + esc(st.verticalLabel||'this trade')+' yet, so the stage is read on general markers alone.</div>')
+      + (r.narrative ? '<div class="qz-narr mono">'+esc(r.narrative)+'</div>' : '')
+      + '<div class="qz-now">'
+      +   (r.now_visible?'<div class="n-t">'+esc(r.now_visible)+'</div>':'')
+      +   (r.closing?'<div class="n-c">'+esc(r.closing)+'</div>':'')
+      + '</div>';
+    /* at_edge is the in-market signal — the strongest moment to place the CTA */
+    if(read.at_edge){
+      out += '<div class="qz-edge"><div class="e-l mono">you are at a transition</div>'
+        + '<p>Your structure and your tooling have come apart. That gap is the crisis forming '
+        + 'in front of you &mdash; and it is the cheapest moment to act on it.</p></div>';
+    }
+    var book = window.PSIKIQ_BOOK_URL;
+    out += '<div class="qz-actions">'
+      + (book ? '<a class="qz-btn" href="'+esc(book)+'">&#968;&nbsp; Book the diagnostic</a>'
+              : '<button class="qz-btn" type="button" data-act="close">&#968;&nbsp; Back to PsikiQ</button>')
+      + '<button class="qz-skip mono" type="button" data-act="restart">Run it again</button>'
+      + '</div>';
+    return out;
+  }
+  function vError(){
+    var msgs={
+      reach:'We can&rsquo;t reach the instrument right now. It runs on its own host, so this is usually brief.',
+      rate:'That&rsquo;s a lot of reads from one place in a short time. Give it five minutes and run it again &mdash; the limit is there to keep bots out, not you.',
+      submit:'The instrument took your answers but couldn&rsquo;t return a read. Nothing is lost &mdash; try once more.'
+    };
+    return '<div class="qz-step mono">interrupted</div>'
+      + '<div class="qz-err">'+(msgs[st.err]||msgs.submit)+'</div>'
+      + '<div class="qz-actions">'
+      +   '<button class="qz-btn" type="button" data-act="retry">Try again</button>'
+      +   '<a class="qz-skip mono" href="'+HOSTED+'">Open it directly instead</a>'
+      + '</div>';
+  }
+
+  function render(){
+    var v=st.view, html;
+    if(v==='loading')      html='<div class="qz-spin mono">opening the instrument&hellip;</div>';
+    else if(v==='sending') html='<div class="qz-spin mono">collapsing your answers into a read&hellip;</div>';
+    else if(v==='intro')   html=vIntro();
+    else if(v==='type')    html=vType();
+    else if(v==='q')       html=vQuestion();
+    else if(v==='reveal')  html=vReveal();
+    else if(v==='contact') html=vContact();
+    else if(v==='result')  html=vResult();
+    else                   html=vError();
+    inner.innerHTML=html;
+    paintAxis();
+    if(v==='type'){
+      paintList();
+      var si=document.getElementById('qzSearch');
+      if(si && !('ontouchstart' in window)) si.focus();
+    }
+    inner.parentNode.scrollTop=0;
+  }
+
+  /* ── flow ── */
+  function loadConfig(){
+    if(cfg && (Date.now()-cfgAt)<CFG_TTL){ st.view='intro'; render(); return; }
+    fetch(API+'/config',{headers:{'Accept':'application/json'}})
+      .then(function(r){ if(!r.ok) throw new Error('cfg'); return r.json(); })
+      .then(function(j){ cfg=j; cfgAt=Date.now(); st.view='intro'; render(); })
+      .catch(function(){ st.err='reach'; st.view='error'; render(); });
+  }
+  function buildQueue(){
+    var q=(cfg.questions||[]).slice();
+    var sq=(cfg.sector_questions||{})[st.vertical];
+    if(sq && sq.length) q=q.concat(sq);
+    st.queue=q; st.qi=0;
+  }
+  function answer(val){
+    var q=st.queue[st.qi];
+    if(!q) return;
+    st.answers[q.marker]=val;
+    if(q.reveal){ st.reveal=q.reveal; st.view='reveal'; }
+    else advance();
+    render();
+  }
+  function advance(){
+    st.qi++;
+    st.view = (st.qi>=st.queue.length) ? 'contact' : 'q';
+  }
+  function submit(withContact){
+    var contact=null;
+    if(withContact){
+      contact={};
+      [].forEach.call(inner.querySelectorAll('[data-field]'),function(el){
+        contact[el.getAttribute('data-field')]=el.value.trim();
+      });
+    }
+    var hp=document.getElementById('qzHp');
+    var payload={
+      vertical: st.vertical,
+      vertical_nested: st.verticalLabel,
+      answers: st.answers,
+      contact: contact,
+      website_hp: hp ? hp.value : ''
+    };
+    st.view='sending'; render();
+    fetch(API+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){
+        if(r.status===429){ var e=new Error('rate'); e.code='rate'; throw e; }
+        if(!r.ok) throw new Error('submit');
+        return r.json();
+      })
+      .then(function(j){ st.result=j; st.view='result'; render(); })
+      .catch(function(e){ st.err=(e && e.code==='rate')?'rate':'submit'; st.view='error'; render(); });
+  }
+
+  /* ── open / close ── */
+  function open(){
+    lastFocus=document.activeElement;
+    reset();
+    qz.classList.add('open');
+    document.body.classList.add('qz-lock');
+    render();
+    loadConfig();
+    document.getElementById('qzClose').focus();
+  }
+  function close(){
+    qz.classList.remove('open');
+    document.body.classList.remove('qz-lock');
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  /* ── events ── */
+  document.getElementById('qzClose').addEventListener('click',close);
+  qz.addEventListener('mousedown',function(e){ if(e.target===qz) close(); });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape' && qz.classList.contains('open')) close();
+  });
+  inner.addEventListener('input',function(e){
+    if(e.target && e.target.id==='qzSearch'){ st.query=e.target.value; paintList(); }
+  });
+  inner.addEventListener('click',function(e){
+    var t=e.target.closest ? e.target.closest('[data-act],[data-ans],[data-vert]') : null;
+    if(!t) return;
+    var act=t.getAttribute('data-act');
+    if(t.hasAttribute('data-vert')){
+      st.vertical=t.getAttribute('data-vert');
+      st.verticalLabel=t.getAttribute('data-label');
+      buildQueue(); st.view='q'; render(); return;
+    }
+    if(t.hasAttribute('data-ans')){ answer(t.getAttribute('data-ans')==='yes'); return; }
+    if(act==='begin'){ st.view='type'; render(); }
+    else if(act==='next'){ advance(); render(); }
+    else if(act==='back'){
+      if(st.qi>0){ st.qi--; delete st.answers[st.queue[st.qi].marker]; st.view='q'; }
+      else { st.vertical=null; st.verticalLabel=null; st.queue=[]; st.answers={}; st.view='type'; }
+      render();
+    }
+    else if(act==='send'){ submit(true); }
+    else if(act==='skip'){ submit(false); }
+    else if(act==='retry'){ if(!cfg){ st.view='loading'; render(); loadConfig(); } else { submit(false); } }
+    else if(act==='restart'){ reset(); st.view='intro'; render(); }
+    else if(act==='close'){ close(); }
+  });
+
+  /* the CTAs. href is the hosted quiz so the link is never dead without JS;
+     the click is intercepted to keep people inside PsikiQ. */
+  [].forEach.call(document.querySelectorAll('[data-cta="quiz"]'),function(el){
+    el.setAttribute('href',HOSTED);
+    el.addEventListener('click',function(ev){ ev.preventDefault(); open(); });
+  });
 })();
 </script>
 </body>
