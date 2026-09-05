@@ -524,7 +524,7 @@
   .eng-sub b{color:var(--gold);font-weight:400;letter-spacing:.02em;}
 
   .movement{margin:44px 0 8px;position:relative;}
-  .movement svg{width:100%;height:auto;max-height:290px;display:block;overflow:visible;}
+  .movement svg{width:100%;height:auto;max-height:340px;display:block;overflow:visible;}
   .gear-ring{fill:none;stroke:rgba(230,190,106,.55);stroke-width:1.6;stroke-linejoin:round;}
   .gear-body{fill:rgba(230,190,106,.05);stroke:rgba(230,190,106,.22);stroke-width:1;}
   .gear-spoke{stroke:rgba(230,190,106,.3);stroke-width:1.4;stroke-linecap:round;}
@@ -1447,6 +1447,7 @@
     return d+'Z';
   }
 
+  var BASE = MODULE*TRAIN[0].n/2 + DEPTH + 26;   /* one caption baseline for all three */
   var cx=0, rotors=[], prev=null;
   TRAIN.forEach(function(g,i){
     g.rp = MODULE*g.n/2;
@@ -1472,7 +1473,7 @@
     wrap.appendChild(el('circle',{class:'gear-hub', r:g.hub}));
     var n=el('text',{class:'gear-n','text-anchor':'middle', y:1}); n.textContent=g.n;
     var t=el('text',{class:'gear-t','text-anchor':'middle', y:12}); t.textContent='TEETH';
-    var c=el('text',{class:'gear-cap','text-anchor':'middle', y:g.rp+DEPTH+24}); c.textContent=g.cap;
+    var c=el('text',{class:'gear-cap','text-anchor':'middle', y:BASE}); c.textContent=g.cap;
     wrap.appendChild(n); wrap.appendChild(t); wrap.appendChild(c);
     svg.appendChild(wrap);
   });
