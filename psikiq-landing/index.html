@@ -610,7 +610,6 @@
         machined caps turning at each end. Ancient object, digital edge. ── */
   .roller{position:relative;height:clamp(104px,13vw,158px);overflow:hidden;--turn:0deg;--shift:0px;}
   .roller-dark{background:var(--void);}
-  .roller-l2d{background:linear-gradient(180deg,var(--white) 0%,#dcd3c4 24%,#75624a 54%,#2b2114 80%,var(--void) 100%);}
   .rod{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
     height:clamp(38px,4.8vw,60px);overflow:hidden;
     border-top:1px solid rgba(255,240,200,.5);border-bottom:1px solid rgba(0,0,0,.6);
@@ -620,17 +619,17 @@
       rgba(255,244,214,.95) 40%, rgba(230,190,106,.7) 54%,
       rgba(120,92,30,.75) 74%, rgba(0,0,0,.72) 92%, rgba(0,0,0,.9) 100%);}
   /* the surface: lines along the rod, sweeping vertically as it turns */
-  .rod-skin{position:absolute;inset:-40% 0;
-    background-image:repeating-linear-gradient(180deg,
-      rgba(255,248,224,.30) 0px, rgba(255,248,224,.30) 1px,
-      rgba(0,0,0,.10) 1px, rgba(0,0,0,.10) 2px,
-      transparent 2px, transparent 9px);
-    background-position:0 var(--shift);mix-blend-mode:overlay;}
+  .rod-skin{position:absolute;inset:0;
+    background-image:repeating-linear-gradient(90deg,
+      rgba(255,248,224,.34) 0px, rgba(255,248,224,.34) 1px,
+      rgba(0,0,0,.14) 1px, rgba(0,0,0,.14) 2px,
+      transparent 2px, transparent 11px);
+    background-position:var(--shift) 0;mix-blend-mode:overlay;}
   /* the digital edge: a data line riding the same surface */
   .rod-data{position:absolute;left:0;right:0;top:50%;height:2px;transform:translateY(-50%);
     background-image:repeating-linear-gradient(90deg,
       rgba(23,17,10,.8) 0 3px, transparent 3px 26px);
-    opacity:.5;}
+    background-position:var(--shift) 0;opacity:.5;}
   .rod-glint{position:absolute;left:0;right:0;top:34%;height:2px;
     background:linear-gradient(90deg,transparent,rgba(255,252,240,.85) 30%,rgba(255,252,240,.85) 70%,transparent);
     opacity:.7;}
@@ -795,7 +794,7 @@
     </div>
   </section>
 
-  <div class="roller roller-l2d" aria-hidden="true">
+  <div class="roller roller-dark" aria-hidden="true">
     <div class="rod"><div class="rod-skin"></div><div class="rod-glint"></div><div class="rod-data"></div></div>
     <div class="cap cap-l"><svg viewBox="-50 -50 100 100" aria-hidden="true">
           <circle class="rim" r="44"/>
@@ -1062,8 +1061,8 @@
       var el=rollers[i], r=el.getBoundingClientRect(), span=window.innerHeight+r.height;
       var p = span>0 ? (window.innerHeight-r.top)/span : 0;
       p = Math.max(0,Math.min(1,p));
-      el.style.setProperty('--turn',(p*520).toFixed(1)+'deg');
-      el.style.setProperty('--shift',(p*320).toFixed(0)+'px');
+      el.style.setProperty('--turn',(p*760).toFixed(1)+'deg');
+      el.style.setProperty('--shift',(p*Math.max(700,window.innerWidth*0.8)).toFixed(0)+'px');
     }
   }
 
