@@ -520,7 +520,7 @@
       <div class="inst-head">
         <div class="qlabel mono">iv &middot; the instrument</div>
         <h2 class="disp inst-h">Every business is mid-sentence in a story it can&rsquo;t read.</h2>
-        <p class="inst-sub">The diagnostic reads it. <b>Five phases of growth, each one ending in the exact crisis that forces the next.</b> Where a business sits on that curve decides what it will buy, what it will ignore, and what it is already desperate for &mdash; long before anyone inside it can say so out loud.</p>
+        <p class="inst-sub">The diagnostic reads it. <b>Five phases of growth, each one ending in the exact crisis that forces the next.</b> Where a business sits on that curve decides what it will buy, what it will ignore, and what it is already desperate for &mdash; long before anyone inside it can say so out loud. It returns a <b>prognosis</b> &mdash; not what you have, but the crisis already forming in front of you.</p>
       </div>
 
       <div class="curve">
@@ -548,7 +548,7 @@
       </div>
 
       <div class="inst-cta">
-        <a href="#" class="btn" data-cta="quiz">&#968;&nbsp; Run the diagnostic</a>
+        <a href="#" class="btn" data-cta="quiz">&#968;&nbsp; Get your prognosis</a>
         <div class="inst-meta mono">
           free &middot; about 8 minutes &middot; <b>no pitch</b><br>
           built by <b>AUBIT</b> on the <b>Qollapsis</b> engine
@@ -629,7 +629,7 @@
      Leave a value empty and that CTA stays inert rather than linking nowhere.
      NOTE: the quiz must be reachable on a PUBLIC host — a 127.0.0.1 address
      resolves to the visitor's own machine, so it works for nobody but you. */
-  var QUIZ_URL = '';   /* e.g. https://<public host>/prognosis */
+  var QUIZ_URL = '';   /* the business-stage quiz, once publicly hosted, at /prognosis */
   var BOOK_URL = '';   /* GHL calendar / booking link          */
   [['quiz',QUIZ_URL],['book',BOOK_URL]].forEach(function(pair){
     var el=document.querySelector('[data-cta="'+pair[0]+'"]');
