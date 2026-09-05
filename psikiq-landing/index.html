@@ -87,9 +87,9 @@
      route silently falls back and the two clipped halves drift out of register.
      One SVG with a hard-stop gradient at x=60 puts the colour split exactly on
      the page seam by construction. */
-  .psi-mark{width:clamp(118px,19vw,208px);margin:0 auto;}
-  .psi-mark svg{display:block;width:100%;height:auto;overflow:visible;
-    filter:drop-shadow(0 0 26px rgba(230,190,106,.18));}
+  .psi-mark{width:clamp(124px,20vw,218px);margin:0 auto;}
+  .psi-mark img{display:block;width:100%;height:auto;
+    filter:drop-shadow(0 0 30px rgba(230,190,106,.2));}
 
   /* WORDMARK in Oswald — tall condensed */
   .wordmark{position:relative;font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(44px,8.5vw,90px);letter-spacing:.03em;text-transform:uppercase;height:1.15em;margin-top:.16em;}
@@ -375,7 +375,7 @@
   footer{padding:40px clamp(24px,6vw,80px);border-top:1px solid var(--line-dark);position:relative;}
   footer .inner2{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;width:100%;}
   footer .fmk{display:inline-flex;align-items:center;gap:.4em;font-family:'Oswald',sans-serif;font-weight:600;font-size:22px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);}
-  footer .fmk svg{width:.95em;height:auto;}
+  footer .fmk img{height:1.05em;width:auto;display:block;}
   footer .fmk .q{color:var(--gold);}
   footer .fine{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.03em;color:var(--mut-dark);}
   footer .fine b{color:var(--silver-2);font-weight:400;}
@@ -552,18 +552,9 @@
     <div class="steel"></div><div class="light"></div><div class="seam"></div>
     <div class="hero-center">
       <div class="psi-mark">
-        <svg viewBox="0 0 120 152" role="img" aria-label="PsikiQ">
-          <defs>
-            <linearGradient id="psiSplit" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="120" y2="0">
-              <stop offset="50%" stop-color="#C9CFD6"/>
-              <stop offset="50%" stop-color="#B8912F"/>
-            </linearGradient>
-          </defs>
-          <g fill="none" stroke="url(#psiSplit)" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M23 42 V73 C23 96 39.5 109 60 109 C80.5 109 97 96 97 73 V42"/>
-            <path d="M60 15 V140"/>
-          </g>
-        </svg>
+        <!-- the mark itself, gold half to the shadow side, ink half to the light -->
+        <img src="psi-split.webp" width="440" height="414" alt="PsikiQ"
+             decoding="async" fetchpriority="high">
       </div>
       <div class="wordmark"><span class="h dk">Psiki<span class="q">Q</span></span><span class="h lt">Psiki<span class="q">Q</span></span><span style="visibility:hidden">PSIKIQ</span></div>
       <div class="tag"><span class="h dk">we see what your market can&rsquo;t</span><span class="h lt">we see what your market can&rsquo;t</span><span style="visibility:hidden">we see what your market can&rsquo;t</span></div>
@@ -741,12 +732,7 @@
   <footer class="steel">
     <div class="inner2">
       <div class="fmk">
-        <svg viewBox="0 0 120 152" aria-hidden="true">
-          <g fill="none" stroke="#C9CFD6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M23 42 V73 C23 96 39.5 109 60 109 C80.5 109 97 96 97 73 V42"/>
-            <path d="M60 15 V140"/>
-          </g>
-        </svg>
+        <img src="psi-gold.webp" alt="" aria-hidden="true">
         Psiki<span class="q">Q</span>
       </div>
       <div class="fine mono">powered by the <b>QOLLAPSIS</b> engine &middot; built by <b>AUBIT</b> &middot; a <b>NOW GROUP</b> company</div>
