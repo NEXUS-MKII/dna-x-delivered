@@ -1694,7 +1694,9 @@
   });
 
   function measure(){
-    RX=Math.min(orbit.clientWidth*0.33, 250);
+    var w = orbit.clientWidth || orbit.parentElement.clientWidth
+            || document.documentElement.clientWidth || 900;
+    RX = Math.max(120, Math.min(w*0.33, 250));
     cards.forEach(function(c){ c.style.marginTop=(-c.offsetHeight/2)+'px'; });
   }
   function place(){
@@ -1729,8 +1731,16 @@
   window.addEventListener('resize',function(){ measure(); place(); });
 
   measure(); place();
+  /* the first measure can land before layout has a width — re-run it whenever
+     the box changes size, and again once everything has loaded */
+  if(window.ResizeObserver){ new ResizeObserver(function(){ measure(); place(); }).observe(orbit); }
+  window.addEventListener('load',function(){ measure(); place(); });
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(function(){ measure(); place(); }); }
   new IntersectionObserver(function(en){
-    en.forEach(function(e){ if(e.isIntersecting){ measure(); place(); restart(); } else { clearInterval(timer); } });
+    en.forEach(function(e){
+      measure(); place();
+      if(e.isIntersecting){ restart(); } else { clearInterval(timer); }
+    });
   },{threshold:.25}).observe(orbit);
 })();
 </script>
