@@ -11,11 +11,9 @@ import re, pathlib
 here = pathlib.Path(__file__).parent
 src = (here / 'index.html').read_text()
 IMG_HOST = 'https://nexus-mkii.github.io/psikiq/'
-FONTS = ('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700'
-         '&family=Michroma&family=Chakra+Petch:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap')
 
-# 1) head <style> … </style>  (everything between the first <style> and </head>)
-head_style = re.search(r'(<style>.*?</style>)\s*</head>', src, re.S).group(1)
+# 1) everything in <head> from the font preconnects through the closing </style>
+head_style = re.search(r'(<!-- FONTS.*?</style>)\s*</head>', src, re.S).group(1)
 # 2) body contents
 body = re.search(r'<body>\n(.*)</body>', src, re.S).group(1)
 # psi images live on the public host — GHL has no relative asset path
@@ -32,7 +30,6 @@ out = f'''<!-- PsikiQ home — ONE Custom Code element, full-width section. -->
   .c-section:has(.hero) .c-column{{padding:0!important;margin:0!important;}}
   body{{background:#17110A!important;}}
 </style>
-<link rel="stylesheet" href="{FONTS}">
 {head_style}
 {body}'''
 dst = here / 'ghl' / 'psikiq-home-ghl.html'

@@ -1,7 +1,8 @@
 # PsikiQ — landing page
 
 Single self-contained static page. No build step, no framework, no dependencies
-beyond Google Fonts (Oswald, Michroma, Chakra Petch, JetBrains Mono) loaded at runtime.
+beyond Google Fonts (Oswald, Chakra Petch, JetBrains Mono) loaded at runtime, off the
+critical path (preconnect + preload + media-swap link; display=swap).
 
 Deploy = the GHL site. `index.html` is the ONE source; run
 

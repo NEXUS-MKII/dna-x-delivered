@@ -9,10 +9,15 @@
   .c-section:has(.hero) .c-column{padding:0!important;margin:0!important;}
   body{background:#17110A!important;}
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Michroma&family=Chakra+Petch:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<!-- FONTS — preconnect both origins, then load the CSS off the critical path (display=swap
+     means text paints in the fallback and swaps in). Only the weights the page sets. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap"></noscript>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Michroma&family=Chakra+Petch:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
-  /* PRIMARY: Oswald (tall, condensed, tight — Impact-but-premium). SECONDARY display: Michroma (wide). BODY: Chakra Petch light. DATA: JetBrains Mono. */
+  /* PRIMARY: Oswald (tall, condensed, tight — Impact-but-premium). BODY: Chakra Petch light. DATA: JetBrains Mono. */
   :root{
     --void:#17110A;
     --white:#FFFFFF;
@@ -47,7 +52,6 @@
   html{scroll-behavior:smooth;}
   body{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:300;background:var(--void);color:var(--white);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
   .disp{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.01em;line-height:1.0;text-transform:uppercase;}
-  .wide{font-family:'Michroma',sans-serif;}
   .mono{font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:0;}
   :focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
 
@@ -99,8 +103,8 @@
     background:linear-gradient(180deg,transparent 0%,rgba(23,17,10,.08) 44%,rgba(23,17,10,.52) 78%,var(--void) 100%);}
   .hero-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;text-align:center;width:min(92vw,780px);}
 
-  /* PSI MARK — drawn, not typeset. Michroma has no usable psi glyph, so the font
-     route silently falls back and the two clipped halves drift out of register.
+  /* PSI MARK — drawn, not typeset. a typeset glyph
+     silently falls back and the two clipped halves drift out of register.
      One SVG with a hard-stop gradient at x=60 puts the colour split exactly on
      the page seam by construction. */
   .psi-mark{width:clamp(124px,20vw,218px);margin:0 auto;}
@@ -377,7 +381,7 @@
   .pg-who span{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:var(--mut-dark);letter-spacing:.04em;}
   .face.is-end{align-items:center;text-align:center;}
   .face.is-end .pg-quote{font-size:clamp(15px,1.7vw,19px);color:var(--silver);max-width:26ch;}
-  .face.is-end .pg-mark{font-family:'Michroma',sans-serif;font-size:26px;color:var(--gold);opacity:.5;margin-bottom:18px;}
+  .face.is-end .pg-mark{font-family:'Oswald',sans-serif;font-weight:300;font-size:26px;color:var(--gold);opacity:.5;margin-bottom:18px;}
   .book-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:30px;}
   .pg-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(230,190,106,.3);background:transparent;color:var(--gold);font-size:18px;cursor:pointer;transition:background .2s,transform .15s;font-family:'JetBrains Mono',ui-monospace,monospace;}
   .pg-btn:hover{background:rgba(230,190,106,.1);transform:translateY(-2px);}
