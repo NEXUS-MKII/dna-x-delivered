@@ -1730,25 +1730,47 @@
 <script>
 /* HERO FILM — the <video> autoplays muted (hidden) from load. After --hero-hold we
    veil the panels down — but only once the film is actually advancing, so a
-   browser that refuses autoplay (iOS low-power, "never auto-play" settings)
-   keeps the clean split rather than thinning it over a frozen frame. A watchdog
-   re-issues play() on any unrequested pause, capped so it never fights forever. */
+   browser that refuses autoplay (iOS Low Power / Low Data mode, "never auto-play"
+   settings) keeps the clean split rather than thinning it over a frozen frame.
+   iOS allows play() after ANY user gesture, so the first touch or scroll retries.
+   A watchdog re-issues play() on any unrequested pause, capped so it never fights
+   forever.  ?filmdebug=1 shows a readout on screen (phones have no console). */
 (function(){
   var hero=document.getElementById('hero'),film=document.getElementById('heroFilm');
   if(!hero||!film)return;
-  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches){film.removeAttribute('autoplay');film.pause();return;}
+  var reduce=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches);
+  var dbg=/[?&]filmdebug=1/.test(location.search),box=null;
+  function say(){
+    if(!dbg)return;
+    if(!box){box=document.createElement('pre');box.style.cssText='position:fixed;left:8px;bottom:40px;z-index:999;margin:0;padding:8px 10px;background:rgba(0,0,0,.8);color:#E6BE6A;font:11px/1.5 monospace;border:1px solid #E6BE6A;border-radius:6px;pointer-events:none;white-space:pre-wrap;max-width:80vw;';document.body.appendChild(box);}
+    box.textContent='film '+(film.currentSrc||'').split('/').pop().slice(0,14)+'\n'
+      +'paused '+film.paused+'  t '+film.currentTime.toFixed(1)+'  ready '+film.readyState+'  net '+film.networkState+'\n'
+      +'err '+(film.error?film.error.code+' '+(film.error.message||''):'none')+'\n'
+      +'reveal '+hero.classList.contains('reveal')+'  reduce-motion '+reduce+'  retries '+retries+'\n'
+      +'lastPlay '+lastPlay+'  gesture '+gestured+'  '+innerWidth+'x'+innerHeight;
+  }
+  if(reduce){film.removeAttribute('autoplay');film.pause();say();return;}
   var hold=parseFloat(getComputedStyle(hero).getPropertyValue('--hero-hold'))*1000||2000;
-  var armed=false,revealed=false,retries=0,MAX=8;
-  function play(){ film.muted=true; var p=film.play(); if(p&&p.catch)p.catch(function(){}); }
-  function reveal(){ if(revealed||!armed)return; if(film.paused||film.currentTime<0.2)return; revealed=true; hero.classList.add('reveal'); }
+  var armed=false,revealed=false,retries=0,MAX=8,lastPlay='-',gestured=false;
+  function play(){
+    film.muted=true; film.defaultMuted=true;
+    var p=film.play();
+    if(p&&p.then){p.then(function(){lastPlay='ok';say();}).catch(function(e){lastPlay=(e&&e.name)||'rejected';say();});}
+  }
+  function reveal(){ say(); if(revealed||!armed)return; if(film.paused||film.currentTime<0.2)return; revealed=true; hero.classList.add('reveal'); say(); }
   film.addEventListener('timeupdate',reveal);
   film.addEventListener('playing',function(){ reveal(); if(film.currentTime>1)retries=0; });
   film.addEventListener('pause',function(){
-    if(film.ended||document.hidden||retries>=MAX)return;
+    say(); if(film.ended||document.hidden||retries>=MAX)return;
     retries++; setTimeout(play,80*retries);
   });
+  film.addEventListener('error',say);
   document.addEventListener('visibilitychange',function(){ if(!document.hidden&&film.paused){retries=0;play();} });
+  /* autoplay refused? the first gesture of any kind is enough for iOS to allow play() */
+  function onGesture(){ gestured=true; if(film.paused){retries=0;play();} if(!film.paused){['touchend','pointerdown','scroll','keydown'].forEach(function(n){window.removeEventListener(n,onGesture,true);});} }
+  ['touchend','pointerdown','scroll','keydown'].forEach(function(n){window.addEventListener(n,onGesture,{capture:true,passive:true});});
   setTimeout(function(){ armed=true; play(); reveal(); },hold);
+  if(dbg){setInterval(say,500);}
 })();
 </script>
 </body>
