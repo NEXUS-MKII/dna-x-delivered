@@ -686,9 +686,23 @@
   </div>
 
   <section class="hero" data-phase="SUPERPOSITION|UNRESOLVED" id="hero">
-    <video class="hero-film" id="heroFilm" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1">
-      <source src="https://assets.cdn.filesafe.space/XmnnOgihSvpbtlApd8cN/media/6ab0e1324091fa65e6a79a0d.mp4" type="video/mp4">
-    </video>
+    <!-- HERO FILM — two renders in the GHL Media Library: 16:9 720p for desktop, a 3:4
+         crop for phones/portrait tablets (a third of the bytes, sharper under cover-fit).
+         No src in the markup: the inline script below picks one BEFORE the browser
+         starts downloading, so a phone never fetches the desktop file. -->
+    <video class="hero-film" id="heroFilm" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1"
+      data-src-desktop="https://assets.cdn.filesafe.space/XmnnOgihSvpbtlApd8cN/media/6ab0e1324091fa65e6a79a0d.mp4"
+      data-src-mobile=""></video>
+    <script>
+    (function(){
+      var v=document.getElementById('heroFilm'); if(!v)return;
+      var m=window.matchMedia&&window.matchMedia('(max-width:768px)').matches;
+      var c=navigator.connection||{};
+      if(c.saveData||/(^|\b)(slow-2g|2g|3g)\b/.test(c.effectiveType||''))m=true;   /* thin pipe: small file regardless of screen */
+      var src=(m&&v.getAttribute('data-src-mobile'))||v.getAttribute('data-src-desktop');
+      if(src){v.src=src;}
+    })();
+    </script>
     <div class="steel"></div><div class="light"></div><div class="seam"></div>
     <div class="hero-center">
       <div class="psi-mark">

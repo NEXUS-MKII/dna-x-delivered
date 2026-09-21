@@ -28,8 +28,12 @@ so splitting into a standalone repo later is a clean operation:
   Page loads with the clean split; after `--hero-hold` (2s) the film starts and the
   two panels veil down to `--hero-veil` (0.5). Both are CSS vars on `.hero`.
   Reduced-motion users keep the still split.
-- The mp4 lives in the GHL Media Library; `src` on `#heroFilm` is the filesafe CDN
-  URL. Re-upload and swap that one URL to change the cut.
+- Two renders live in the GHL Media Library, as `data-src-desktop` / `data-src-mobile`
+  on `#heroFilm` (16:9 720p and a 3:4 crop). An inline script picks one before the
+  browser fetches: ≤768px, Save-Data, or a 2g/3g connection gets the mobile file.
+  Empty `data-src-mobile` falls back to desktop. Renders come from the stitch
+  script (`build.py` in the cut session) with the Safari-safe encode flags
+  (yuv420p, High@4.0, 48 kHz); the hero files are silent.
 
 ## Open items
 
