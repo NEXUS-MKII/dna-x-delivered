@@ -80,7 +80,7 @@
   /* HERO FILM — runs muted on loop beneath the split. The steel/white panels open
      with full opacity (the page loads exactly as before), then after the hold they
      veil down to --hero-veil so the film reads through the split. */
-  .hero{--hero-veil:.28;--hero-hold:2s;--hero-fade:1.8s;}
+  .hero{--hero-veil:.5;--hero-hold:2s;--hero-fade:1.8s;}
   .hero-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity var(--hero-fade) ease;pointer-events:none;}
   .hero .steel,.hero .light{position:relative;z-index:1;transition:opacity var(--hero-fade) ease;}
   .hero.reveal .hero-film{opacity:1;}
