@@ -1138,7 +1138,7 @@
      Leave a value empty and that CTA stays inert rather than linking nowhere.
      NOTE: the quiz must be reachable on a PUBLIC host — a 127.0.0.1 address
      resolves to the visitor's own machine, so it works for nobody but you. */
-  var BOOK_URL = '';   /* GHL calendar / booking link — the only one still unset */
+  var BOOK_URL = 'https://book.psikiq.io/widget/booking/hilKmb9laNRnqffVwmSk';   /* Business Diagnostic — permanent link (survives slug changes) */
   window.PSIKIQ_BOOK_URL = BOOK_URL;
   [].forEach.call(document.querySelectorAll('[data-cta="book"]'),function(el){
     if(BOOK_URL){ el.setAttribute('href',BOOK_URL); }

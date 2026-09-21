@@ -73,8 +73,9 @@ the site's `.wordmark` tracking.
   workflow Inbound Webhook URL — until set, the form opens a pre-filled email),
   `CONTACT_EMAIL`, `LINKEDIN_URL`, `BOOK_URL`. Empty values hide their line.
 
-- CTA `Book the diagnostic` points at `href="#"` — swap for the GHL calendar /
-  booking URL before it takes real traffic.
+- Book CTAs (all pages + the Prognosis result screen) → the Business Diagnostic calendar,
+  permanent link `book.psikiq.io/widget/booking/hilKmb9laNRnqffVwmSk` (wired 22 Sep 2026;
+  survives slug changes — use this form, not the slug link).
 - Fonts need internet at runtime. If an offline demo is ever a risk, self-host
   the four faces in `fonts/` and swap the `@import` for local `@font-face`.
 - The flying seeker and HUD readouts are desktop-only by design (mobile perf).

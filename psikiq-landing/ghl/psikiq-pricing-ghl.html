@@ -579,7 +579,7 @@
 (function(){
   'use strict';
   /* ── WIRING ── same two destinations as the home page. Leave empty and the CTA stays inert. */
-  var BOOK_URL = '';
+  var BOOK_URL = 'https://book.psikiq.io/widget/booking/hilKmb9laNRnqffVwmSk';   /* Business Diagnostic — permanent link */
   [].forEach.call(document.querySelectorAll('[data-cta="book"]'),function(el){ if(BOOK_URL) el.setAttribute('href',BOOK_URL); });
   [].forEach.call(document.querySelectorAll('[data-cta="quiz"]'),function(el){ el.setAttribute('href','/#prognosis'); });
 
