@@ -86,6 +86,13 @@
   .hero.reveal .wordmark .h.dk,.hero.reveal .tag .h.dk{text-shadow:0 2px 24px rgba(23,17,10,.85),0 0 2px rgba(23,17,10,.9);}
   .hero.reveal .wordmark .h.lt,.hero.reveal .tag .h.lt{text-shadow:0 2px 24px rgba(255,255,255,.85),0 0 2px rgba(255,255,255,.9);}
   @media(prefers-reduced-motion:reduce){.hero-film{display:none;}.hero.reveal .steel,.hero.reveal .light{opacity:1;}}
+  /* PHONES — the hero takes the mobile film's shape (3:4) instead of the viewport's,
+     so the whole frame shows edge to edge and nothing is cropped off the sides. */
+  @media(max-width:768px){
+    .hero{height:auto;aspect-ratio:3/4;min-height:420px;}
+    .hero-film{object-fit:cover;}
+    .scrollcue{bottom:22px;}
+  }
   .hero .seam{position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:100%;background:var(--gold);z-index:5;box-shadow:0 0 22px 1px var(--accent-glow);}
   /* blend the hero down into the dark beat below — no hard edge */
   .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:15%;z-index:6;pointer-events:none;
