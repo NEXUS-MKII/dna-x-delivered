@@ -240,8 +240,8 @@
       <a href="/#instrument">The instrument</a><span class="sep"></span>
       <a href="/#engine">The engine</a><span class="sep"></span>
       <a href="/#proof">Proof</a><span class="sep"></span>
-      <a href="/pricing" data-nav="pricing">Pricing</a><span class="sep"></span>
-      <a href="/contact" data-nav="contact">Contact</a>
+      <a href="/psikiq-pricing" data-nav="pricing">Pricing</a><span class="sep"></span>
+      <a href="/psikiq-contact" data-nav="contact">Contact</a>
       <a href="/#instrument" class="hdr-cta" data-cta="quiz">Get your prognosis</a>
     </nav>
     <button class="hdr-burger" id="hdrBurger" type="button" aria-label="Menu" aria-controls="hdrMenu" aria-expanded="false"><i></i><i></i><i></i></button>
@@ -251,8 +251,8 @@
     <a href="/#instrument">The instrument</a>
     <a href="/#engine">The engine</a>
     <a href="/#proof">Proof</a>
-    <a href="/pricing" data-nav="pricing">Pricing</a>
-    <a href="/contact" data-nav="contact">Contact</a>
+    <a href="/psikiq-pricing" data-nav="pricing">Pricing</a>
+    <a href="/psikiq-contact" data-nav="contact">Contact</a>
     <a href="/#instrument" class="m-cta" data-cta="quiz">&#968;&nbsp; Get your prognosis</a>
   </nav>
 </header>
@@ -403,7 +403,7 @@
   var BOOK_URL      = '';
 
   if(BOOK_URL){ [].forEach.call(document.querySelectorAll('[data-cta="book"]'),function(el){ el.setAttribute('href',BOOK_URL); }); }
-  [].forEach.call(document.querySelectorAll('[data-cta="quiz"]'),function(el){ el.setAttribute('href','index.html#instrument'); });
+  [].forEach.call(document.querySelectorAll('[data-cta="quiz"]'),function(el){ el.setAttribute('href','/#instrument'); });
   if(CONTACT_EMAIL){ var le=document.getElementById('lineEmail'); le.href='mailto:'+CONTACT_EMAIL; document.getElementById('lineEmailV').textContent=CONTACT_EMAIL; le.hidden=false; }
   if(LINKEDIN_URL){ var ll=document.getElementById('lineLinkedIn'); ll.href=LINKEDIN_URL; ll.hidden=false; }
 

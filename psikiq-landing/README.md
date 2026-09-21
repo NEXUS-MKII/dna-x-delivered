@@ -14,8 +14,8 @@ Code element (full-width section):
 | source         | GHL page path | paste                        |
 |----------------|---------------|------------------------------|
 | `index.html`   | `/`           | `ghl/psikiq-home-ghl.html`    |
-| `pricing.html` | `/pricing`    | `ghl/psikiq-pricing-ghl.html` |
-| `contact.html` | `/contact`    | `ghl/psikiq-contact-ghl.html` |
+| `pricing.html` | `/psikiq-pricing` | `ghl/psikiq-pricing-ghl.html` |
+| `contact.html` | `/psikiq-contact` | `ghl/psikiq-contact-ghl.html` |
 
 `ghl/psikiq-header-ghl.html` is the HUD pill on its own (fonts + tokens included) for
 any GHL page built in GHL's own editor — paste at the top of that page. The generated
