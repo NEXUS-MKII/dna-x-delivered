@@ -16,12 +16,13 @@ so splitting into a standalone repo later is a clean operation:
 
 ## Media
 
-- `iv · the practice` plays the 68s film (cinematic clips intercut with Riverside /
-  Pika footage of Chris with Rob and Aaron). The mp4 is hosted in the GHL Media
-  Library — `src` in `#filmVideo` points at the filesafe CDN URL. Re-upload and
-  swap that URL to change the cut; nothing else references it.
-- `psi-practice.webp` is the poster frame (cafe, 14.5s). Regenerate from the mp4
-  if the cut changes.
+- The hero runs the 68s film (cinematic clips intercut with Pika/Riverside footage
+  of Chris with Rob and Aaron) **behind** the steel/white split — muted, looping.
+  Page loads with the clean split; after `--hero-hold` (2s) the film starts and the
+  two panels veil down to `--hero-veil` (0.28). Both are CSS vars on `.hero`.
+  Reduced-motion users keep the still split.
+- The mp4 lives in the GHL Media Library; `src` on `#heroFilm` is the filesafe CDN
+  URL. Re-upload and swap that one URL to change the cut.
 
 ## Open items
 
