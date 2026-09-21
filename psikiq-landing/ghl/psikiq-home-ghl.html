@@ -752,7 +752,7 @@
       <a href="/#proof">Proof</a><span class="sep"></span>
       <a href="/psikiq-pricing" data-nav="pricing">Pricing</a><span class="sep"></span>
       <a href="/psikiq-contact" data-nav="contact">Contact</a>
-      <a href="/#instrument" class="hdr-cta" data-cta="quiz">Get your prognosis</a>
+      <a href="/#prognosis" class="hdr-cta" data-cta="quiz">Get your prognosis</a>
     </nav>
     <button class="hdr-burger" id="hdrBurger" type="button" aria-label="Menu" aria-controls="hdrMenu" aria-expanded="false"><i></i><i></i><i></i></button>
   </div>
@@ -763,7 +763,7 @@
     <a href="/#proof">Proof</a>
     <a href="/psikiq-pricing" data-nav="pricing">Pricing</a>
     <a href="/psikiq-contact" data-nav="contact">Contact</a>
-    <a href="/#instrument" class="m-cta" data-cta="quiz">&#968;&nbsp; Get your prognosis</a>
+    <a href="/#prognosis" class="m-cta" data-cta="quiz">&#968;&nbsp; Get your prognosis</a>
   </nav>
 </header>
 <script>
@@ -1674,6 +1674,17 @@
     el.setAttribute('href',HOSTED);
     el.addEventListener('click',function(ev){ ev.preventDefault(); open(); });
   });
+
+  /* deep link — the other pages (and anything external) send people to /#prognosis
+     to land INSIDE the instrument, not merely near it. The hash is cleared once
+     opened so a refresh or a back-swipe doesn't re-open it on them. */
+  function openFromHash(){
+    if(location.hash!=='#prognosis') return;
+    if(history.replaceState) history.replaceState(null,'',location.pathname+location.search);
+    open();
+  }
+  window.addEventListener('hashchange',openFromHash);
+  openFromHash();
 })();
 
 /* ══ THE GEAR TRAIN ════════════════════════════════════════════════════════
