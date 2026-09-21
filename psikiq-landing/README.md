@@ -3,7 +3,14 @@
 Single self-contained static page. No build step, no framework, no dependencies
 beyond Google Fonts (Oswald, Michroma, Chakra Petch, JetBrains Mono) loaded at runtime.
 
-Deploy = serve `index.html`. That's the whole job.
+Deploy = the GHL site. `index.html` is the ONE source; run
+
+    python3 build_ghl.py
+
+and paste `ghl/psikiq-home-ghl.html` into the page's single Custom Code element
+(full-width section). The build strips the document wrapper, lifts GHL's 1170px
+row cap on that section, and points the psi images at nexus-mkii.github.io/psikiq/.
+Never hand-edit the GHL copy — that is how the two drifted apart in Sep 2026.
 
 ## Structure
 
