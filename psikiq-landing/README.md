@@ -58,6 +58,15 @@ pages link them in `<head>`; on GHL the header script swaps GHL's default icon f
 ours at load. Also set it in GHL: Sites → Settings → Favicon → `icons/favicon-32.png`.
 The set is mirrored on nexus-mkii.github.io/psikiq/icons/ (what the GHL pages fetch).
 
+## Logo
+
+`logo/` — lockups cut from `psi-gold.webp` + Oswald SemiBold wordmark (PSIKI white/ink, Q gold):
+square 512/1024 (void, rounded, hairline), `psikiq-calendar-logo-180.png` (GHL calendar cap),
+square + wide on transparent in on-dark (white text) and on-light (ink text) variants,
+`psikiq-mark-avatar-512.png` (mark only, for circle-cropped avatars). Regenerate from the
+session script if the mark changes; the wordmark is rendered, not typeset, so it matches
+the site's `.wordmark` tracking.
+
 ## Open items
 
 - Contact page wiring (`contact.html`, top of the script): `FORM_ENDPOINT` (a GHL
