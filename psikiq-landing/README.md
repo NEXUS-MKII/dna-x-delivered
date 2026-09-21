@@ -4,12 +4,22 @@ Single self-contained static page. No build step, no framework, no dependencies
 beyond Google Fonts (Oswald, Chakra Petch, JetBrains Mono) loaded at runtime, off the
 critical path (preconnect + preload + media-swap link; display=swap).
 
-Deploy = the GHL site. `index.html` is the ONE source; run
+Deploy = the GHL site. Two pages, each ONE source file; run
 
     python3 build_ghl.py
 
-and paste `ghl/psikiq-home-ghl.html` into the page's single Custom Code element
-(full-width section). The build strips the document wrapper, lifts GHL's 1170px
+and paste the matching `ghl/psikiq-*-ghl.html` into that GHL page's single Custom
+Code element (full-width section):
+
+| source         | GHL page path | paste                        |
+|----------------|---------------|------------------------------|
+| `index.html`   | `/`           | `ghl/psikiq-home-ghl.html`    |
+| `pricing.html` | `/pricing`    | `ghl/psikiq-pricing-ghl.html` |
+
+The site header (bar, nav, mobile menu) lives in `partials/header.html`; the build
+injects it into every page between the `HEADER:start/end` markers, so edit the
+partial, never the injected copy. Page links are written as `pricing.html` /
+`index.html#…` in source and rewritten to the GHL paths in the output. The build strips the document wrapper, lifts GHL's 1170px
 row cap on that section, and points the psi images at nexus-mkii.github.io/psikiq/.
 Never hand-edit the GHL copy — that is how the two drifted apart in Sep 2026.
 

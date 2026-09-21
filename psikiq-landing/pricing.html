@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PsikiQ — Pricing</title>
+<meta name="description" content="Your quiz funnel: a conversion engine under your entire marketing — built in four weeks, live for years. Fixed-scope build, care plan, creative packs. NZD ex-GST.">
+<meta name="theme-color" content="#17110A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PsikiQ — Pricing">
+<meta property="og:description" content="Your quiz funnel: built in four weeks, live for years. Fixed-scope build, care plan, creative packs.">
+<meta property="og:site_name" content="PsikiQ">
+<!-- FONTS — preconnect both origins, then load the CSS off the critical path (display=swap
+     means text paints in the fallback and swaps in). Only the weights the page sets. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap"></noscript>
+<style>
+  /* Tokens and ground are the home page's, verbatim — the two pages must read as one site. */
+  :root{
+    --void:#17110A;
+    --white:#FFFFFF;
+    --white-2:#EEF0F3;
+    --gold:#E6BE6A;
+    --gold-deep:#B8912F;
+    --silver:#C9CFD6;
+    --silver-2:#9AA3AD;
+    --accent:#E6BE6A;
+    --accent-ink:#A8801E;
+    --accent-glow:rgba(230,190,106,.28);
+    --warm:#E8912E;
+    --line-dark:#1C232D;
+    --line-light:#E1E4E9;
+    --mut-dark:#727E8E;
+    --mut-light:#8A93A0;
+    --ink:#17110A;
+    --steel-stripes:repeating-linear-gradient(90deg,
+        #17110a 0px,#20180e 2px,#191108 4px,#241b0f 6px,#150f08 8px);
+    --steel-sheen:linear-gradient(105deg,
+        rgba(230,190,106,.10) 0%,
+        rgba(230,190,106,.18) 12%,
+        rgba(201,207,214,.06) 26%,
+        transparent 42%,
+        rgba(230,190,106,.10) 62%,
+        transparent 84%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:300;background:var(--void);color:var(--white);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .disp{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.01em;line-height:1.0;text-transform:uppercase;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:0;}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+  .steel{position:relative;background-color:#17110a;
+    background-image:var(--steel-sheen),var(--steel-stripes);
+    background-blend-mode:screen,normal;}
+  .steel::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(201,207,214,.05),transparent 20%,transparent 82%,rgba(0,0,0,.35));
+    pointer-events:none;}
+
+  .hud{position:fixed;inset:0;pointer-events:none;z-index:100;}
+  .hud .corner{position:absolute;width:24px;height:24px;border-color:var(--gold);opacity:.6;}
+  .hud .tl{top:18px;left:18px;border-top:1.5px solid;border-left:1.5px solid;}
+  .hud .tr{top:18px;right:18px;border-top:1.5px solid;border-right:1.5px solid;}
+  .hud .bl{bottom:18px;left:18px;border-bottom:1.5px solid;border-left:1.5px solid;}
+  .hud .br{bottom:18px;right:18px;border-bottom:1.5px solid;border-right:1.5px solid;}
+  .hud .progress{position:absolute;bottom:24px;left:52px;right:52px;height:1px;background:rgba(201,207,214,.12);}
+  .hud .progress .fill{position:absolute;left:0;top:0;height:100%;width:0%;background:linear-gradient(90deg,var(--warm),var(--gold));}
+  .hud .state{position:absolute;bottom:18px;right:52px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--silver-2);opacity:.85;}
+  @media(max-width:640px){.hud .state{display:none;}.hud .progress{left:18px;right:18px;}}
+
+  /* shared type */
+  .kicker{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--warm);margin-bottom:24px;}
+  .wrap{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+  .sec{padding:clamp(64px,8vw,110px) clamp(24px,6vw,88px);position:relative;color:var(--white);border-top:1px solid rgba(230,190,106,.12);}
+  .sec h2{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(28px,4.6vw,52px);line-height:1.06;text-transform:uppercase;letter-spacing:.01em;color:var(--white);text-wrap:balance;}
+  .sec h2 .em{color:var(--gold);}
+  .lede{color:var(--silver);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:clamp(16px,1.9vw,19px);line-height:1.6;margin-top:18px;max-width:62ch;}
+  .body{color:var(--mut-dark);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:15.5px;line-height:1.68;max-width:66ch;}
+  .body+.body{margin-top:16px;}
+  .body b{color:var(--silver);font-weight:400;}
+  .body em{font-style:normal;color:var(--gold);}
+  .note{margin-top:22px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;line-height:1.7;color:var(--mut-dark);max-width:70ch;}
+  .note b{color:var(--gold);font-weight:400;}
+
+  /* ── the opening — shorter than the home hero; this page is for reading ── */
+  .pr-hero{padding:calc(64px + clamp(64px,9vw,120px)) clamp(24px,6vw,88px) clamp(56px,7vw,90px);position:relative;color:var(--white);}
+  .pr-hero h1{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(44px,8vw,96px);line-height:.98;text-transform:uppercase;letter-spacing:.01em;color:var(--white);}
+  .pr-hero h1 .em{color:var(--gold);}
+  .pr-hero .lede{font-size:clamp(17px,2.1vw,22px);color:var(--silver);}
+  .pr-hero .terms{margin-top:28px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut-dark);}
+  .pr-hero .terms b{color:var(--gold);font-weight:400;}
+  .pr-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(230,190,106,.45),transparent);}
+
+  /* ── the plate — engraved figures, the home page's spec plate idiom ── */
+  .plate{margin-top:40px;border-top:1px solid rgba(230,190,106,.32);border-bottom:1px solid rgba(230,190,106,.14);
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+  .spec{padding:22px 20px 20px;border-right:1px solid rgba(230,190,106,.12);}
+  .spec:last-child{border-right:none;}
+  .spec .s-n{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(30px,4vw,44px);line-height:1;color:var(--gold);font-variant-numeric:tabular-nums;letter-spacing:.01em;}
+  .spec .s-n small{font-size:.5em;color:var(--mut-dark);letter-spacing:.04em;margin-left:.2em;}
+  .spec .s-d{margin-top:9px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;line-height:1.55;color:var(--mut-dark);text-transform:uppercase;}
+  @media(max-width:620px){.spec{border-right:none;border-bottom:1px solid rgba(230,190,106,.12);}}
+
+  /* ── channels — hairline columns, no card soup ── */
+  .grid3{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:30px 40px;}
+  .col{border-top:1px solid rgba(230,190,106,.3);padding-top:16px;}
+  .col h3{font-family:'Oswald',sans-serif;font-weight:500;font-size:17px;text-transform:uppercase;letter-spacing:.03em;color:var(--gold);margin-bottom:8px;}
+  .col p{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;line-height:1.62;color:var(--mut-dark);}
+
+  /* ── the price ledger — rows, not cards; the recommended row is lit ── */
+  .ledger{margin-top:40px;border-top:1px solid rgba(230,190,106,.32);}
+  .row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(150px,.6fr) minmax(0,1.6fr);gap:18px 28px;align-items:baseline;
+    padding:22px 0;border-bottom:1px solid rgba(230,190,106,.12);}
+  .row .r-n{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(17px,2vw,21px);text-transform:uppercase;letter-spacing:.02em;color:var(--white);line-height:1.15;}
+  .row .r-n small{display:block;margin-top:5px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--mut-dark);text-transform:uppercase;font-weight:400;}
+  .row .r-p{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(20px,2.4vw,28px);color:var(--gold);line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .row .r-p small{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;color:var(--mut-dark);font-weight:400;margin-top:5px;white-space:normal;}
+  .row .r-d{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;line-height:1.6;color:var(--mut-dark);}
+  .row .r-d b{color:var(--silver);font-weight:400;}
+  .row.rec{background:linear-gradient(90deg,rgba(230,190,106,.09),rgba(230,190,106,.02));border-top:1px solid var(--gold);border-bottom:1px solid rgba(230,190,106,.4);
+    padding:24px 22px;margin:14px -22px 0;border-radius:6px;}
+  .row.rec .r-n::before{content:"recommended";display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;color:var(--warm);margin-bottom:8px;font-weight:500;}
+  .ledger.addons .row{grid-template-columns:minmax(0,1.3fr) minmax(120px,.5fr) minmax(0,1.7fr);padding:18px 0;}
+  .ledger.addons .row .r-n{font-size:clamp(15px,1.7vw,18px);}
+  .ledger.addons .row .r-p{font-size:clamp(18px,2vw,22px);}
+  @media(max-width:720px){
+    .row,.ledger.addons .row{grid-template-columns:1fr 1fr;gap:8px 16px;}
+    .row .r-d{grid-column:1 / -1;}
+    .row .r-p{text-align:right;}
+    .row.rec{margin-left:0;margin-right:0;padding:20px 16px;}
+  }
+
+  /* ── the scope — two phases, ruled checklists ── */
+  .phases{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:40px 48px;}
+  @media(max-width:800px){.phases{grid-template-columns:1fr;}}
+  .phase h3{display:flex;align-items:baseline;gap:12px;font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(20px,2.6vw,26px);text-transform:uppercase;letter-spacing:.02em;color:var(--white);}
+  .phase h3 .wk{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;color:var(--warm);font-weight:500;}
+  .tick{list-style:none;margin-top:18px;}
+  .tick li{position:relative;padding:12px 0 12px 26px;border-top:1px solid rgba(230,190,106,.12);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;line-height:1.58;color:var(--mut-dark);}
+  .tick li:last-child{border-bottom:1px solid rgba(230,190,106,.12);}
+  .tick li::before{content:"";position:absolute;left:2px;top:19px;width:8px;height:8px;border:1px solid var(--gold);transform:rotate(45deg);}
+  .tick li b{color:var(--silver);font-weight:400;}
+  .scope-head{margin-top:26px;font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(18px,2.3vw,24px);line-height:1.4;color:var(--white);max-width:60ch;}
+  .scope-head b{font-weight:500;color:var(--gold);}
+
+  /* ── care + creative ── */
+  .split2{margin-top:40px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px 56px;align-items:start;}
+  @media(max-width:860px){.split2{grid-template-columns:1fr;}}
+  .aside{border-left:2px solid var(--gold);padding:6px 0 6px 22px;}
+  .aside .a-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:12px;}
+  .aside .a-t{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(17px,2.2vw,23px);line-height:1.4;color:var(--white);}
+  .aside .a-t b{font-weight:500;color:var(--gold);}
+  .aside .a-p{margin-top:12px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;line-height:1.62;color:var(--mut-dark);}
+  .packs{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:34px 48px;}
+  @media(max-width:800px){.packs{grid-template-columns:1fr;}}
+  .pack{border-top:1px solid rgba(230,190,106,.3);padding-top:18px;}
+  .pack .p-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;}
+  .pack h3{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.2vw,22px);text-transform:uppercase;letter-spacing:.02em;color:var(--white);}
+  .pack .p-p{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(20px,2.4vw,26px);color:var(--gold);white-space:nowrap;}
+  .pack p{margin-top:12px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;line-height:1.62;color:var(--mut-dark);}
+  .pack p b{color:var(--silver);font-weight:400;}
+
+  /* ── the honest close + CTA ── */
+  .grow{margin-top:8px;border-right:2px solid var(--gold);padding:6px 24px 6px 0;margin-left:auto;max-width:62ch;text-align:right;}
+  .grow p{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(17px,2.3vw,24px);line-height:1.4;color:var(--white);}
+  .grow .g-s{margin-top:12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;color:var(--gold);opacity:.8;}
+  .cta{color:var(--white);text-align:center;padding:clamp(80px,10vw,140px) clamp(32px,6vw,88px);position:relative;overflow:hidden;}
+  .cta .inner{position:relative;z-index:2;}
+  .cta h2{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(32px,6vw,68px);line-height:1.04;text-transform:uppercase;letter-spacing:.01em;color:var(--white);max-width:15ch;margin:0 auto 24px;}
+  .cta p{color:var(--mut-dark);max-width:48ch;margin:0 auto 42px;font-size:16px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;line-height:1.6;}
+  .cta p b{color:var(--silver);font-weight:400;}
+  .btn{display:inline-flex;align-items:center;gap:12px;background:var(--gold);color:var(--ink);font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.06em;padding:18px 42px;border-radius:6px;text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s,filter .15s;box-shadow:0 8px 30px var(--accent-glow);}
+  .btn:hover{filter:brightness(1.06);transform:translateY(-2px);box-shadow:0 12px 42px var(--accent-glow);}
+  .btn-ghost{background:transparent;color:var(--gold);border:1px solid rgba(230,190,106,.45);box-shadow:none;}
+  .btn-ghost:hover{background:rgba(230,190,106,.09);box-shadow:0 10px 34px rgba(230,190,106,.14);}
+  .cta .btns{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
+  .cta .valid{margin-top:34px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut-dark);}
+
+  footer{padding:40px clamp(24px,6vw,80px);border-top:1px solid var(--line-dark);position:relative;}
+  footer .inner2{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;width:100%;}
+  footer .fmk{display:inline-flex;align-items:center;gap:.4em;font-family:'Oswald',sans-serif;font-weight:600;font-size:22px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);}
+  footer .fmk img{height:1.05em;width:auto;display:block;}
+  footer .fmk .q{color:var(--gold);}
+  footer .fine{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.03em;color:var(--mut-dark);}
+  footer .fine b{color:var(--silver-2);font-weight:400;}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<script>document.documentElement.className+=' js';</script>
+<!-- HEADER:start (generated from partials/header.html by build_ghl.py — do not edit here) -->
+<!-- SITE HEADER — shared by every page. Injected by build_ghl.py between the HEADER markers;
+     edit THIS file, not the copy inside index.html / pricing.html. the readout span is filled per page. -->
+<style>
+  .hdr{position:fixed;top:0;left:0;right:0;z-index:110;height:64px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 clamp(18px,3vw,40px);background:rgba(23,17,10,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(230,190,106,.14);}
+  .hdr-l{display:flex;align-items:center;gap:18px;min-width:0;}
+  .hdr-brand{display:inline-flex;align-items:center;gap:.4em;font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;
+    text-transform:uppercase;letter-spacing:.04em;color:var(--white);text-decoration:none;white-space:nowrap;}
+  .hdr-brand img{height:1.1em;width:auto;display:block;}
+  .hdr-brand .q{color:var(--gold);}
+  .hdr-read{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--gold);opacity:.8;white-space:nowrap;}
+  .hdr-read .w{color:var(--warm);}
+  .hdr-nav{display:flex;align-items:center;gap:clamp(16px,2.2vw,28px);}
+  .hdr-nav a{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--silver-2);text-decoration:none;transition:color .2s;}
+  .hdr-nav a:hover,.hdr-nav a.on{color:var(--gold);}
+  .hdr-cta{font-family:'Oswald',sans-serif!important;font-weight:500;font-size:13px!important;letter-spacing:.08em!important;
+    color:var(--gold)!important;border:1px solid rgba(230,190,106,.5);border-radius:5px;padding:8px 15px;transition:background .2s,color .2s;}
+  .hdr-cta:hover{background:rgba(230,190,106,.12);}
+  .hdr-burger{display:none;width:40px;height:40px;border:1px solid rgba(230,190,106,.35);border-radius:6px;background:transparent;cursor:pointer;
+    align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0;}
+  .hdr-burger i{display:block;width:18px;height:1.5px;background:var(--gold);transition:transform .25s,opacity .25s;}
+  .hdr-burger[aria-expanded="true"] i:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .hdr-burger[aria-expanded="true"] i:nth-child(2){opacity:0;}
+  .hdr-burger[aria-expanded="true"] i:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+  .hdr-menu{position:fixed;inset:0;z-index:105;display:none;flex-direction:column;justify-content:center;gap:6px;padding:80px 28px 40px;
+    background-color:#17110a;background-image:var(--steel-sheen),var(--steel-stripes);background-blend-mode:screen,normal;}
+  .hdr-menu.open{display:flex;}
+  .hdr-menu a{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(30px,8vw,44px);text-transform:uppercase;letter-spacing:.02em;
+    color:var(--white);text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(230,190,106,.14);}
+  .hdr-menu a.on,.hdr-menu a:hover{color:var(--gold);}
+  .hdr-menu .m-cta{margin-top:22px;border:none;color:var(--gold);font-size:clamp(20px,5vw,26px);}
+  .hdr-menu .m-cta::before{content:"\03C8  ";}
+  body.menu-open{overflow:hidden;}
+  /* the HUD's top corners sit under the bar — drop them below it */
+  .hud .tl,.hud .tr{top:76px;}
+  @media(max-width:860px){.hdr-nav{display:none;}.hdr-burger{display:flex;}.hdr-read{display:none;}}
+  @media(max-width:640px){.hdr-brand{font-size:18px;}}
+</style>
+<header class="hdr" id="hdr">
+  <div class="hdr-l">
+    <a class="hdr-brand" href="index.html" aria-label="PsikiQ home"><img src="psi-gold.webp" alt="" aria-hidden="true"><span>Psiki<span class="q">Q</span></span></a>
+    <span class="hdr-read mono"><span class="w">//</span>&nbsp;PRICING</span>
+  </div>
+  <nav class="hdr-nav" aria-label="Site">
+    <a href="index.html#instrument">The instrument</a>
+    <a href="index.html#engine">The engine</a>
+    <a href="index.html#proof">Proof</a>
+    <a href="pricing.html" data-nav="pricing">Pricing</a>
+    <a href="#" class="hdr-cta" data-cta="quiz">Get your prognosis</a>
+  </nav>
+  <button class="hdr-burger" id="hdrBurger" type="button" aria-label="Menu" aria-controls="hdrMenu" aria-expanded="false"><i></i><i></i><i></i></button>
+</header>
+<nav class="hdr-menu" id="hdrMenu" aria-label="Site, mobile">
+  <a href="index.html">Home</a>
+  <a href="index.html#instrument">The instrument</a>
+  <a href="index.html#engine">The engine</a>
+  <a href="index.html#proof">Proof</a>
+  <a href="pricing.html" data-nav="pricing">Pricing</a>
+  <a href="#" class="m-cta" data-cta="quiz">Get your prognosis</a>
+</nav>
+<script>
+(function(){
+  var b=document.getElementById('hdrBurger'),m=document.getElementById('hdrMenu');
+  if(!b||!m)return;
+  function set(o){b.setAttribute('aria-expanded',o?'true':'false');m.classList.toggle('open',o);document.body.classList.toggle('menu-open',o);}
+  b.addEventListener('click',function(){set(b.getAttribute('aria-expanded')!=='true');});
+  m.addEventListener('click',function(e){if(e.target.tagName==='A')set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  /* mark the current page */
+  var here=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');
+  [].forEach.call(document.querySelectorAll('[data-nav]'),function(a){
+    var p=a.getAttribute('href').replace(/\.html$/,'').replace(/^\//,'');
+    if(here.replace(/^\//,'')===p||here.split('/').pop()===p)a.classList.add('on');
+  });
+})();
+</script>
+
+<!-- HEADER:end -->
+
+  <div class="hud">
+    <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+    <div class="state mono">STATE&nbsp;&middot;&nbsp;PRICED</div>
+    <div class="progress"><div class="fill" id="pf"></div></div>
+  </div>
+
+  <!-- THE OPENING — the instrument, priced. Pain first, the number where it belongs. -->
+  <section class="pr-hero steel">
+    <div class="wrap">
+      <div class="kicker mono">pricing &middot; your quiz funnel</div>
+      <h1>A conversion engine under <span class="em">your entire marketing.</span></h1>
+      <p class="lede">Built in four weeks. Live for years. One asset every channel points at &mdash; organic, outbound and paid &mdash; so every improvement to the funnel lifts every channel at once.</p>
+      <div class="terms mono">fixed scope &middot; four-week build &middot; all pricing <b>NZD ex-GST</b></div>
+    </div>
+  </section>
+
+  <!-- i · WHY A QUIZ -->
+  <section class="sec steel">
+    <div class="wrap">
+      <div class="kicker mono">i &middot; why a quiz outperforms a landing page</div>
+      <h2>People love exploring their own challenges. <span class="em">A quiz turns that instinct into your pipeline.</span></h2>
+      <div class="plate">
+        <div class="spec"><div class="s-n">30&ndash;40<small>%+</small></div><div class="s-d mono">opt-in on well-built<br>scorecards &middot; ScoreApp benchmarks</div></div>
+        <div class="spec"><div class="s-n">low single<small>digits</small></div><div class="s-d mono">what a standard landing<br>page converts at</div></div>
+        <div class="spec"><div class="s-n">&gt; &#8532;</div><div class="s-d mono">completion among<br>starters</div></div>
+        <div class="spec"><div class="s-n">days</div><div class="s-d mono">to sales-ready conversations<br>on our latest deployment</div></div>
+      </div>
+      <div class="grid3">
+        <div class="col">
+          <h3>The exchange, flipped</h3>
+          <p>A standard landing page asks a stranger for their contact details in exchange for a brochure &mdash; a tired trade, and it converts like one. A quiz offers self-discovery first &mdash; <b>&ldquo;find out your result&rdquo;</b> &mdash; and the contact details arrive as a natural by-product of wanting the answer.</p>
+        </div>
+        <div class="col">
+          <h3>Better leads, not just more</h3>
+          <p>Every completion arrives scored, segmented and self-described: their situation, their pain, their profile &mdash; known before anyone picks up the phone, landing in your CRM as rich, labelled data rather than a bare email address.</p>
+        </div>
+        <div class="col">
+          <h3>Follow-up that writes itself</h3>
+          <p>They&rsquo;ve told you what to say. Our most recent live deployment was producing sales-ready conversations within days of launch &mdash; a multiple-times lift, on traffic you&rsquo;re already paying for.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ii · ONE ASSET, EVERY CHANNEL -->
+  <section class="sec steel">
+    <div class="wrap">
+      <div class="kicker mono">ii &middot; one asset, every channel, all of your spend</div>
+      <h2>The destination <span class="em">every channel points at.</span></h2>
+      <p class="lede">That is what makes it different from any single campaign asset. One link works everywhere you already spend &mdash; you&rsquo;re not buying a campaign asset, you&rsquo;re upgrading the conversion layer under your entire marketing.</p>
+      <div class="grid3">
+        <div class="col"><h3>LinkedIn featured section</h3><p>Every profile visit has somewhere to convert.</p></div>
+        <div class="col"><h3>Social content</h3><p>Posts stop ending at &ldquo;great point&rdquo; and start ending in captured, scored leads.</p></div>
+        <div class="col"><h3>Email outreach</h3><p>The ask drops from &ldquo;book a call with a stranger&rdquo; to &ldquo;find out your result&rdquo; &mdash; a far easier yes, from far colder people.</p></div>
+        <div class="col"><h3>Meta campaigns</h3><p>Every ad dollar lands on a page built to convert, not a homepage built to describe.</p></div>
+        <div class="col"><h3>Your website</h3><p>Embedded or as a pop-up, lifting conversion on visitors you already get.</p></div>
+        <div class="col"><h3>Google Ads &amp; search</h3><p>Sent straight into a high-conversion funnel.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- iii · PRICING -->
+  <section class="sec steel" id="pricing">
+    <div class="wrap">
+      <div class="kicker mono">iii &middot; pricing</div>
+      <h2>Fixed scope. <span class="em">Known number.</span></h2>
+      <div class="ledger">
+        <div class="row">
+          <div class="r-n">Quiz Funnel Build<small>fixed scope</small></div>
+          <div class="r-p">$5,000<small>one-off</small></div>
+          <div class="r-d">The complete funnel &mdash; full scope below. <b>Four-week build.</b></div>
+        </div>
+        <div class="row">
+          <div class="r-n">Meta Creative Pack<small>video + statics</small></div>
+          <div class="r-p">$1,500</div>
+          <div class="r-d">Ad creative built on the same hooks as your funnel: video for cold traffic, statics for the warm. <b>The recommended pack.</b></div>
+        </div>
+        <div class="row">
+          <div class="r-n">Meta Creative Pack<small>statics only</small></div>
+          <div class="r-p">$500</div>
+          <div class="r-d">The static variant sets alone &mdash; where you supply or skip video.</div>
+        </div>
+        <div class="row">
+          <div class="r-n">Hosting &amp; Care Plan</div>
+          <div class="r-p">$375<small>per month</small></div>
+          <div class="r-d">From launch: hosting, monitoring, tuning and monthly changes &mdash; detail below.</div>
+        </div>
+        <div class="row">
+          <div class="r-n">Premium Care Plan</div>
+          <div class="r-p">$495<small>per month</small></div>
+          <div class="r-d">Everything in the care plan, plus <b>one professionally edited campaign video each month</b> &mdash; your creative stays fresh without a project quote every time. Unused video credits bank, up to two.</div>
+        </div>
+        <div class="row rec">
+          <div class="r-n">Build + video creative pack</div>
+          <div class="r-p">$6,500<small>one-off, then $375 / mo</small></div>
+          <div class="r-d">The funnel and its ad creative, <b>designed together, launched together.</b></div>
+        </div>
+      </div>
+
+      <div class="kicker mono" style="margin-top:56px">options &amp; add-ons</div>
+      <div class="ledger addons">
+        <div class="row">
+          <div class="r-n">Animated presenter<small>funnel</small></div>
+          <div class="r-p">+$500</div>
+          <div class="r-d">Prefer not to appear on camera? A branded animated presenter replaces real-presenter footage across the funnel.</div>
+        </div>
+        <div class="row">
+          <div class="r-n">Animated presenter<small>creative pack</small></div>
+          <div class="r-p">+$200</div>
+          <div class="r-d">The same substitution applied to your ad creative.</div>
+        </div>
+        <div class="row">
+          <div class="r-n">Full video pack</div>
+          <div class="r-p">+$500</div>
+          <div class="r-d">Extends presenter video from the core result page to every results page.</div>
+        </div>
+        <div class="row">
+          <div class="r-n">Extra landing or results page</div>
+          <div class="r-p">$1,000<small>each</small></div>
+          <div class="r-d">Additional regions, offers, or a fourth-and-subsequent audience profile.</div>
+        </div>
+        <div class="row">
+          <div class="r-n">Strategic consultation</div>
+          <div class="r-p">$120<small>per 90 min</small></div>
+          <div class="r-d">Direct session with the Director of NOW Group during your care-plan period.</div>
+        </div>
+      </div>
+      <p class="note">The included video is <b>real-presenter footage</b> &mdash; you, or a nominated representative, on camera. It converts better and it ages better. Where that&rsquo;s not workable, the animated presenter options above carry the same job.</p>
+    </div>
+  </section>
+
+  <!-- iv · THE SCOPE -->
+  <section class="sec steel" id="scope">
+    <div class="wrap">
+      <div class="kicker mono">iv &middot; what the $5,000 build contains</div>
+      <h2>One landing page. Three results pages. <span class="em">Video where it converts.</span></h2>
+      <p class="scope-head">Quiz entry, offer framing and lead capture on the landing page. <b>Three results pages &mdash; one per audience profile</b> &mdash; personalised section by section to how each person answered. Video on the landing page and the core result page.</p>
+      <div class="phases">
+        <div class="phase">
+          <h3>Planning <span class="wk mono">weeks 1&ndash;2</span></h3>
+          <ul class="tick">
+            <li><b>Quiz concept proposal</b> &mdash; the angle, the hook, and the outcome metrics we&rsquo;ll track.</li>
+            <li><b>Question design</b> &mdash; written to segment precisely, finish at high completion rates, and arm you with data that helps convert.</li>
+            <li><b>Scoring and routing design</b> &mdash; how answers become scores, and scores route each person to the result built for them.</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <h3>Construction <span class="wk mono">weeks 2&ndash;4</span></h3>
+          <ul class="tick">
+            <li><b>Audience profiles agreed with you before build</b> &mdash; scoring bands, character types, qualification.</li>
+            <li><b>Section-by-section personalisation</b> on every results page, keyed to each respondent&rsquo;s answers.</li>
+            <li><b>CRM integration, most platforms</b> &mdash; field mapping and tagging so leads arrive labelled, not just listed.</li>
+            <li><b>All page builds, plus SEO setup</b> &mdash; meta descriptions, titles, social share cards.</li>
+            <li><b>One complimentary lead magnet</b>, with its automated delivery email.</li>
+            <li><b>A recommended follow-up email sequence</b> per audience profile, ready for your CRM.</li>
+            <li><b>Abandoned-quiz capture and tuning</b> &mdash; the almost-finished leads get a second chance.</li>
+            <li><b>Full analytics</b> &mdash; GA4 events, Meta pixel and Conversions API, conversion events wired.</li>
+            <li><b>A retargeting audience</b> built from quiz-starters &mdash; ready the day an ad campaign begins.</li>
+            <li><b>Privacy done properly</b> &mdash; consent capture and notice on the form (NZ Privacy Act).</li>
+            <li><b>Full device QA</b>, build documentation, a recorded handover walkthrough, and two revision rounds.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- v · THE CARE PLAN -->
+  <section class="sec steel" id="care">
+    <div class="wrap">
+      <div class="kicker mono">v &middot; the care plan &middot; $375 / month</div>
+      <h2>Live, fast, secure &mdash; <span class="em">and still improving.</span></h2>
+      <div class="split2">
+        <ul class="tick">
+          <li><b>Hosting &amp; SSL</b> &mdash; your funnel stays live, fast and secure.</li>
+          <li><b>Uptime monitoring</b> &mdash; watched around the clock; if it blinks, we know before you do.</li>
+          <li><b>Abandoned-quiz email tuning</b> &mdash; ongoing tweaks so recovery emails keep working.</li>
+          <li><b>Text amendments</b>, image swaps, link and button updates, quiz copy touch-ups.</li>
+          <li><b>Monthly integration health check</b> &mdash; CRM connection, tags and lead alerts verified working.</li>
+          <li><b>Up to 5 change tickets a month</b> &mdash; a ticket is one small change from this list, typically turned around within 2 business days. New pages, new audience profiles, new logic or redesigns are quoted from the add-on menu, so the plan stays simple and predictable.</li>
+        </ul>
+        <div class="aside">
+          <div class="a-l mono">premium care plan &middot; $495 / month</div>
+          <div class="a-t">Prefer your creative evolving month to month? <b>One edited campaign video folded into every month</b> &mdash; planned against your ad strategy, so each video has a defined job before it&rsquo;s made.</div>
+          <p class="a-p">Unused credits bank, up to two.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- vi · THE CREATIVE PACKS -->
+  <section class="sec steel" id="creative">
+    <div class="wrap">
+      <div class="kicker mono">vi &middot; the creative packs, briefly</div>
+      <h2>Same hooks, same language, <span class="em">one story from first scroll to result.</span></h2>
+      <div class="packs">
+        <div class="pack">
+          <div class="p-top"><h3>Video + statics</h3><div class="p-p">$1,500</div></div>
+          <p>Three static variant sets plus video ad creative for the same campaign &mdash; <b>video doing the cold-traffic heavy lifting, statics converting the warm</b>, all sharing the hooks, language and visual identity of your funnel so the journey reads as one story from first scroll to result.</p>
+        </div>
+        <div class="pack">
+          <div class="p-top"><h3>Statics only</h3><div class="p-p">$500</div></div>
+          <p>Three variant sets, each a deliberate spread of angles built to test against each other: <b>a cinematic pattern-interrupt, demographic cuts</b> shaped to your audiences, <b>clean typographic offer-delivery, and a wildcard concept.</b> Want more angles later? Another pack &mdash; same price, same structure, pointed at the next offer.</p>
+        </div>
+      </div>
+      <div class="grow" style="margin-top:56px">
+        <p>Behind the quiz sit the bigger plays when you&rsquo;re ready for them: fully managed Meta campaigns feeding the funnel, further creative packs as offers multiply, and &mdash; where an owned asset makes better long-term economics &mdash; a multi-quiz engine of your own.</p>
+        <div class="g-s mono">the funnel is the foundation &middot; everything after it compounds</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT STEP -->
+  <section class="cta steel">
+    <div class="inner">
+      <div class="kicker mono">next step</div>
+      <h2>From signed-off concept to live funnel: four weeks.</h2>
+      <p>A short discovery conversation, then the quiz concept proposal &mdash; <b>the angle, the hook, and the result your market actually wants to know.</b></p>
+      <div class="btns">
+        <a href="#" class="btn" data-cta="book">&#968;&nbsp; Book a discovery conversation</a>
+        <a href="index.html#instrument" class="btn btn-ghost">Run the diagnostic first</a>
+      </div>
+      <div class="valid mono">engineered and delivered by NOW Group &middot; pricing valid 90 days from issue &middot; August 2026</div>
+    </div>
+  </section>
+
+  <footer class="steel">
+    <div class="inner2">
+      <div class="fmk">
+        <img src="psi-gold.webp" alt="" aria-hidden="true">
+        Psiki<span class="q">Q</span>
+      </div>
+      <div class="fine mono">powered by the <b>ELENCHUS</b> engine &middot; built by <b>AUBIT</b> &middot; a <b>NOW GROUP</b> company</div>
+    </div>
+  </footer>
+
+<script>
+(function(){
+  'use strict';
+  /* ── WIRING ── same two destinations as the home page. Leave empty and the CTA stays inert. */
+  var BOOK_URL = '';
+  [].forEach.call(document.querySelectorAll('[data-cta="book"]'),function(el){ if(BOOK_URL) el.setAttribute('href',BOOK_URL); });
+  [].forEach.call(document.querySelectorAll('[data-cta="quiz"]'),function(el){ el.setAttribute('href','index.html#instrument'); });
+
+  /* progress rail */
+  var pf=document.getElementById('pf');
+  function progress(){
+    var doc=document.documentElement, max=doc.scrollHeight-doc.clientHeight;
+    pf.style.width=((max>0?Math.min(1,doc.scrollTop/max):0)*100).toFixed(1)+'%';
+  }
+  var ticking=false;
+  window.addEventListener('scroll',function(){ if(ticking)return; ticking=true; requestAnimationFrame(function(){progress();ticking=false;}); },{passive:true});
+  window.addEventListener('resize',progress); progress();
+})();
+</script>
+</body>
+</html>
