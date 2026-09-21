@@ -686,7 +686,7 @@
   </div>
 
   <section class="hero" data-phase="SUPERPOSITION|UNRESOLVED" id="hero">
-    <video class="hero-film" id="heroFilm" muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+    <video class="hero-film" id="heroFilm" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1">
       <source src="https://assets.cdn.filesafe.space/XmnnOgihSvpbtlApd8cN/media/6ab0e1324091fa65e6a79a0d.mp4" type="video/mp4">
     </video>
     <div class="steel"></div><div class="light"></div><div class="seam"></div>
@@ -1709,18 +1709,26 @@
 })();
 </script>
 <script>
-/* HERO FILM — hold the clean split for --hero-hold, then start the film (muted, loop)
-   and veil the panels down. Reduced-motion users keep the still split. */
+/* HERO FILM — the <video> autoplays muted (hidden) from load. After --hero-hold we
+   veil the panels down — but only once the film is actually advancing, so a
+   browser that refuses autoplay (iOS low-power, "never auto-play" settings)
+   keeps the clean split rather than thinning it over a frozen frame. A watchdog
+   re-issues play() on any unrequested pause, capped so it never fights forever. */
 (function(){
   var hero=document.getElementById('hero'),film=document.getElementById('heroFilm');
   if(!hero||!film)return;
-  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches){film.removeAttribute('autoplay');film.pause();return;}
   var hold=parseFloat(getComputedStyle(hero).getPropertyValue('--hero-hold'))*1000||2000;
-  setTimeout(function(){
-    film.muted=true;
-    var p=film.play();
-    var reveal=function(){hero.classList.add('reveal');};
-    if(p&&p.then){p.then(reveal).catch(function(){});}else{reveal();}
-  },hold);
+  var armed=false,revealed=false,retries=0,MAX=8;
+  function play(){ film.muted=true; var p=film.play(); if(p&&p.catch)p.catch(function(){}); }
+  function reveal(){ if(revealed||!armed)return; if(film.paused||film.currentTime<0.2)return; revealed=true; hero.classList.add('reveal'); }
+  film.addEventListener('timeupdate',reveal);
+  film.addEventListener('playing',function(){ reveal(); if(film.currentTime>1)retries=0; });
+  film.addEventListener('pause',function(){
+    if(film.ended||document.hidden||retries>=MAX)return;
+    retries++; setTimeout(play,80*retries);
+  });
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden&&film.paused){retries=0;play();} });
+  setTimeout(function(){ armed=true; play(); reveal(); },hold);
 })();
 </script>
