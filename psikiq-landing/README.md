@@ -15,7 +15,11 @@ Code element (full-width section):
 |----------------|---------------|------------------------------|
 | `index.html`   | `/`           | `ghl/psikiq-home-ghl.html`    |
 | `pricing.html` | `/pricing`    | `ghl/psikiq-pricing-ghl.html` |
+| `contact.html` | `/contact`    | `ghl/psikiq-contact-ghl.html` |
 
+`ghl/psikiq-header-ghl.html` is the HUD pill on its own (fonts + tokens included) for
+any GHL page built in GHL's own editor — paste at the top of that page. The generated
+pages above already carry it.
 The site header (bar, nav, mobile menu) lives in `partials/header.html`; the build
 injects it into every page between the `HEADER:start/end` markers, so edit the
 partial, never the injected copy. Page links are written as `pricing.html` /
@@ -47,6 +51,10 @@ so splitting into a standalone repo later is a clean operation:
   (yuv420p, High@4.0, 48 kHz); the hero files are silent.
 
 ## Open items
+
+- Contact page wiring (`contact.html`, top of the script): `FORM_ENDPOINT` (a GHL
+  workflow Inbound Webhook URL — until set, the form opens a pre-filled email),
+  `CONTACT_EMAIL`, `LINKEDIN_URL`, `BOOK_URL`. Empty values hide their line.
 
 - CTA `Book the diagnostic` points at `href="#"` — swap for the GHL calendar /
   booking URL before it takes real traffic.

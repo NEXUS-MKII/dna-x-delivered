@@ -9,9 +9,8 @@
   .c-section:has(.hdr) .c-column{padding:0!important;margin:0!important;}
   body{background:#17110A!important;}
 </style>
-<!-- FONTS — preconnect both origins, then load the CSS off the critical path (display=swap
-     means text paints in the fallback and swaps in). Only the weights the page sets. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- FONTS — one preconnect (the file origin; the CSS is preloaded, which opens its own
+     connection), then the CSS off the critical path. Only the weights the page sets. -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap" media="print" onload="this.media='all'">
@@ -189,81 +188,112 @@
 </style>
 <script>document.documentElement.className+=' js';</script>
 <!-- HEADER:start (generated from partials/header.html by build_ghl.py — do not edit here) -->
-<!-- SITE HEADER — shared by every page. Injected by build_ghl.py between the HEADER markers;
-     edit THIS file, not the copy inside index.html / pricing.html. the readout span is filled per page. -->
+<!-- SITE HEADER — the HUD pill. Shared by every page; injected by build_ghl.py between the
+     HEADER markers (edit THIS file, never the injected copy). The readout span is per page.
+     Also emitted standalone as ghl/psikiq-header-ghl.html for any other GHL page. -->
 <style>
-  .hdr{position:fixed;top:0;left:0;right:0;z-index:110;height:64px;display:flex;align-items:center;justify-content:space-between;
-    padding:0 clamp(18px,3vw,40px);background:rgba(23,17,10,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-    border-bottom:1px solid rgba(230,190,106,.14);}
-  .hdr-l{display:flex;align-items:center;gap:18px;min-width:0;}
+  /* ── the pill ── */
+  .hdr{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(94%,1400px);z-index:110;
+    background:rgba(23,17,10,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid rgba(230,190,106,.34);border-radius:6px;
+    box-shadow:0 0 0 1px rgba(230,190,106,.06),inset 0 1px 0 rgba(255,255,255,.04),0 10px 34px rgba(0,0,0,.55);
+    transition:border-color .3s,box-shadow .3s;}
+  .hdr::before,.hdr::after{content:"";position:absolute;width:14px;height:14px;pointer-events:none;border-color:var(--gold);border-style:solid;border-width:0;}
+  .hdr::before{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;border-radius:2px 0 0 0;}
+  .hdr::after{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 2px 0;}
+  .hdr.scrolled{border-color:rgba(230,190,106,.7);box-shadow:0 0 0 1px rgba(230,190,106,.12),inset 0 1px 0 rgba(255,255,255,.05),0 14px 40px rgba(0,0,0,.6),0 0 26px rgba(230,190,106,.10);}
+  .hdr-in{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px;padding:0 clamp(16px,2.4vw,28px);overflow:hidden;}
+  /* a slow scan — the instrument is on */
+  .hdr-in::before{content:"";position:absolute;left:0;right:0;height:36%;pointer-events:none;
+    background:linear-gradient(180deg,transparent,rgba(230,190,106,.05),transparent);animation:hdr-scan 7s linear infinite;}
+  @keyframes hdr-scan{0%{transform:translateY(-100%);opacity:0;}15%{opacity:1;}85%{opacity:1;}100%{transform:translateY(400%);opacity:0;}}
+  .hdr-l{display:flex;align-items:center;gap:16px;min-width:0;position:relative;z-index:1;}
   .hdr-brand{display:inline-flex;align-items:center;gap:.4em;font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;
     text-transform:uppercase;letter-spacing:.04em;color:var(--white);text-decoration:none;white-space:nowrap;}
   .hdr-brand img{height:1.1em;width:auto;display:block;}
   .hdr-brand .q{color:var(--gold);}
-  .hdr-read{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--gold);opacity:.8;white-space:nowrap;}
+  .hdr-read{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;color:var(--gold);opacity:.85;white-space:nowrap;}
   .hdr-read .w{color:var(--warm);}
-  .hdr-nav{display:flex;align-items:center;gap:clamp(16px,2.2vw,28px);}
-  .hdr-nav a{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--silver-2);text-decoration:none;transition:color .2s;}
-  .hdr-nav a:hover,.hdr-nav a.on{color:var(--gold);}
-  .hdr-cta{font-family:'Oswald',sans-serif!important;font-weight:500;font-size:13px!important;letter-spacing:.08em!important;
-    color:var(--gold)!important;border:1px solid rgba(230,190,106,.5);border-radius:5px;padding:8px 15px;transition:background .2s,color .2s;}
-  .hdr-cta:hover{background:rgba(230,190,106,.12);}
-  .hdr-burger{display:none;width:40px;height:40px;border:1px solid rgba(230,190,106,.35);border-radius:6px;background:transparent;cursor:pointer;
-    align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0;}
-  .hdr-burger i{display:block;width:18px;height:1.5px;background:var(--gold);transition:transform .25s,opacity .25s;}
+  .hdr-read i{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:hdr-pulse 2.4s ease-in-out infinite;flex:none;}
+  @keyframes hdr-pulse{0%,100%{box-shadow:0 0 0 0 rgba(230,190,106,.7);}50%{box-shadow:0 0 0 5px rgba(230,190,106,0);}}
+  .hdr-nav{display:flex;align-items:center;gap:2px;position:relative;z-index:1;}
+  .hdr-nav a{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--silver-2);text-decoration:none;padding:8px 13px;border-radius:4px;border:1px solid transparent;transition:color .18s,background .18s,border-color .18s;white-space:nowrap;}
+  .hdr-nav a:hover{color:var(--white);background:rgba(230,190,106,.08);border-color:rgba(230,190,106,.3);}
+  .hdr-nav a.on{color:var(--gold);background:rgba(230,190,106,.08);border-color:rgba(230,190,106,.28);}
+  .hdr-nav .sep{width:1px;height:12px;background:rgba(201,207,214,.14);margin:0 4px;flex:none;}
+  .hdr-cta{margin-left:10px;font-family:'Oswald',sans-serif!important;font-weight:500;font-size:13px!important;letter-spacing:.08em!important;
+    color:var(--ink)!important;background:var(--gold)!important;border-color:rgba(230,190,106,.5)!important;padding:9px 18px!important;
+    box-shadow:0 0 14px rgba(230,190,106,.28);transition:filter .18s,box-shadow .18s!important;}
+  .hdr-cta:hover{filter:brightness(1.06);box-shadow:0 0 22px rgba(230,190,106,.5);}
+  .hdr-burger{display:none;width:40px;height:40px;border:1px solid rgba(230,190,106,.35);border-radius:5px;background:transparent;cursor:pointer;
+    align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0;position:relative;z-index:1;-webkit-tap-highlight-color:transparent;}
+  .hdr-burger i{display:block;width:18px;height:1.5px;background:rgba(255,255,255,.8);transition:transform .22s,opacity .22s,background .18s;}
+  .hdr-burger[aria-expanded="true"] i{background:var(--gold);}
   .hdr-burger[aria-expanded="true"] i:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
   .hdr-burger[aria-expanded="true"] i:nth-child(2){opacity:0;}
   .hdr-burger[aria-expanded="true"] i:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
-  .hdr-menu{position:fixed;inset:0;z-index:105;display:none;flex-direction:column;justify-content:center;gap:6px;padding:80px 28px 40px;
-    background-color:#17110a;background-image:var(--steel-sheen),var(--steel-stripes);background-blend-mode:screen,normal;}
-  .hdr-menu.open{display:flex;}
-  .hdr-menu a{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(30px,8vw,44px);text-transform:uppercase;letter-spacing:.02em;
-    color:var(--white);text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(230,190,106,.14);}
-  .hdr-menu a.on,.hdr-menu a:hover{color:var(--gold);}
-  .hdr-menu .m-cta{margin-top:22px;border:none;color:var(--gold);font-size:clamp(20px,5vw,26px);}
-  .hdr-menu .m-cta::before{content:"\03C8  ";}
-  body.menu-open{overflow:hidden;}
-  /* the HUD's top corners sit under the bar — drop them below it */
-  .hud .tl,.hud .tr{top:76px;}
-  @media(max-width:860px){.hdr-nav{display:none;}.hdr-burger{display:flex;}.hdr-read{display:none;}}
-  @media(max-width:640px){.hdr-brand{font-size:18px;}}
+  /* ── the drawer — drops from the pill on small screens ── */
+  .hdr-menu{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;padding:8px;
+    background:rgba(23,17,10,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid rgba(230,190,106,.4);border-radius:6px;box-shadow:0 14px 40px rgba(0,0,0,.7);}
+  .hdr-menu::before,.hdr-menu::after{content:"";position:absolute;width:12px;height:12px;border-color:var(--gold);border-style:solid;border-width:0;}
+  .hdr-menu::before{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;}
+  .hdr-menu::after{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;}
+  .hdr-menu.open{display:block;}
+  .hdr-menu a{display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:4px;border:1px solid transparent;
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:15px;text-transform:uppercase;letter-spacing:.05em;color:var(--silver);text-decoration:none;
+    transition:color .18s,background .18s,border-color .18s;}
+  .hdr-menu a:hover,.hdr-menu a.on{color:var(--gold);background:rgba(230,190,106,.08);border-color:rgba(230,190,106,.28);}
+  .hdr-menu a::before{content:"\03C8";font-family:'Oswald',sans-serif;color:var(--gold);opacity:.45;font-size:13px;width:14px;}
+  .hdr-menu .m-cta{margin-top:6px;justify-content:center;color:var(--ink);background:var(--gold);border-color:rgba(230,190,106,.5);font-weight:600;}
+  .hdr-menu .m-cta::before{content:none;}
+  .hdr-menu .m-cta:hover{color:var(--ink);filter:brightness(1.06);}
+  @media(max-width:900px){.hdr-nav{display:none;}.hdr-burger{display:flex;}}
+  @media(max-width:640px){.hdr{top:10px;width:96%;}.hdr-in{height:54px;}.hdr-brand{font-size:18px;}.hdr-read{display:none;}}
 </style>
 <header class="hdr" id="hdr">
-  <div class="hdr-l">
-    <a class="hdr-brand" href="/" aria-label="PsikiQ home"><img src="https://nexus-mkii.github.io/psikiq/psi-gold.webp" alt="" aria-hidden="true"><span>Psiki<span class="q">Q</span></span></a>
-    <span class="hdr-read mono"><span class="w">//</span>&nbsp;PRICING</span>
+  <div class="hdr-in">
+    <div class="hdr-l">
+      <a class="hdr-brand" href="/" aria-label="PsikiQ home"><img src="https://nexus-mkii.github.io/psikiq/psi-gold.webp" alt="" aria-hidden="true"><span>Psiki<span class="q">Q</span></span></a>
+      <span class="hdr-read mono"><i aria-hidden="true"></i><span class="w">//</span>&nbsp;PRICING</span>
+    </div>
+    <nav class="hdr-nav" aria-label="Site">
+      <a href="/#instrument">The instrument</a><span class="sep"></span>
+      <a href="/#engine">The engine</a><span class="sep"></span>
+      <a href="/#proof">Proof</a><span class="sep"></span>
+      <a href="/pricing" data-nav="pricing">Pricing</a><span class="sep"></span>
+      <a href="/contact" data-nav="contact">Contact</a>
+      <a href="/#instrument" class="hdr-cta" data-cta="quiz">Get your prognosis</a>
+    </nav>
+    <button class="hdr-burger" id="hdrBurger" type="button" aria-label="Menu" aria-controls="hdrMenu" aria-expanded="false"><i></i><i></i><i></i></button>
   </div>
-  <nav class="hdr-nav" aria-label="Site">
+  <nav class="hdr-menu" id="hdrMenu" aria-label="Site, mobile">
+    <a href="/">Home</a>
     <a href="/#instrument">The instrument</a>
     <a href="/#engine">The engine</a>
     <a href="/#proof">Proof</a>
     <a href="/pricing" data-nav="pricing">Pricing</a>
-    <a href="#" class="hdr-cta" data-cta="quiz">Get your prognosis</a>
+    <a href="/contact" data-nav="contact">Contact</a>
+    <a href="/#instrument" class="m-cta" data-cta="quiz">&#968;&nbsp; Get your prognosis</a>
   </nav>
-  <button class="hdr-burger" id="hdrBurger" type="button" aria-label="Menu" aria-controls="hdrMenu" aria-expanded="false"><i></i><i></i><i></i></button>
 </header>
-<nav class="hdr-menu" id="hdrMenu" aria-label="Site, mobile">
-  <a href="/">Home</a>
-  <a href="/#instrument">The instrument</a>
-  <a href="/#engine">The engine</a>
-  <a href="/#proof">Proof</a>
-  <a href="/pricing" data-nav="pricing">Pricing</a>
-  <a href="#" class="m-cta" data-cta="quiz">Get your prognosis</a>
-</nav>
 <script>
 (function(){
-  var b=document.getElementById('hdrBurger'),m=document.getElementById('hdrMenu');
-  if(!b||!m)return;
-  function set(o){b.setAttribute('aria-expanded',o?'true':'false');m.classList.toggle('open',o);document.body.classList.toggle('menu-open',o);}
-  b.addEventListener('click',function(){set(b.getAttribute('aria-expanded')!=='true');});
-  m.addEventListener('click',function(e){if(e.target.tagName==='A')set(false);});
+  var h=document.getElementById('hdr'),b=document.getElementById('hdrBurger'),m=document.getElementById('hdrMenu');
+  if(!h||!b||!m)return;
+  function set(o){b.setAttribute('aria-expanded',o?'true':'false');m.classList.toggle('open',o);}
+  b.addEventListener('click',function(e){e.stopPropagation();set(b.getAttribute('aria-expanded')!=='true');});
+  document.addEventListener('click',function(e){if(!h.contains(e.target))set(false);});
+  m.addEventListener('click',function(e){if(e.target.closest('a'))set(false);});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
-  /* mark the current page */
-  var here=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');
+  var t=false;
+  window.addEventListener('scroll',function(){if(t)return;t=true;requestAnimationFrame(function(){h.classList.toggle('scrolled',window.scrollY>60);t=false;});},{passive:true});
+  /* current page */
+  var here=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'').replace(/\/$/,'')||'/';
   [].forEach.call(document.querySelectorAll('[data-nav]'),function(a){
-    var p=a.getAttribute('href').replace(/\.html$/,'').replace(/^\//,'');
-    if(here.replace(/^\//,'')===p||here.split('/').pop()===p)a.classList.add('on');
+    var p=a.getAttribute('href').replace(/\.html$/,'').replace(/\/$/,'');
+    if(here===p||here.split('/').pop()===p.split('/').pop())a.classList.add('on');
   });
 })();
 </script>

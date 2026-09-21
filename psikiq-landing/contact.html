@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PsikiQ — Contact</title>
+<meta name="description" content="Say what you're circling. We'll tell you what we see. Talk to PsikiQ about the diagnostic, a quiz funnel build, or pricing.">
+<meta name="theme-color" content="#17110A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PsikiQ — Contact">
+<meta property="og:description" content="Say what you're circling. We'll tell you what we see.">
+<meta property="og:site_name" content="PsikiQ">
+<!-- FONTS — one preconnect (the file origin; the CSS is preloaded, which opens its own
+     connection), then the CSS off the critical path. Only the weights the page sets. -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap"></noscript>
+<style>
+  /* Tokens and ground are the home page's, verbatim — every page must read as one site. */
+  :root{
+    --void:#17110A;
+    --white:#FFFFFF;
+    --white-2:#EEF0F3;
+    --gold:#E6BE6A;
+    --gold-deep:#B8912F;
+    --silver:#C9CFD6;
+    --silver-2:#9AA3AD;
+    --accent:#E6BE6A;
+    --accent-ink:#A8801E;
+    --accent-glow:rgba(230,190,106,.28);
+    --warm:#E8912E;
+    --line-dark:#1C232D;
+    --line-light:#E1E4E9;
+    --mut-dark:#727E8E;
+    --mut-light:#8A93A0;
+    --ink:#17110A;
+    --steel-stripes:repeating-linear-gradient(90deg,
+        #17110a 0px,#20180e 2px,#191108 4px,#241b0f 6px,#150f08 8px);
+    --steel-sheen:linear-gradient(105deg,
+        rgba(230,190,106,.10) 0%,
+        rgba(230,190,106,.18) 12%,
+        rgba(201,207,214,.06) 26%,
+        transparent 42%,
+        rgba(230,190,106,.10) 62%,
+        transparent 84%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:300;background:var(--void);color:var(--white);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:0;}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+  .steel{position:relative;background-color:#17110a;
+    background-image:var(--steel-sheen),var(--steel-stripes);
+    background-blend-mode:screen,normal;}
+  .steel::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(201,207,214,.05),transparent 20%,transparent 82%,rgba(0,0,0,.35));
+    pointer-events:none;}
+
+  .hud{position:fixed;inset:0;pointer-events:none;z-index:100;}
+  .hud .corner{position:absolute;width:24px;height:24px;border-color:var(--gold);opacity:.6;}
+  .hud .tl{top:18px;left:18px;border-top:1.5px solid;border-left:1.5px solid;}
+  .hud .tr{top:18px;right:18px;border-top:1.5px solid;border-right:1.5px solid;}
+  .hud .bl{bottom:18px;left:18px;border-bottom:1.5px solid;border-left:1.5px solid;}
+  .hud .br{bottom:18px;right:18px;border-bottom:1.5px solid;border-right:1.5px solid;}
+  .hud .progress{position:absolute;bottom:24px;left:52px;right:52px;height:1px;background:rgba(201,207,214,.12);}
+  .hud .progress .fill{position:absolute;left:0;top:0;height:100%;width:0%;background:linear-gradient(90deg,var(--warm),var(--gold));}
+  .hud .state{position:absolute;bottom:18px;right:52px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--silver-2);opacity:.85;}
+  @media(max-width:640px){.hud .state{display:none;}.hud .progress{left:18px;right:18px;}}
+
+  .kicker{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--warm);margin-bottom:24px;}
+  .wrap{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+
+  /* ── the opening ── */
+  .ct-hero{padding:calc(78px + clamp(56px,8vw,110px)) clamp(24px,6vw,88px) clamp(48px,6vw,80px);position:relative;color:var(--white);}
+  .ct-hero h1{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(40px,7.4vw,88px);line-height:.98;text-transform:uppercase;letter-spacing:.01em;color:var(--white);text-wrap:balance;max-width:14ch;}
+  .ct-hero h1 .em{color:var(--gold);}
+  .ct-hero .lede{margin-top:20px;color:var(--silver);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:clamp(16px,2vw,20px);line-height:1.6;max-width:56ch;}
+  .ct-hero .lede b{color:var(--gold);font-weight:400;}
+  .ct-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(230,190,106,.45),transparent);}
+
+  /* ── the exchange — the message and the direct lines, side by side ── */
+  .ct{padding:clamp(56px,7vw,96px) clamp(24px,6vw,88px);position:relative;color:var(--white);}
+  .ct-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:48px clamp(40px,6vw,88px);align-items:start;}
+  @media(max-width:860px){.ct-grid{grid-template-columns:1fr;}}
+
+  /* the form — an instrument, not a form. Ruled fields, gold focus, mono labels. */
+  .msg{position:relative;border:1px solid rgba(230,190,106,.24);border-top:2px solid var(--gold);border-radius:8px;
+    background:linear-gradient(160deg,rgba(38,29,17,.7),rgba(20,15,9,.85));padding:clamp(24px,3.4vw,40px);}
+  .msg::before{content:"\03C8 // INBOUND";position:absolute;top:14px;right:18px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.12em;color:var(--gold);opacity:.6;}
+  .msg h2{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(22px,2.8vw,30px);text-transform:uppercase;letter-spacing:.01em;color:var(--white);line-height:1.1;max-width:18ch;}
+  .msg .sub{margin-top:10px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;line-height:1.6;color:var(--mut-dark);max-width:52ch;}
+  .fields{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;}
+  .fields .full{grid-column:1 / -1;}
+  @media(max-width:560px){.fields{grid-template-columns:1fr;}}
+  .f{display:flex;flex-direction:column;gap:7px;}
+  .f label{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut-dark);}
+  .f label i{font-style:normal;color:var(--warm);}
+  .f input,.f select,.f textarea{width:100%;padding:13px 15px;border-radius:6px;border:1px solid rgba(230,190,106,.24);
+    background:rgba(0,0,0,.32);color:var(--white);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:15.5px;line-height:1.5;
+    transition:border-color .18s,box-shadow .18s;appearance:none;-webkit-appearance:none;}
+  .f select{background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+    background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:40px;}
+  .f select option{background:#17110a;color:var(--white);}
+  .f textarea{min-height:150px;resize:vertical;}
+  .f input::placeholder,.f textarea::placeholder{color:#6b7280;}
+  .f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(230,190,106,.12);}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .consent{margin-top:18px;display:flex;gap:12px;align-items:flex-start;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:13px;line-height:1.55;color:var(--mut-dark);}
+  .consent input{margin-top:4px;width:15px;height:15px;accent-color:var(--gold);flex:none;}
+  .consent b{color:var(--silver);font-weight:400;}
+  .actions{margin-top:24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:12px;background:var(--gold);color:var(--ink);font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.06em;padding:15px 34px;border-radius:6px;border:none;text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s,filter .15s;box-shadow:0 8px 26px var(--accent-glow);}
+  .btn:hover{filter:brightness(1.06);transform:translateY(-2px);box-shadow:0 12px 40px var(--accent-glow);}
+  .btn[disabled]{opacity:.5;cursor:default;transform:none;filter:none;}
+  .btn-ghost{background:transparent;color:var(--gold);border:1px solid rgba(230,190,106,.45);box-shadow:none;}
+  .btn-ghost:hover{background:rgba(230,190,106,.09);box-shadow:0 10px 34px rgba(230,190,106,.14);}
+  .status{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:var(--mut-dark);}
+  .status.ok{color:var(--gold);}
+  .status.err{color:var(--warm);}
+  .sent{display:none;padding:28px 0 8px;}
+  .sent .s-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:12px;}
+  .sent .s-t{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(20px,2.6vw,28px);line-height:1.35;color:var(--white);max-width:26ch;}
+  .sent .s-t b{font-weight:500;color:var(--gold);}
+  .msg.done form{display:none;}
+  .msg.done .sent{display:block;}
+
+  /* the direct lines — ruled rows, one gesture each */
+  .lines h2{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(22px,2.8vw,30px);text-transform:uppercase;letter-spacing:.01em;color:var(--white);line-height:1.1;}
+  .line{display:block;padding:18px 0;border-top:1px solid rgba(230,190,106,.14);text-decoration:none;color:inherit;transition:padding-left .2s;}
+  .line:last-of-type{border-bottom:1px solid rgba(230,190,106,.14);}
+  a.line:hover{padding-left:6px;}
+  .line .l-k{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--warm);}
+  .line .l-v{margin-top:5px;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(17px,2vw,21px);text-transform:uppercase;letter-spacing:.02em;color:var(--white);line-height:1.15;}
+  a.line:hover .l-v{color:var(--gold);}
+  .line .l-d{margin-top:4px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:13.5px;line-height:1.55;color:var(--mut-dark);}
+  .lines .first{margin-top:22px;}
+  .line[hidden]{display:none;}
+
+  /* what happens next — three ruled steps */
+  .next{margin-top:44px;}
+  .next .n-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:14px;}
+  .step{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:12px 0;border-top:1px solid rgba(230,190,106,.12);}
+  .step:last-child{border-bottom:1px solid rgba(230,190,106,.12);}
+  .step .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.14em;color:var(--gold);padding-top:3px;}
+  .step .t{font-family:'Oswald',sans-serif;font-weight:400;font-size:16px;letter-spacing:.02em;text-transform:uppercase;color:var(--silver);}
+  .step .d{margin-top:3px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:13.5px;line-height:1.55;color:var(--mut-dark);}
+  .where{margin-top:36px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut-dark);line-height:1.9;}
+  .where b{color:var(--silver-2);font-weight:400;}
+
+  /* the honest close */
+  .close{padding:clamp(56px,7vw,96px) clamp(24px,6vw,88px);position:relative;color:var(--white);border-top:1px solid rgba(230,190,106,.12);}
+  .close .q{margin-left:auto;max-width:60ch;text-align:right;border-right:2px solid var(--gold);padding:6px 24px 6px 0;}
+  .close .q p{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(18px,2.4vw,26px);line-height:1.4;color:var(--white);}
+  .close .q p b{font-weight:500;color:var(--gold);}
+  .close .q .s{margin-top:12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;color:var(--gold);opacity:.8;}
+
+  footer{padding:40px clamp(24px,6vw,80px);border-top:1px solid var(--line-dark);position:relative;}
+  footer .inner2{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;width:100%;}
+  footer .fmk{display:inline-flex;align-items:center;gap:.4em;font-family:'Oswald',sans-serif;font-weight:600;font-size:22px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);}
+  footer .fmk img{height:1.05em;width:auto;display:block;}
+  footer .fmk .q{color:var(--gold);}
+  footer .fine{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.03em;color:var(--mut-dark);}
+  footer .fine b{color:var(--silver-2);font-weight:400;}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<script>document.documentElement.className+=' js';</script>
+<!-- HEADER:start (generated from partials/header.html by build_ghl.py — do not edit here) -->
+<!-- SITE HEADER — the HUD pill. Shared by every page; injected by build_ghl.py between the
+     HEADER markers (edit THIS file, never the injected copy). The readout span is per page.
+     Also emitted standalone as ghl/psikiq-header-ghl.html for any other GHL page. -->
+<style>
+  /* ── the pill ── */
+  .hdr{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(94%,1400px);z-index:110;
+    background:rgba(23,17,10,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid rgba(230,190,106,.34);border-radius:6px;
+    box-shadow:0 0 0 1px rgba(230,190,106,.06),inset 0 1px 0 rgba(255,255,255,.04),0 10px 34px rgba(0,0,0,.55);
+    transition:border-color .3s,box-shadow .3s;}
+  .hdr::before,.hdr::after{content:"";position:absolute;width:14px;height:14px;pointer-events:none;border-color:var(--gold);border-style:solid;border-width:0;}
+  .hdr::before{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;border-radius:2px 0 0 0;}
+  .hdr::after{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 2px 0;}
+  .hdr.scrolled{border-color:rgba(230,190,106,.7);box-shadow:0 0 0 1px rgba(230,190,106,.12),inset 0 1px 0 rgba(255,255,255,.05),0 14px 40px rgba(0,0,0,.6),0 0 26px rgba(230,190,106,.10);}
+  .hdr-in{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px;padding:0 clamp(16px,2.4vw,28px);overflow:hidden;}
+  /* a slow scan — the instrument is on */
+  .hdr-in::before{content:"";position:absolute;left:0;right:0;height:36%;pointer-events:none;
+    background:linear-gradient(180deg,transparent,rgba(230,190,106,.05),transparent);animation:hdr-scan 7s linear infinite;}
+  @keyframes hdr-scan{0%{transform:translateY(-100%);opacity:0;}15%{opacity:1;}85%{opacity:1;}100%{transform:translateY(400%);opacity:0;}}
+  .hdr-l{display:flex;align-items:center;gap:16px;min-width:0;position:relative;z-index:1;}
+  .hdr-brand{display:inline-flex;align-items:center;gap:.4em;font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;
+    text-transform:uppercase;letter-spacing:.04em;color:var(--white);text-decoration:none;white-space:nowrap;}
+  .hdr-brand img{height:1.1em;width:auto;display:block;}
+  .hdr-brand .q{color:var(--gold);}
+  .hdr-read{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;color:var(--gold);opacity:.85;white-space:nowrap;}
+  .hdr-read .w{color:var(--warm);}
+  .hdr-read i{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:hdr-pulse 2.4s ease-in-out infinite;flex:none;}
+  @keyframes hdr-pulse{0%,100%{box-shadow:0 0 0 0 rgba(230,190,106,.7);}50%{box-shadow:0 0 0 5px rgba(230,190,106,0);}}
+  .hdr-nav{display:flex;align-items:center;gap:2px;position:relative;z-index:1;}
+  .hdr-nav a{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--silver-2);text-decoration:none;padding:8px 13px;border-radius:4px;border:1px solid transparent;transition:color .18s,background .18s,border-color .18s;white-space:nowrap;}
+  .hdr-nav a:hover{color:var(--white);background:rgba(230,190,106,.08);border-color:rgba(230,190,106,.3);}
+  .hdr-nav a.on{color:var(--gold);background:rgba(230,190,106,.08);border-color:rgba(230,190,106,.28);}
+  .hdr-nav .sep{width:1px;height:12px;background:rgba(201,207,214,.14);margin:0 4px;flex:none;}
+  .hdr-cta{margin-left:10px;font-family:'Oswald',sans-serif!important;font-weight:500;font-size:13px!important;letter-spacing:.08em!important;
+    color:var(--ink)!important;background:var(--gold)!important;border-color:rgba(230,190,106,.5)!important;padding:9px 18px!important;
+    box-shadow:0 0 14px rgba(230,190,106,.28);transition:filter .18s,box-shadow .18s!important;}
+  .hdr-cta:hover{filter:brightness(1.06);box-shadow:0 0 22px rgba(230,190,106,.5);}
+  .hdr-burger{display:none;width:40px;height:40px;border:1px solid rgba(230,190,106,.35);border-radius:5px;background:transparent;cursor:pointer;
+    align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0;position:relative;z-index:1;-webkit-tap-highlight-color:transparent;}
+  .hdr-burger i{display:block;width:18px;height:1.5px;background:rgba(255,255,255,.8);transition:transform .22s,opacity .22s,background .18s;}
+  .hdr-burger[aria-expanded="true"] i{background:var(--gold);}
+  .hdr-burger[aria-expanded="true"] i:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .hdr-burger[aria-expanded="true"] i:nth-child(2){opacity:0;}
+  .hdr-burger[aria-expanded="true"] i:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+  /* ── the drawer — drops from the pill on small screens ── */
+  .hdr-menu{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;padding:8px;
+    background:rgba(23,17,10,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid rgba(230,190,106,.4);border-radius:6px;box-shadow:0 14px 40px rgba(0,0,0,.7);}
+  .hdr-menu::before,.hdr-menu::after{content:"";position:absolute;width:12px;height:12px;border-color:var(--gold);border-style:solid;border-width:0;}
+  .hdr-menu::before{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;}
+  .hdr-menu::after{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;}
+  .hdr-menu.open{display:block;}
+  .hdr-menu a{display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:4px;border:1px solid transparent;
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:15px;text-transform:uppercase;letter-spacing:.05em;color:var(--silver);text-decoration:none;
+    transition:color .18s,background .18s,border-color .18s;}
+  .hdr-menu a:hover,.hdr-menu a.on{color:var(--gold);background:rgba(230,190,106,.08);border-color:rgba(230,190,106,.28);}
+  .hdr-menu a::before{content:"\03C8";font-family:'Oswald',sans-serif;color:var(--gold);opacity:.45;font-size:13px;width:14px;}
+  .hdr-menu .m-cta{margin-top:6px;justify-content:center;color:var(--ink);background:var(--gold);border-color:rgba(230,190,106,.5);font-weight:600;}
+  .hdr-menu .m-cta::before{content:none;}
+  .hdr-menu .m-cta:hover{color:var(--ink);filter:brightness(1.06);}
+  @media(max-width:900px){.hdr-nav{display:none;}.hdr-burger{display:flex;}}
+  @media(max-width:640px){.hdr{top:10px;width:96%;}.hdr-in{height:54px;}.hdr-brand{font-size:18px;}.hdr-read{display:none;}}
+</style>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <div class="hdr-l">
+      <a class="hdr-brand" href="index.html" aria-label="PsikiQ home"><img src="psi-gold.webp" alt="" aria-hidden="true"><span>Psiki<span class="q">Q</span></span></a>
+      <span class="hdr-read mono"><i aria-hidden="true"></i><span class="w">//</span>&nbsp;LISTENING</span>
+    </div>
+    <nav class="hdr-nav" aria-label="Site">
+      <a href="index.html#instrument">The instrument</a><span class="sep"></span>
+      <a href="index.html#engine">The engine</a><span class="sep"></span>
+      <a href="index.html#proof">Proof</a><span class="sep"></span>
+      <a href="pricing.html" data-nav="pricing">Pricing</a><span class="sep"></span>
+      <a href="contact.html" data-nav="contact">Contact</a>
+      <a href="index.html#instrument" class="hdr-cta" data-cta="quiz">Get your prognosis</a>
+    </nav>
+    <button class="hdr-burger" id="hdrBurger" type="button" aria-label="Menu" aria-controls="hdrMenu" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+  <nav class="hdr-menu" id="hdrMenu" aria-label="Site, mobile">
+    <a href="index.html">Home</a>
+    <a href="index.html#instrument">The instrument</a>
+    <a href="index.html#engine">The engine</a>
+    <a href="index.html#proof">Proof</a>
+    <a href="pricing.html" data-nav="pricing">Pricing</a>
+    <a href="contact.html" data-nav="contact">Contact</a>
+    <a href="index.html#instrument" class="m-cta" data-cta="quiz">&#968;&nbsp; Get your prognosis</a>
+  </nav>
+</header>
+<script>
+(function(){
+  var h=document.getElementById('hdr'),b=document.getElementById('hdrBurger'),m=document.getElementById('hdrMenu');
+  if(!h||!b||!m)return;
+  function set(o){b.setAttribute('aria-expanded',o?'true':'false');m.classList.toggle('open',o);}
+  b.addEventListener('click',function(e){e.stopPropagation();set(b.getAttribute('aria-expanded')!=='true');});
+  document.addEventListener('click',function(e){if(!h.contains(e.target))set(false);});
+  m.addEventListener('click',function(e){if(e.target.closest('a'))set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  var t=false;
+  window.addEventListener('scroll',function(){if(t)return;t=true;requestAnimationFrame(function(){h.classList.toggle('scrolled',window.scrollY>60);t=false;});},{passive:true});
+  /* current page */
+  var here=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'').replace(/\/$/,'')||'/';
+  [].forEach.call(document.querySelectorAll('[data-nav]'),function(a){
+    var p=a.getAttribute('href').replace(/\.html$/,'').replace(/\/$/,'');
+    if(here===p||here.split('/').pop()===p.split('/').pop())a.classList.add('on');
+  });
+})();
+</script>
+
+<!-- HEADER:end -->
+
+  <div class="hud">
+    <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+    <div class="state mono">STATE&nbsp;&middot;&nbsp;LISTENING</div>
+    <div class="progress"><div class="fill" id="pf"></div></div>
+  </div>
+
+  <!-- THE OPENING -->
+  <section class="ct-hero steel">
+    <div class="wrap">
+      <div class="kicker mono">contact</div>
+      <h1>Say what you&rsquo;re circling. <span class="em">We&rsquo;ll tell you what we see.</span></h1>
+      <p class="lede">A market you can&rsquo;t read, a funnel that isn&rsquo;t converting, a number you want to check &mdash; or nothing that neat yet. <b>Write it the way you&rsquo;d say it.</b> A person reads every message, and that person replies.</p>
+    </div>
+  </section>
+
+  <!-- THE EXCHANGE -->
+  <section class="ct steel">
+    <div class="wrap ct-grid">
+
+      <!-- the message -->
+      <div class="msg" id="msg">
+        <h2>Leave the message.</h2>
+        <p class="sub">Three fields we need, one we&rsquo;d like, and the space that matters. No newsletter is attached to this form.</p>
+        <form id="ctForm" novalidate>
+          <div class="fields">
+            <div class="f"><label for="cName">Your name <i>*</i></label><input id="cName" name="name" type="text" autocomplete="name" required></div>
+            <div class="f"><label for="cEmail">Email <i>*</i></label><input id="cEmail" name="email" type="email" autocomplete="email" required></div>
+            <div class="f"><label for="cBiz">Business</label><input id="cBiz" name="business" type="text" autocomplete="organization" placeholder="optional"></div>
+            <div class="f"><label for="cAbout">This is about</label>
+              <select id="cAbout" name="about">
+                <option value="diagnostic">The diagnostic &mdash; running it on my market</option>
+                <option value="funnel">A quiz funnel build</option>
+                <option value="pricing">Pricing &mdash; a question on the numbers</option>
+                <option value="partner">Working together / partnership</option>
+                <option value="other">Something else</option>
+              </select>
+            </div>
+            <div class="f full"><label for="cMsg">What you&rsquo;re circling <i>*</i></label><textarea id="cMsg" name="message" required placeholder="The situation, in your words. Where it&rsquo;s stuck, what you&rsquo;ve tried, what you&rsquo;d want to be true in six months."></textarea></div>
+          </div>
+          <!-- honeypot — never labelled, never removed -->
+          <div class="hp" aria-hidden="true"><label>Website<input type="text" id="cHp" name="website_hp" tabindex="-1" autocomplete="off"></label></div>
+          <label class="consent"><input type="checkbox" id="cConsent" required><span>I&rsquo;m happy for PsikiQ to hold these details to reply to this message. <b>Nothing else is done with them</b> &mdash; NZ Privacy Act 2020.</span></label>
+          <div class="actions">
+            <button class="btn" id="cSend" type="submit">&#968;&nbsp; Send it</button>
+            <span class="status mono" id="cStatus"></span>
+          </div>
+        </form>
+        <div class="sent">
+          <div class="s-l mono">received</div>
+          <div class="s-t">It&rsquo;s in. <b>A person will read it</b> and reply within one business day &mdash; usually sooner.</div>
+        </div>
+      </div>
+
+      <!-- the direct lines -->
+      <div class="lines">
+        <h2>Or take a direct line.</h2>
+        <div class="first"></div>
+        <a class="line" href="#" data-cta="book" id="lineBook">
+          <div class="l-k mono">01 &middot; talk</div>
+          <div class="l-v">Book a discovery conversation</div>
+          <div class="l-d">Twenty minutes. You talk, we listen, we tell you what we&rsquo;d look at first.</div>
+        </a>
+        <a class="line" href="#" id="lineEmail" hidden>
+          <div class="l-k mono">02 &middot; write</div>
+          <div class="l-v" id="lineEmailV"></div>
+          <div class="l-d">Straight to the inbox that reads this page.</div>
+        </a>
+        <a class="line" href="#" id="lineLinkedIn" hidden rel="noopener" target="_blank">
+          <div class="l-k mono">03 &middot; connect</div>
+          <div class="l-v">LinkedIn</div>
+          <div class="l-d">Where most of these conversations start anyway.</div>
+        </a>
+        <a class="line" href="index.html#instrument">
+          <div class="l-k mono">04 &middot; run</div>
+          <div class="l-v">Run the diagnostic first</div>
+          <div class="l-d">Eight minutes, no pitch. You&rsquo;ll arrive at the conversation already knowing your stage.</div>
+        </a>
+
+        <div class="next">
+          <div class="n-l mono">what happens next</div>
+          <div class="step"><div class="n mono">i</div><div><div class="t">We read it</div><div class="d">Properly &mdash; the whole message, by a person. Reply within one business day.</div></div></div>
+          <div class="step"><div class="n mono">ii</div><div><div class="t">A short conversation</div><div class="d">Zoom, twenty minutes. Where you sit on the curve, and whether we&rsquo;re the right instrument.</div></div></div>
+          <div class="step"><div class="n mono">iii</div><div><div class="t">The concept proposal</div><div class="d">If it fits: the angle, the hook, and the result your market actually wants to know.</div></div></div>
+        </div>
+
+        <div class="where mono">new zealand &middot; <b>NZST</b> &middot; replies in business hours<br>engineered and delivered by <b>NOW Group</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="close steel">
+    <div class="wrap">
+      <div class="q">
+        <p>You don&rsquo;t need to have it worded. <b>The half-formed version is the useful one</b> &mdash; it&rsquo;s the thing the instrument is built to read.</p>
+        <div class="s mono">say what you&rsquo;re circling</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="steel">
+    <div class="inner2">
+      <div class="fmk">
+        <img src="psi-gold.webp" alt="" aria-hidden="true">
+        Psiki<span class="q">Q</span>
+      </div>
+      <div class="fine mono">powered by the <b>ELENCHUS</b> engine &middot; built by <b>AUBIT</b> &middot; a <b>NOW GROUP</b> company</div>
+    </div>
+  </footer>
+
+<script>
+(function(){
+  'use strict';
+  /* ── WIRING ── the only lines to change. Leave a value empty and that line stays hidden
+     or inert rather than pointing nowhere.
+       FORM_ENDPOINT  a GHL workflow "Inbound Webhook" URL (creates the contact, fires the
+                      alert). Empty = the form opens a pre-filled email to CONTACT_EMAIL.
+       CONTACT_EMAIL  the inbox that reads this page.
+       LINKEDIN_URL   profile or page.
+       BOOK_URL       the GHL calendar link — same value as the other pages.               */
+  var FORM_ENDPOINT = '';
+  var CONTACT_EMAIL = '';
+  var LINKEDIN_URL  = '';
+  var BOOK_URL      = '';
+
+  if(BOOK_URL){ [].forEach.call(document.querySelectorAll('[data-cta="book"]'),function(el){ el.setAttribute('href',BOOK_URL); }); }
+  [].forEach.call(document.querySelectorAll('[data-cta="quiz"]'),function(el){ el.setAttribute('href','index.html#instrument'); });
+  if(CONTACT_EMAIL){ var le=document.getElementById('lineEmail'); le.href='mailto:'+CONTACT_EMAIL; document.getElementById('lineEmailV').textContent=CONTACT_EMAIL; le.hidden=false; }
+  if(LINKEDIN_URL){ var ll=document.getElementById('lineLinkedIn'); ll.href=LINKEDIN_URL; ll.hidden=false; }
+
+  /* ── the form ── */
+  var form=document.getElementById('ctForm'), box=document.getElementById('msg'),
+      btn=document.getElementById('cSend'), status=document.getElementById('cStatus');
+  function say(t,cls){ status.textContent=t; status.className='status mono'+(cls?' '+cls:''); }
+  function val(id){ return (document.getElementById(id).value||'').trim(); }
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=val('cName'), email=val('cEmail'), biz=val('cBiz'), about=document.getElementById('cAbout'), msg=val('cMsg');
+    if(!name||!email||!msg){ say('name, email and the message are the three we need','err'); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ say('that email doesn’t look right','err'); return; }
+    if(!document.getElementById('cConsent').checked){ say('tick the consent line so we can reply','err'); return; }
+    var payload={ name:name, email:email, business:biz, about:about.options[about.selectedIndex].text, message:msg,
+                  page:location.href, website_hp:document.getElementById('cHp').value };
+    if(!FORM_ENDPOINT){
+      /* no endpoint yet — hand the message to their mail client, fully written */
+      var to=CONTACT_EMAIL||'', subj='PsikiQ — '+payload.about+' — '+name;
+      var body='Name: '+name+'\nEmail: '+email+(biz?'\nBusiness: '+biz:'')+'\nAbout: '+payload.about+'\n\n'+msg;
+      location.href='mailto:'+to+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+      box.classList.add('done'); return;
+    }
+    btn.disabled=true; say('sending…');
+    fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){ if(!r.ok) throw new Error('bad'); box.classList.add('done'); })
+      .catch(function(){ btn.disabled=false; say('it didn’t go through — try once more, or take a direct line','err'); });
+  });
+
+  /* progress rail */
+  var pf=document.getElementById('pf');
+  function progress(){ var d=document.documentElement,m=d.scrollHeight-d.clientHeight; pf.style.width=((m>0?Math.min(1,d.scrollTop/m):0)*100).toFixed(1)+'%'; }
+  var t=false;
+  window.addEventListener('scroll',function(){ if(t)return; t=true; requestAnimationFrame(function(){progress();t=false;}); },{passive:true});
+  window.addEventListener('resize',progress); progress();
+})();
+</script>
+</body>
+</html>
