@@ -14,6 +14,15 @@ so splitting into a standalone repo later is a clean operation:
     git remote add psikiq git@github.com:NEXUS-MKII/psikiq.git
     git push psikiq psikiq-standalone:main
 
+## Media
+
+- `iv · the practice` plays the 68s film (cinematic clips intercut with Riverside /
+  Pika footage of Chris with Rob and Aaron). The mp4 is hosted in the GHL Media
+  Library — `src` in `#filmVideo` points at the filesafe CDN URL. Re-upload and
+  swap that URL to change the cut; nothing else references it.
+- `psi-practice.webp` is the poster frame (cafe, 14.5s). Regenerate from the mp4
+  if the cut changes.
+
 ## Open items
 
 - CTA `Book the diagnostic` points at `href="#"` — swap for the GHL calendar /

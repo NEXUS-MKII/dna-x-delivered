@@ -653,6 +653,25 @@
     .ax-spectrum{transition:none!important;}
     .movement svg{opacity:1;}
   }
+
+  /* ── iv · THE PRACTICE — the film: the idea, and the human who runs it ── */
+  .practice{padding:clamp(72px,9vw,120px) clamp(32px,6vw,88px);border-top:1px solid rgba(230,190,106,.14);}
+  .practice .pr-head{position:relative;z-index:2;text-align:center;max-width:680px;margin:0 auto 44px;}
+  .practice .pr-h{font-size:clamp(26px,4.4vw,50px);color:var(--white);}
+  .practice .pr-h .em{color:var(--gold);}
+  .practice .pr-sub{color:var(--silver-2);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:15px;margin-top:14px;line-height:1.6;}
+  .film{position:relative;z-index:2;max-width:960px;margin:0 auto;border:1px solid rgba(230,190,106,.22);border-top:2px solid var(--gold);border-radius:8px;background:#0e0a06;overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.8),0 0 0 1px rgba(0,0,0,.4);}
+  .film::before{content:"\03C8 // FIELD RECORDING";position:absolute;top:14px;right:18px;z-index:3;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.12em;color:var(--gold);opacity:.7;pointer-events:none;transition:opacity .4s;}
+  .film.playing::before{opacity:0;}
+  .film video{display:block;width:100%;aspect-ratio:16/9;background:#000;}
+  .film-play{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;border:0;padding:0;cursor:pointer;background:radial-gradient(ellipse at center,rgba(23,17,10,.15),rgba(23,17,10,.55));transition:opacity .4s;}
+  .film-play .ring{width:88px;height:88px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;background:rgba(23,17,10,.55);box-shadow:0 0 32px 2px var(--accent-glow);transition:transform .25s,box-shadow .25s;}
+  .film-play:hover .ring,.film-play:focus-visible .ring{transform:scale(1.06);box-shadow:0 0 48px 6px var(--accent-glow);}
+  .film-play .ring svg{width:30px;height:30px;margin-left:5px;fill:var(--gold);}
+  .film-play .cue{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.85;}
+  .film.playing .film-play{opacity:0;pointer-events:none;}
+  .film-cap{max-width:960px;margin:14px auto 0;display:flex;justify-content:space-between;gap:16px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--silver-2);opacity:.75;position:relative;z-index:2;}
+  @media(max-width:640px){.film-cap{flex-direction:column;gap:4px;}.film-play .ring{width:68px;height:68px;}}
 </style>
 </head>
 <body>
@@ -773,11 +792,30 @@
     <div class="rod"><div class="rod-skin"></div></div>
   </div>
 
+  <!-- THE PRACTICE — the film: cinematic idea, intercut with the human who actually runs the conversations -->
+  <section class="practice steel" data-phase="PRACTICE|OBSERVED" id="practice">
+    <div class="pr-head">
+      <div class="qlabel mono">iv &middot; the practice</div>
+      <h2 class="disp pr-h">The model reads the data. <span class="em">A person still has the conversation.</span></h2>
+      <p class="pr-sub">Sixty-eight seconds. The idea, and the rooms, streets and calls where it actually gets used.</p>
+    </div>
+    <div class="film" id="film">
+      <video id="filmVideo" playsinline preload="metadata" poster="psi-practice.webp" controlslist="nodownload">
+        <source src="https://assets.cdn.filesafe.space/XmnnOgihSvpbtlApd8cN/media/6ab0e1324091fa65e6a79a0d.mp4" type="video/mp4">
+      </video>
+      <button class="film-play" id="filmPlay" type="button" aria-label="Play the film, sound on">
+        <span class="ring" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3.5v17l14-8.5z"/></svg></span>
+        <span class="cue">play &middot; sound on</span>
+      </button>
+    </div>
+    <div class="film-cap mono"><span>&#968; observer &middot; field recording</span><span>1:08 &middot; 720p &middot; sound on</span></div>
+  </section>
+
   <!-- THE INSTRUMENT — the diagnostic itself, positioned -->
   <section class="instrument steel" data-phase="INSTRUMENT|CALIBRATING" id="instrument">
     <div class="inst-wrap">
       <div class="inst-head">
-        <div class="qlabel mono">iv &middot; the instrument</div>
+        <div class="qlabel mono">v &middot; the instrument</div>
         <h2 class="disp inst-h">Every business is mid-sentence in a story it can&rsquo;t read.</h2>
         <p class="inst-sub">The diagnostic reads it. <b>Five phases of growth, each one ending in the exact crisis that forces the next.</b> Where a business sits on that curve decides what it will buy, what it will ignore, and what it is already desperate for &mdash; long before anyone inside it can say so out loud. It returns a <b>prognosis</b> &mdash; not what you have, but the crisis already forming in front of you.</p>
       </div>
@@ -849,7 +887,7 @@
   <!-- v · THE ENGINE — the case opened -->
   <section class="engine steel" data-phase="MECHANISM|INSPECTING" id="engine">
     <div class="eng-wrap">
-      <div class="qlabel mono">v &middot; the engine</div>
+      <div class="qlabel mono">vi &middot; the engine</div>
       <h2 class="disp eng-h">Under the chassis.</h2>
       <p class="eng-sub">The read runs on <b>ELENCHUS</b> &mdash; the questioning engine under PsikiQ. Named for the Socratic <i>elenchus</i>: the cross-examination that collapses a belief its holder did not know was false. That is not a flourish, it is the method. Not a scoring sheet with a good front end &mdash; this is the movement, and every figure below is the one it is running right now.</p>
 
@@ -1695,6 +1733,16 @@
       if(e.isIntersecting){ restart(); } else { clearInterval(timer); }
     });
   },{threshold:.25}).observe(orbit);
+})();
+</script>
+<script>
+/* iv · the practice — gold play overlay; native controls take over once playing */
+(function(){
+  var film=document.getElementById('film'),v=document.getElementById('filmVideo'),b=document.getElementById('filmPlay');
+  if(!film||!v||!b)return;
+  b.addEventListener('click',function(){v.controls=true;v.muted=false;v.play();});
+  v.addEventListener('play',function(){film.classList.add('playing');v.controls=true;});
+  v.addEventListener('ended',function(){film.classList.remove('playing');v.controls=false;v.currentTime=0;});
 })();
 </script>
 </body>
