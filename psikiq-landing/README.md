@@ -50,6 +50,14 @@ so splitting into a standalone repo later is a clean operation:
   script (`build.py` in the cut session) with the Safari-safe encode flags
   (yuv420p, High@4.0, 48 kHz); the hero files are silent.
 
+## Favicon
+
+`icons/` — gold psi on the void, rounded, hairline frame (16/32/48 .ico, 16 + 32 png,
+180 apple-touch, 192/512). Regenerate from `psi-gold.webp` if the mark changes. Source
+pages link them in `<head>`; on GHL the header script swaps GHL's default icon for
+ours at load. Also set it in GHL: Sites → Settings → Favicon → `icons/favicon-32.png`.
+The set is mirrored on nexus-mkii.github.io/psikiq/icons/ (what the GHL pages fetch).
+
 ## Open items
 
 - Contact page wiring (`contact.html`, top of the script): `FORM_ENDPOINT` (a GHL

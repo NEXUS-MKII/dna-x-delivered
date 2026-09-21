@@ -60,7 +60,7 @@ for src, (out, path, readout) in PAGES.items():
     head_style = re.search(r'(<!-- FONTS.*?</style>)\s*</head>', s, re.S).group(1)
     body = re.search(r'<body>\n(.*)</body>', s, re.S).group(1)
     ghl = head_style + '\n' + body
-    ghl = re.sub(r'(psi-[a-z0-9-]+\.webp)', lambda m: IMG_HOST + m.group(1), ghl)
+    ghl = re.sub(r'(psi-[a-z0-9-]+\.webp|icons/[a-z0-9-]+\.(?:png|ico))', lambda m: IMG_HOST + m.group(1), ghl)
     ghl = relink(ghl)
     o = here / out
     o.write_text(GHL_HEAD.format(name=src.replace('.html', ''), src=src) + ghl)
@@ -71,7 +71,7 @@ for src, (out, path, readout) in PAGES.items():
 FONTS = ('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600'
          '&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap')
 hdr = header.replace('{{READOUT}}', '<span class="w">//</span>&nbsp;PSIKIQ')
-hdr = re.sub(r'(psi-[a-z0-9-]+\.webp)', lambda m: IMG_HOST + m.group(1), hdr)
+hdr = re.sub(r'(psi-[a-z0-9-]+\.webp|icons/[a-z0-9-]+\.(?:png|ico))', lambda m: IMG_HOST + m.group(1), hdr)
 hdr = relink(hdr)
 standalone = f'''<!-- PsikiQ HUD header — standalone. Paste into a Custom Code element at the TOP of any GHL
      page that is NOT one of the generated psikiq-*-ghl.html pages (those carry it already).

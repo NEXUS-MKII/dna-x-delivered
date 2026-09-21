@@ -6,6 +6,12 @@
 <title>PsikiQ — Contact</title>
 <meta name="description" content="Say what you're circling. We'll tell you what we see. Talk to PsikiQ about the diagnostic, a quiz funnel build, or pricing.">
 <meta name="theme-color" content="#17110A">
+<link rel="icon" href="icons/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="PsikiQ — Contact">
 <meta property="og:description" content="Say what you're circling. We'll tell you what we see.">
@@ -260,6 +266,15 @@
   </nav>
 </header>
 <script>
+/* FAVICON — GHL puts its own icon in <head>; swap it for the brand's. Paths are rewritten
+   to the public host by the build, so this works from any GHL page. */
+(function(){
+  var icons=[['icon','icons/favicon-32.png','32x32','image/png'],['icon','icons/favicon-16.png','16x16','image/png'],
+             ['apple-touch-icon','icons/apple-touch-icon.png','180x180',''],['icon','icons/icon-192.png','192x192','image/png']];
+  var have=document.querySelector('link[rel="icon"][href*="icons/favicon"]'); if(have)return;   /* the source pages link them in <head> */
+  [].forEach.call(document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]'),function(l){l.parentNode.removeChild(l);});
+  icons.forEach(function(i){var l=document.createElement('link');l.rel=i[0];l.href=i[1];l.sizes=i[2];if(i[3])l.type=i[3];document.head.appendChild(l);});
+})();
 (function(){
   var h=document.getElementById('hdr'),b=document.getElementById('hdrBurger'),m=document.getElementById('hdrMenu');
   if(!h||!b||!m)return;
