@@ -3,7 +3,8 @@
 
 catalogue.json is the source; this pushes it to GHL. Idempotent by product NAME:
 a product whose name already exists is updated, not duplicated. Prices are a separate
-endpoint, so each product's single price is created only if the product has none.
+endpoint; the product's single price is created if absent and corrected if it has drifted.
+Amounts are WHOLE DOLLARS — this API takes major units, not cents.
 
     python3 sync_products.py --dry-run     # print what would happen, touch nothing
     python3 sync_products.py               # create/update
@@ -79,7 +80,7 @@ def main() -> int:
             print(f"{'UPDATE' if cur else 'CREATE'}  {item['name']}")
             if item.get("price"):
                 pr = item["price"]
-                unit = f"{pr['amount']/100:,.2f} {cat['currency']}"
+                unit = f"${pr['amount']:,} {cat['currency']}"
                 print(f"         price: {pr['type']} {unit}"
                       + (f" / {pr['interval']}" if pr["type"] == "recurring" else ""))
             else:
@@ -98,16 +99,19 @@ def main() -> int:
         note = ""
         if item.get("price"):
             prices = api("GET", f"/products/{pid}/price?locationId={LOCATION}&limit=20", tok).get("prices", [])
+            pr = item["price"]
+            pbody = {"locationId": LOCATION, "name": pr["name"], "type": pr["type"],
+                     "currency": cat["currency"], "amount": pr["amount"]}
+            if pr["type"] == "recurring":
+                pbody["recurring"] = {"interval": pr["interval"], "intervalCount": 1}
             if not prices:
-                pr = item["price"]
-                pbody = {"locationId": LOCATION, "name": pr["name"], "type": pr["type"],
-                         "currency": cat["currency"], "amount": pr["amount"]}
-                if pr["type"] == "recurring":
-                    pbody["recurring"] = {"interval": pr["interval"], "intervalCount": 1}
                 api("POST", f"/products/{pid}/price", tok, pbody)
-                note = f" + price {pr['amount']/100:,.2f}"
+                note = f" + price ${pr['amount']:,}"
+            elif prices[0]["amount"] != pr["amount"] or prices[0]["type"] != pr["type"]:
+                api("PUT", f"/products/{pid}/price/{prices[0]['_id']}", tok, pbody)
+                note = f" ~ price ${prices[0]['amount']:,} → ${pr['amount']:,}"
             else:
-                note = " (price already set)"
+                note = f" (price ${pr['amount']:,} already set)"
         else:
             note = " (no price — quoted at point of sale)"
         print(f"{action:>8}  {item['name']}{note}")
