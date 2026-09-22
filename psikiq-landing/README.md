@@ -67,6 +67,16 @@ square + wide on transparent in on-dark (white text) and on-light (ink text) var
 session script if the mark changes; the wordmark is rendered, not typeset, so it matches
 the site's `.wordmark` tracking.
 
+## Products (GHL catalogue)
+
+`products/catalogue.json` is the source for the GHL product ladder — mirrors the
+pricing page. `build_cards.py` renders one 1000x1000 card per product (steel ground,
+gold psi, Oswald name, gold price) into `products/cards/`; push those to the psikiq
+Pages repo under `products/`, then `sync_products.py` creates/updates the products in
+the PsikiQSolutions location and attaches prices. Both are idempotent — a product is
+matched by NAME, a price is only created if the product has none. Change a price on
+the pricing page → change it here → re-run. Token comes from the AUBIT vault.
+
 ## Open items
 
 - Contact page wiring (`contact.html`, top of the script): `FORM_ENDPOINT` (a GHL

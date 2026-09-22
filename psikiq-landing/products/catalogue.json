@@ -1,0 +1,143 @@
+{
+  "_comment": "The PsikiQ product ladder — the single source for the GHL products, their prices and their card images. Mirrors pricing.html; if a price changes there, change it here and re-run build_products.py, then sync_products.py. Prices are NZD ex-GST, in cents (GHL takes minor units).",
+  "currency": "NZD",
+  "products": [
+    {
+      "key": "guided-business-diagnostic",
+      "name": "Guided Business Diagnostic",
+      "kicker": "the diagnostic",
+      "blurb": "90 min · written finding",
+      "price_label": "$1,500",
+      "price": { "type": "one_time", "amount": 150000, "name": "Guided Business Diagnostic" },
+      "description": "Ninety minutes on Zoom, run with you in the room. Three proprietary reads: maturity modelling after Greiner — your stage and the crisis forming in front of it; a valuation band — what the business is worth at this stage, and whether that value is ready to grow or growth is available but capped by named constraints; and a risk read — what could take the value off the table. You leave with the finding written down and the one move that changes the band. Credited in full against a build or an engine started within 30 days."
+    },
+    {
+      "key": "quiz-endpoint-build",
+      "name": "Quiz Endpoint Build",
+      "kicker": "the endpoint",
+      "blurb": "fixed scope · four weeks",
+      "price_label": "$5,000",
+      "price": { "type": "one_time", "amount": 500000, "name": "Quiz Endpoint Build" },
+      "description": "The endpoint every channel lands on: one landing page, three results pages personalised section by section, scoring and routing design, CRM integration, SEO setup, a lead magnet with its delivery email, follow-up sequences per audience profile, abandoned-quiz capture, full analytics (GA4, Meta pixel and CAPI), a retargeting audience, privacy done properly, device QA, documentation, a recorded handover and two revision rounds. Four-week build."
+    },
+    {
+      "key": "funnel-ad-to-booked",
+      "name": "The Funnel: Ad to Booked",
+      "kicker": "the package",
+      "blurb": "endpoint + video creative",
+      "price_label": "$6,500",
+      "price": { "type": "one_time", "amount": 650000, "name": "The Funnel: Ad to Booked" },
+      "description": "The whole funnel — creative at the front, endpoint at the back — designed together, launched together. The Quiz Endpoint Build plus the video + statics creative pack. The package that is actually a funnel. Care plan from launch, billed separately."
+    },
+    {
+      "key": "meta-creative-pack-video",
+      "name": "Meta Creative Pack — Video + Statics",
+      "kicker": "the creative",
+      "blurb": "video for cold · statics for warm",
+      "price_label": "$1,500",
+      "price": { "type": "one_time", "amount": 150000, "name": "Meta Creative Pack — Video + Statics" },
+      "description": "The front of the funnel. Three static variant sets plus video ad creative for the same campaign — video doing the cold-traffic heavy lifting, statics converting the warm — all sharing the hooks, language and visual identity of your endpoint so the journey reads as one story from first scroll to result."
+    },
+    {
+      "key": "meta-creative-pack-statics",
+      "name": "Meta Creative Pack — Statics Only",
+      "kicker": "the creative",
+      "blurb": "three variant sets",
+      "price_label": "$500",
+      "price": { "type": "one_time", "amount": 50000, "name": "Meta Creative Pack — Statics Only" },
+      "description": "Three variant sets, each a deliberate spread of angles built to test against each other: a cinematic pattern-interrupt, demographic cuts shaped to your audiences, clean typographic offer-delivery, and a wildcard concept. Where you supply or skip video."
+    },
+    {
+      "key": "hosting-care-plan",
+      "name": "Hosting & Care Plan",
+      "kicker": "the care plan",
+      "blurb": "monthly · from launch",
+      "price_label": "$375 / mo",
+      "price": { "type": "recurring", "amount": 37500, "interval": "month", "name": "Hosting & Care Plan" },
+      "description": "Hosting and SSL, uptime monitoring around the clock, abandoned-quiz email tuning, text amendments, image swaps, link and button updates, quiz copy touch-ups, and a monthly integration health check. Up to 5 change tickets a month, typically turned around within 2 business days."
+    },
+    {
+      "key": "premium-care-plan",
+      "name": "Premium Care Plan",
+      "kicker": "the care plan",
+      "blurb": "monthly · one video included",
+      "price_label": "$495 / mo",
+      "price": { "type": "recurring", "amount": 49500, "interval": "month", "name": "Premium Care Plan" },
+      "description": "Everything in the Hosting & Care Plan, plus one professionally edited campaign video each month — planned against your ad strategy, so each video has a defined job before it is made. Unused video credits bank, up to two."
+    },
+    {
+      "key": "sales-leak-diagnostic",
+      "name": "Sales Leak Diagnostic",
+      "kicker": "the sales path",
+      "blurb": "where booked becomes bought",
+      "price_label": "$1,500",
+      "price": { "type": "one_time", "amount": 150000, "name": "Sales Leak Diagnostic" },
+      "description": "Everyone has leaks: booked conversations that never become proposals, proposals that never become a yes. A structured read of your sales path from first reply to signed — the leaks named, sized, and fixed (scripts, sequences, follow-up timing), not just reported. Run alongside a build, or on a sales process you already have."
+    },
+    {
+      "key": "animated-presenter-endpoint",
+      "name": "Animated Presenter — Endpoint",
+      "kicker": "add-on",
+      "blurb": "in place of on-camera",
+      "price_label": "+$500",
+      "price": { "type": "one_time", "amount": 50000, "name": "Animated Presenter — Endpoint" },
+      "description": "Prefer not to appear on camera? A branded animated presenter replaces real-presenter footage across the endpoint pages."
+    },
+    {
+      "key": "animated-presenter-creative",
+      "name": "Animated Presenter — Creative Pack",
+      "kicker": "add-on",
+      "blurb": "in place of on-camera",
+      "price_label": "+$200",
+      "price": { "type": "one_time", "amount": 20000, "name": "Animated Presenter — Creative Pack" },
+      "description": "The same substitution applied to your ad creative."
+    },
+    {
+      "key": "full-video-pack",
+      "name": "Full Video Pack",
+      "kicker": "add-on",
+      "blurb": "video on every results page",
+      "price_label": "+$500",
+      "price": { "type": "one_time", "amount": 50000, "name": "Full Video Pack" },
+      "description": "Extends presenter video from the core result page to every results page."
+    },
+    {
+      "key": "extra-page",
+      "name": "Extra Landing or Results Page",
+      "kicker": "add-on",
+      "blurb": "per page",
+      "price_label": "$1,000",
+      "price": { "type": "one_time", "amount": 100000, "name": "Extra Landing or Results Page" },
+      "description": "Additional regions, offers, or a fourth-and-subsequent audience profile."
+    },
+    {
+      "key": "strategic-consultation",
+      "name": "Strategic Consultation",
+      "kicker": "add-on",
+      "blurb": "90 min",
+      "price_label": "$120",
+      "price": { "type": "one_time", "amount": 12000, "name": "Strategic Consultation — 90 min" },
+      "description": "Direct session with the Director of NOW Group during your care-plan period."
+    },
+    {
+      "key": "owned-quiz-engine",
+      "name": "Owned Quiz Engine",
+      "kicker": "the engine",
+      "blurb": "self-hosted or VPS",
+      "price_label": "$8k–12k",
+      "price": null,
+      "price_note": "Scoped after discovery — $8,000–12,000. Quote at point of sale.",
+      "description": "The instrument, yours. A permanent, mutable quiz engine on your own host — new quizzes, new verticals, new result logic, without a project quote each time. Includes the first endpoint built on it, handover, and the documentation to run it without us. Maintenance packages offered at point of sale, scoped to the engine as built. Price scoped after discovery: $8,000–12,000."
+    },
+    {
+      "key": "ask-console",
+      "name": "Ask Console",
+      "kicker": "the engine",
+      "blurb": "community capture point",
+      "price_label": "POE",
+      "price": null,
+      "price_note": "Price on enquiry — complex by nature, needs deeper discovery.",
+      "description": "A branded, always-on console your community asks its questions of — and every question is captured intent, routed into the engine. For scaled solutions: associations, networks, multi-site operators. Complex by nature; needs deeper discovery before a number."
+    }
+  ]
+}
