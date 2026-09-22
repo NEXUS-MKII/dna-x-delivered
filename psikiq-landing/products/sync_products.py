@@ -72,6 +72,13 @@ def main() -> int:
             "availableInStore": True,
             "slug": item["key"],
             # medias[].id is required even for externally hosted art — the card's key is stable
+            "statementDescriptor": item["statement_descriptor"],
+            "seo": item["seo"],
+            "collectionIds": [cat["collections"][item["collection"]]] if item.get("collection") in cat.get("collections", {}) else [],
+            # GST: the rate is created in the GHL UI (no API for it); once its id is in
+            # catalogue.json as "tax_id", every product is enabled and attached here.
+            "isTaxesEnabled": bool(cat.get("tax_id")),
+            "taxes": [cat["tax_id"]] if cat.get("tax_id") else [],
             "medias": [{"id": item["key"], "title": item["name"],
                         "url": f"{IMG_BASE}/{item['key']}.png", "type": "image", "isFeatured": True}],
         }

@@ -13,7 +13,13 @@
         "amount": 1500,
         "name": "Guided Business Diagnostic"
       },
-      "description": "Ninety minutes on Zoom, run with you in the room. Three proprietary reads: maturity modelling after Greiner — your stage and the crisis forming in front of it; a valuation band — what the business is worth at this stage, and whether that value is ready to grow or growth is available but capped by named constraints; and a risk read — what could take the value off the table. You leave with the finding written down and the one move that changes the band. Credited in full against a build or an engine started within 30 days."
+      "description": "Ninety minutes on Zoom, run with you in the room. Three proprietary reads: maturity modelling after Greiner — your stage and the crisis forming in front of it; a valuation band — what the business is worth at this stage, and whether that value is ready to grow or growth is available but capped by named constraints; and a risk read — what could take the value off the table. You leave with the finding written down and the one move that changes the band. Credited in full against a build or an engine started within 30 days.",
+      "collection": "Diagnostics",
+      "statement_descriptor": "PSIKIQ DIAGNOSTIC",
+      "seo": {
+        "title": "Guided Business Diagnostic — PsikiQ",
+        "description": "Ninety minutes on Zoom, run with you in the room. Three proprietary reads: maturity modelling after Greiner — your stage and the crisis forming in front…"
+      }
     },
     {
       "key": "quiz-endpoint-build",
@@ -26,7 +32,13 @@
         "amount": 5000,
         "name": "Quiz Endpoint Build"
       },
-      "description": "The endpoint every channel lands on: one landing page, three results pages personalised section by section, scoring and routing design, CRM integration, SEO setup, a lead magnet with its delivery email, follow-up sequences per audience profile, abandoned-quiz capture, full analytics (GA4, Meta pixel and CAPI), a retargeting audience, privacy done properly, device QA, documentation, a recorded handover and two revision rounds. Four-week build."
+      "description": "The endpoint every channel lands on: one landing page, three results pages personalised section by section, scoring and routing design, CRM integration, SEO setup, a lead magnet with its delivery email, follow-up sequences per audience profile, abandoned-quiz capture, full analytics (GA4, Meta pixel and CAPI), a retargeting audience, privacy done properly, device QA, documentation, a recorded handover and two revision rounds. Four-week build.",
+      "collection": "Build & Creative",
+      "statement_descriptor": "PSIKIQ BUILD",
+      "seo": {
+        "title": "Quiz Endpoint Build — PsikiQ",
+        "description": "The endpoint every channel lands on: one landing page, three results pages personalised section by section, scoring and routing design, CRM integration,…"
+      }
     },
     {
       "key": "funnel-ad-to-booked",
@@ -39,7 +51,13 @@
         "amount": 6500,
         "name": "The Funnel: Ad to Booked"
       },
-      "description": "The whole funnel — creative at the front, endpoint at the back — designed together, launched together. The Quiz Endpoint Build plus the video + statics creative pack. The package that is actually a funnel. Care plan from launch, billed separately."
+      "description": "The whole funnel — creative at the front, endpoint at the back — designed together, launched together. The Quiz Endpoint Build plus the video + statics creative pack. The package that is actually a funnel. Care plan from launch, billed separately.",
+      "collection": "Build & Creative",
+      "statement_descriptor": "PSIKIQ FUNNEL",
+      "seo": {
+        "title": "The Funnel: Ad to Booked — PsikiQ",
+        "description": "The whole funnel — creative at the front, endpoint at the back — designed together, launched together. The Quiz Endpoint Build plus the video + statics…"
+      }
     },
     {
       "key": "meta-creative-pack-video",
@@ -52,7 +70,13 @@
         "amount": 1500,
         "name": "Meta Creative Pack — Video + Statics"
       },
-      "description": "The front of the funnel. Three static variant sets plus video ad creative for the same campaign — video doing the cold-traffic heavy lifting, statics converting the warm — all sharing the hooks, language and visual identity of your endpoint so the journey reads as one story from first scroll to result."
+      "description": "The front of the funnel. Three static variant sets plus video ad creative for the same campaign — video doing the cold-traffic heavy lifting, statics converting the warm — all sharing the hooks, language and visual identity of your endpoint so the journey reads as one story from first scroll to result.",
+      "collection": "Build & Creative",
+      "statement_descriptor": "PSIKIQ CREATIVE",
+      "seo": {
+        "title": "Meta Creative Pack — Video + Statics — PsikiQ",
+        "description": "The front of the funnel. Three static variant sets plus video ad creative for the same campaign — video doing the cold-traffic heavy lifting, statics…"
+      }
     },
     {
       "key": "meta-creative-pack-statics",
@@ -65,7 +89,13 @@
         "amount": 500,
         "name": "Meta Creative Pack — Statics Only"
       },
-      "description": "Three variant sets, each a deliberate spread of angles built to test against each other: a cinematic pattern-interrupt, demographic cuts shaped to your audiences, clean typographic offer-delivery, and a wildcard concept. Where you supply or skip video."
+      "description": "Three variant sets, each a deliberate spread of angles built to test against each other: a cinematic pattern-interrupt, demographic cuts shaped to your audiences, clean typographic offer-delivery, and a wildcard concept. Where you supply or skip video.",
+      "collection": "Build & Creative",
+      "statement_descriptor": "PSIKIQ CREATIVE",
+      "seo": {
+        "title": "Meta Creative Pack — Statics Only — PsikiQ",
+        "description": "Three variant sets, each a deliberate spread of angles built to test against each other: a cinematic pattern-interrupt, demographic cuts shaped to your…"
+      }
     },
     {
       "key": "hosting-care-plan",
@@ -79,7 +109,13 @@
         "interval": "month",
         "name": "Hosting & Care Plan"
       },
-      "description": "Hosting and SSL, uptime monitoring around the clock, abandoned-quiz email tuning, text amendments, image swaps, link and button updates, quiz copy touch-ups, and a monthly integration health check. Up to 5 change tickets a month, typically turned around within 2 business days."
+      "description": "Hosting and SSL, uptime monitoring around the clock, abandoned-quiz email tuning, text amendments, image swaps, link and button updates, quiz copy touch-ups, and a monthly integration health check. Up to 5 change tickets a month, typically turned around within 2 business days.",
+      "collection": "Care Plans",
+      "statement_descriptor": "PSIKIQ CARE PLAN",
+      "seo": {
+        "title": "Hosting & Care Plan — PsikiQ",
+        "description": "Hosting and SSL, uptime monitoring around the clock, abandoned-quiz email tuning, text amendments, image swaps, link and button updates, quiz copy…"
+      }
     },
     {
       "key": "premium-care-plan",
@@ -93,7 +129,13 @@
         "interval": "month",
         "name": "Premium Care Plan"
       },
-      "description": "Everything in the Hosting & Care Plan, plus one professionally edited campaign video each month — planned against your ad strategy, so each video has a defined job before it is made. Unused video credits bank, up to two."
+      "description": "Everything in the Hosting & Care Plan, plus one professionally edited campaign video each month — planned against your ad strategy, so each video has a defined job before it is made. Unused video credits bank, up to two.",
+      "collection": "Care Plans",
+      "statement_descriptor": "PSIKIQ CARE PLUS",
+      "seo": {
+        "title": "Premium Care Plan — PsikiQ",
+        "description": "Everything in the Hosting & Care Plan, plus one professionally edited campaign video each month — planned against your ad strategy, so each video has a…"
+      }
     },
     {
       "key": "sales-leak-diagnostic",
@@ -106,7 +148,13 @@
         "amount": 1500,
         "name": "Sales Leak Diagnostic"
       },
-      "description": "Everyone has leaks: booked conversations that never become proposals, proposals that never become a yes. A structured read of your sales path from first reply to signed — the leaks named, sized, and fixed (scripts, sequences, follow-up timing), not just reported. Run alongside a build, or on a sales process you already have."
+      "description": "Everyone has leaks: booked conversations that never become proposals, proposals that never become a yes. A structured read of your sales path from first reply to signed — the leaks named, sized, and fixed (scripts, sequences, follow-up timing), not just reported. Run alongside a build, or on a sales process you already have.",
+      "collection": "Diagnostics",
+      "statement_descriptor": "PSIKIQ SALES READ",
+      "seo": {
+        "title": "Sales Leak Diagnostic — PsikiQ",
+        "description": "Everyone has leaks: booked conversations that never become proposals, proposals that never become a yes. A structured read of your sales path from first…"
+      }
     },
     {
       "key": "animated-presenter-endpoint",
@@ -119,7 +167,13 @@
         "amount": 500,
         "name": "Animated Presenter — Endpoint"
       },
-      "description": "Prefer not to appear on camera? A branded animated presenter replaces real-presenter footage across the endpoint pages."
+      "description": "Prefer not to appear on camera? A branded animated presenter replaces real-presenter footage across the endpoint pages.",
+      "collection": "Add-ons",
+      "statement_descriptor": "PSIKIQ ADDON",
+      "seo": {
+        "title": "Animated Presenter — Endpoint — PsikiQ",
+        "description": "Prefer not to appear on camera? A branded animated presenter replaces real-presenter footage across the endpoint…"
+      }
     },
     {
       "key": "animated-presenter-creative",
@@ -132,7 +186,13 @@
         "amount": 200,
         "name": "Animated Presenter — Creative Pack"
       },
-      "description": "The same substitution applied to your ad creative."
+      "description": "The same substitution applied to your ad creative.",
+      "collection": "Add-ons",
+      "statement_descriptor": "PSIKIQ ADDON",
+      "seo": {
+        "title": "Animated Presenter — Creative Pack — PsikiQ",
+        "description": "The same substitution applied to your ad…"
+      }
     },
     {
       "key": "full-video-pack",
@@ -145,7 +205,13 @@
         "amount": 500,
         "name": "Full Video Pack"
       },
-      "description": "Extends presenter video from the core result page to every results page."
+      "description": "Extends presenter video from the core result page to every results page.",
+      "collection": "Add-ons",
+      "statement_descriptor": "PSIKIQ VIDEO",
+      "seo": {
+        "title": "Full Video Pack — PsikiQ",
+        "description": "Extends presenter video from the core result page to every results…"
+      }
     },
     {
       "key": "extra-page",
@@ -158,7 +224,13 @@
         "amount": 1000,
         "name": "Extra Landing or Results Page"
       },
-      "description": "Additional regions, offers, or a fourth-and-subsequent audience profile."
+      "description": "Additional regions, offers, or a fourth-and-subsequent audience profile.",
+      "collection": "Add-ons",
+      "statement_descriptor": "PSIKIQ PAGE",
+      "seo": {
+        "title": "Extra Landing or Results Page — PsikiQ",
+        "description": "Additional regions, offers, or a fourth-and-subsequent audience…"
+      }
     },
     {
       "key": "strategic-consultation",
@@ -171,7 +243,13 @@
         "amount": 120,
         "name": "Strategic Consultation — 90 min"
       },
-      "description": "Direct session with the Director of NOW Group during your care-plan period."
+      "description": "Direct session with the Director of NOW Group during your care-plan period.",
+      "collection": "Add-ons",
+      "statement_descriptor": "PSIKIQ CONSULT",
+      "seo": {
+        "title": "Strategic Consultation — PsikiQ",
+        "description": "Direct session with the Director of NOW Group during your care-plan…"
+      }
     },
     {
       "key": "owned-quiz-engine",
@@ -181,7 +259,13 @@
       "price_label": "$8k–12k",
       "price": null,
       "price_note": "Scoped after discovery — $8,000–12,000. Quote at point of sale.",
-      "description": "The instrument, yours. A permanent, mutable quiz engine on your own host — new quizzes, new verticals, new result logic, without a project quote each time. Includes the first endpoint built on it, handover, and the documentation to run it without us. Maintenance packages offered at point of sale, scoped to the engine as built. Price scoped after discovery: $8,000–12,000."
+      "description": "The instrument, yours. A permanent, mutable quiz engine on your own host — new quizzes, new verticals, new result logic, without a project quote each time. Includes the first endpoint built on it, handover, and the documentation to run it without us. Maintenance packages offered at point of sale, scoped to the engine as built. Price scoped after discovery: $8,000–12,000.",
+      "collection": "Engines",
+      "statement_descriptor": "PSIKIQ ENGINE",
+      "seo": {
+        "title": "Owned Quiz Engine — PsikiQ",
+        "description": "The instrument, yours. A permanent, mutable quiz engine on your own host — new quizzes, new verticals, new result logic, without a project quote each…"
+      }
     },
     {
       "key": "ask-console",
@@ -191,7 +275,20 @@
       "price_label": "POE",
       "price": null,
       "price_note": "Price on enquiry — complex by nature, needs deeper discovery.",
-      "description": "A branded, always-on console your community asks its questions of — and every question is captured intent, routed into the engine. For scaled solutions: associations, networks, multi-site operators. Complex by nature; needs deeper discovery before a number."
+      "description": "A branded, always-on console your community asks its questions of — and every question is captured intent, routed into the engine. For scaled solutions: associations, networks, multi-site operators. Complex by nature; needs deeper discovery before a number.",
+      "collection": "Engines",
+      "statement_descriptor": "PSIKIQ CONSOLE",
+      "seo": {
+        "title": "Ask Console — PsikiQ",
+        "description": "A branded, always-on console your community asks its questions of — and every question is captured intent, routed into the engine. For scaled solutions:…"
+      }
     }
-  ]
+  ],
+  "collections": {
+    "Diagnostics": "6ab2b1fab53116b5defeb4ca",
+    "Build & Creative": "6ab2b1fb1c881dda60580c25",
+    "Care Plans": "6ab2b1fbb53116b5defeb4e7",
+    "Add-ons": "6ab2b1fb0c323cbf2e300820",
+    "Engines": "6ab2b1fc0bece5d79307f211"
+  }
 }
