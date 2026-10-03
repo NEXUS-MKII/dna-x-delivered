@@ -3,7 +3,7 @@ name: dna-x-build-a
 description: Run a Content Pack Pro build (Tier 1 · Option A) for a NOW Group buyer using Claude.ai connectors (Gamma, Google Drive). Use when the user mentions Content Pack Pro, Option A, WOW Option A, "run a content pack", "build a content pack for [buyer]", or wants to refine / audit / regenerate any asset in an existing pack. Trigger on phrases like "let's build [buyer]'s content pack", "ship Option A for [buyer]", or "regenerate the carousels for [buyer]" — even without the explicit Option A label.
 ---
 
-<!-- version: 1.4.0 · 2026-10-04 — Gamma visual stage rewired for PNG card export and the standalone graphic generator; merged in the Excel manifest + Fal.AI baseline image pass; poster art direction moved onto per-style themes (default-style slot) -->
+<!-- version: 1.5.0 · 2026-10-04 — Gamma visual stage rewired for PNG card export and the standalone graphic generator; merged in the Excel manifest + Fal.AI baseline image pass; poster art direction moved onto per-style themes; carousels can build from a workspace template -->
 
 # DNA-X · Content Pack Pro (Tier 1 · Option A)
 
@@ -212,6 +212,12 @@ Format **social**, dimensions **4x5**, **8 cards**, `exportAs: png`.
 4x5 is the highest-CTR feed aspect and centre-crops cleanly to square, so one render serves both placements. The PNG export returns a ZIP holding one PNG per card, which means the carousels arrive post-ready — no exporting or screenshotting by hand.
 
 **Download the export immediately.** Export URLs expire about a week after creation and are not tied to the API key, so treat one as a secret and never leave it as the only copy.
+
+**Carousel mode via a workspace template (preferred when one exists).** Gamma's Carousel mode is template-driven, and the API reaches it through `POST /v1.0/generations/from-template`. That call keeps the source template's card count, sections and layout, reworks the content to the prompt, and still accepts a `themeId` override and `exportAs: "png"` — so the carousels come out on-structure, on-brand and post-ready.
+
+The precondition is that the template lives in the **workspace**. Gallery templates (Knockout, Spikecut, Operator Notes, Storyboard and the rest of Explore) are browse-only and are rejected if passed as a source. Either save one into the workspace, or — better — build one carousel exactly as it should look, save that as a template, and every pack renders the same shape instead of re-deciding it each run.
+
+Where no workspace template is named or found, the build generates from scratch and says so.
 
 ### 6.2 Infographics — 4 renders, a pair for each
 
