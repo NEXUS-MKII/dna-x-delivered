@@ -3,11 +3,13 @@ name: dna-x-build-a
 description: Run a Content Pack Pro build (Tier 1 · Option A) for a NOW Group buyer using Claude.ai connectors (Gamma, Google Drive). Use when the user mentions Content Pack Pro, Option A, WOW Option A, "run a content pack", "build a content pack for [buyer]", or wants to refine / audit / regenerate any asset in an existing pack. Trigger on phrases like "let's build [buyer]'s content pack", "ship Option A for [buyer]", or "regenerate the carousels for [buyer]" — even without the explicit Option A label.
 ---
 
+<!-- version: 1.2.0 · 2026-10-03 — Gamma visual stage rewired for PNG card export and the standalone graphic generator; merged in the Excel manifest + Fal.AI baseline image pass -->
+
 # DNA-X · Content Pack Pro (Tier 1 · Option A)
 
 You are running Content Pack Pro for a NOW Group buyer in Claude.ai. This is a **Tier 1 one-shot delivery build** — you produce the full pack in one session and deliver it. No retainer, no ongoing, no tier-orchestration layer.
 
-The thread should already contain the buyer's brand, voice, and ICP context. Your job is to take that context, generate the full asset pack (33+ copy artefacts + 4 HTML lead magnets + 7 Gamma generations), and deliver it to the buyer's Drive folder.
+The thread should already contain the buyer's brand, voice, and ICP context. Your job is to take that context, generate the full asset pack (33+ copy artefacts + 4 HTML lead magnets + 9 Gamma renders), and deliver it to the buyer's Drive folder.
 
 Follow this operating loop. Do not skip steps. Do not reorder.
 
@@ -50,11 +52,12 @@ Under- or over-delivering is a fail. The campaign architecture depends on this e
 - **4 Carousels (A, B, C, D)** — 8 slides each (slide 1 hook only, slides 2–7 body, slide 8 CTA) + complete Gamma prompt
 - **2 Infographics (A, B)** — 4-section structure + red-flag bar + Gamma prompt + image tags
 - **16 LinkedIn posts** — 4 per article (A1–A4, B1–B4, C1–C4, D1–D4) · 120–220 words each · escalating CTA strength
+- **16 Fal.AI image prompts** — one per copy post. Single editorial image concept matching the post's hook, buyer's visual register, no text-in-image. Written once here, reviewed in the pack, never modified at post time
 - **16 Video scripts** — 4 per article · 45–75 sec / ≤180 words · Hook → Scene → Framework → Proof → Closing
 - **4 Wrapper posts** — for Carousel A, Carousel B, Infographic A, Infographic B
 - **6 GEO blogs** — A1, A2, B1, B2, C1, D1 · 40–60w Answer Capsule + 600–1000w body + 4 FAQs + schema flags
 - **1 Long-form lead magnet** — Gamma prompt for 6–8 section A4 document, deeper treatment of Article A
-- **1 Posting schedule** — fortnight-by-fortnight publishing plan
+- **1 Excel manifest (`content_manifest.xlsx`)** — one row per postable asset, carrying copy, asset routing, image URL, and the full publishing schedule. This is both the human posting schedule AND the machine input the `now-group-linkedin-scheduler` skill reads. Schema is fixed — see `now-group-linkedin-scheduler/references/manifest_schema.md`. Replaces the retired prose schedule
 
 ### 2.3 Rendered HTML lead magnets (Pass 3) — see §5 for render contract
 - **`<slug>_lm_diagnostic.html`** — built from Article A
@@ -62,11 +65,18 @@ Under- or over-delivering is a fail. The campaign architecture depends on this e
 - **`<slug>_infographic_a.html`** — built from Pass 2 Infographic A
 - **`<slug>_infographic_b.html`** — built from Pass 2 Infographic B
 
-### 2.4 Visual assets via Gamma MCP — see §6
-- 4 Carousel Gammas + 2 Infographic Gammas + 1 Long-form LM Gamma = **7 Gamma generations**
+### 2.4 Visual assets via Gamma — see §6
+- 4 Carousels → **social, 4x5, 8 cards each, exported as PNGs**
+- 2 Infographics → **a pair each**: typographic + poster = 4 renders
+- 1 Long-form LM → A4 document, no PNG export
+- **9 renders total** (7 card sets/documents + 2 generated graphics)
 
-### 2.5 Bundle
-- **`Content_Pack_Pro_<Buyer>_v1` Google Doc** — all copy assets, posting schedule, Gamma prompts, in publish order
+### 2.5 Baseline images via Fal.AI — see §6.5
+- **Up to 12 baseline images** — one per `copy_post_image` row in the manifest, generated at build-time via the shared repo script `generate_FAL_images.py`. Named by `post_id` (e.g. `B2.png`), dropped into the delivery folder's `images/` subfolder, with each URL written back into the manifest's `fal_url` column. If the cadence produces fewer than 12 image posts, generate what the manifest calls for — the `now-group-fal-batch` skill tops up later if needed.
+
+### 2.6 Bundle
+- **`Content_Pack_Pro_<Buyer>_v1` Google Doc** — all copy assets + Gamma prompts, in publish order (the posting schedule now lives in `content_manifest.xlsx`)
+- **`content_manifest.xlsx`** — the fortnight-by-fortnight publishing schedule as a machine-readable manifest, one row per postable asset
 - **`00_START_HERE.txt`** — what's in the pack + how to use it
 - **`gamma_links.txt`** — one Gamma URL per visual asset
 
@@ -87,6 +97,9 @@ VPB fields applied on every asset:
 
 ### Universal banned words (baseline — extend per buyer)
 `synergy`, `leverage`, `paradigm`, `best-in-class`, `digital transformation`, `in today's business environment`, `genuinely`, `honestly`, `straightforward`, `as you can see`, `many business owners struggle with`, `I want to talk to you about`. Plus the buyer's VPB-specific banned_words.
+
+### Fal.AI image prompts (Pass 2 — one per copy post)
+Fal.AI image prompts describe one editorial photo/illustration carrying the post's core metaphor. Concrete, brand-toned, no embedded text, no logos, no real-person faces unless the buyer supplied a likeness policy. Must trace to the post's hook or framework — same anchor-or-stop discipline as the copy. Written once during Pass 2, reviewed in the pack, never re-authored at post time. `generate_FAL_images.py` reads these from the manifest's `image_prompt` column at build-time and never modifies them.
 
 ### Foundation discipline
 Every derivative must be **derived from the Pass 1 foundation** — not invented independently. If you find yourself writing copy that doesn't trace back to a hook / framework / proof / objection from Pass 1, stop and re-anchor.
@@ -186,13 +199,76 @@ Internal artefacts (`00_START_HERE.txt`) don't require it (those don't go to cli
 
 ---
 
-## 6. Visual assets via Gamma MCP
+## 6. Visual assets via Gamma
 
-For each of: 4 carousels, 2 infographics, 1 long-form LM → call the Gamma MCP `generate` tool. **Use the exact Gamma prompt emitted in Pass 2 — do not "improve" or modify it at generation time.** Tweaks during generation are how drift creeps in.
+**Use the exact Gamma prompt emitted in Pass 2 — do not "improve" or modify it at generation time.** Tweaks during generation are how drift creeps in. The API cannot edit an existing Gamma either, so a prompt only gets one run: re-rendering means paying for a new generation.
 
-If the buyer has a brand-aligned Gamma theme, pass it as `themeName`. Otherwise omit (Gamma defaults are fine for first generation; buyer can re-theme in the Gamma editor).
+If the buyer has a brand-aligned Gamma theme, pass it. Otherwise omit it — defaults are fine for a first generation and the buyer can re-theme in the editor.
 
-Collect the resulting Gamma URLs into `gamma_links.txt` in the Drive delivery folder.
+### 6.1 Carousels — 4 renders, PNG out
+
+Format **social**, dimensions **4x5**, **8 cards**, `exportAs: png`.
+
+4x5 is the highest-CTR feed aspect and centre-crops cleanly to square, so one render serves both placements. The PNG export returns a ZIP holding one PNG per card, which means the carousels arrive post-ready — no exporting or screenshotting by hand.
+
+**Download the export immediately.** Export URLs expire about a week after creation and are not tied to the API key, so treat one as a secret and never leave it as the only copy.
+
+### 6.2 Infographics — 4 renders, a pair for each
+
+Each infographic prompt is rendered **twice**, deliberately, and nothing chooses between them:
+
+| Style | Route | What it is good for |
+|---|---|---|
+| **Typographic** | social, 4x5, 1 card, `exportAs: png` | Gamma composes the page, so the text is real text. Dense copy survives and the wording comes out exactly as written. **The only route that is safe for regulated claims.** |
+| **Poster** | the standalone graphic generator, portrait | An image model paints the whole page. Usually the stronger scroll-stopper, looser with words. |
+
+Deliver both and let a person pick. Using both is a normal outcome, not a fallback. **Proofread every word of a poster before it ships** — an image model redraws text each run and will drift spelling, weight and kerning. Never ship a poster carrying a regulated claim on trust.
+
+### 6.3 Long-form lead magnet — 1 render
+
+A4 **document**, 8 sections, no PNG export. It is read as a Gamma or a PDF, not posted.
+
+### 6.4 Collect the output
+
+Put the Gamma URLs in `gamma_links.txt` in the Drive delivery folder, and the exported PNGs alongside them so the buyer can post without opening Gamma at all.
+
+Note the credit cost: 9 renders per pack. Polling a generation is free; re-POSTing is not. Never re-create a generation to check on it — poll the id you already hold.
+
+---
+
+### 6.5 Baseline image generation (Fal.AI via the shared repo script)
+
+After the manifest is written and the Gamma visuals are generated, run the image pass. This calls the shared repo script `generate_FAL_images.py` — dna-x-build-a does **not** re-implement the Fal call. See `now-group-fal-batch/references/generate_FAL_images_SPEC.md` for the script contract.
+
+```
+python generate_FAL_images.py \
+  --prompts content_manifest.xlsx \
+  --count <number of copy_post_image rows, up to the 12 baseline> \
+  --out <buyer Drive delivery folder>/images \
+  --manifest content_manifest.xlsx \
+  --name-prefix <uses per-row post_id automatically in manifest mode>
+```
+
+The script reads `image_prompt` for `copy_post_image` rows, generates one image each, saves them named by `post_id` (e.g. `B2.png`) into the delivery folder's `images/` subfolder, and writes each image's URL back into that row's `fal_url`. Baseline target is **12 images**; if the cadence produces fewer image posts, generate what the manifest calls for.
+
+Show the count and model before running (cost visibility). On any failed prompt, the script logs the `post_id` and continues; surface the failed set in the closing summary so those images can be regenerated or topped up via the `now-group-fal-batch` skill.
+
+> **Fal or Gamma?** Since 2026-10-03 Gamma can also generate a standalone branded graphic, which is what §6.2's poster route uses. Fal stays the baseline for these 12 because it is materially cheaper per image and the manifest round-trip is already built around it. Reach for the Gamma graphic generator when an image has to sit inside the buyer's theme; reach for Fal when it is a scene. Do not mix routes within one pack without saying so in the closing summary.
+
+**Manifest population at build-time.** The build owns every column except `fal_url` and `linkedin_id`:
+- `post_id` · stable ID (`A1`, `B2`, `carousel_A`, `infog_B`, `video_C2`)
+- `week` / `day` · human reference; the scheduler ignores these and derives "due" from `scheduled_date`
+- `asset_type` · one of `article`, `copy_post`, `copy_post_image`, `carousel`, `infographic`, `video`
+- `post_copy` · the approved LinkedIn copy (posted exactly, never rewritten)
+- `image_prompt` · required for `copy_post_image` rows; also on `video` rows as fallback
+- `asset_path` / `gamma_url` · rendered-asset location for HUNT types (carousel/infographic/video)
+- `scheduled_date` / `scheduled_time` / `timezone` · from the cadence; timezone is IANA (`Pacific/Auckland`), never guessed
+- `account` · buyer's LinkedIn page identifier — ask if unknown
+- `status` · `pending` on every row (the scheduler flips it)
+- `fal_url` · filled by `generate_FAL_images.py` at this step
+- `linkedin_id` · left empty for the scheduler
+
+**Cadence drives `copy_post` vs `copy_post_image`.** Follow the client's weekly pattern — some weeks a copy post is text-only, some carry an image. Do not blanket-default all 16 to image; the manifest reflects what actually posts.
 
 ---
 
@@ -203,11 +279,14 @@ Create folder: `NOW Group — Content Pack Delivery / Content Pack Pro — <Buye
 Folder contents:
 - `00_START_HERE.txt`
 - `Content_Pack_Pro_<Buyer>_v1` (Google Doc — see §8)
+- `content_manifest.xlsx` (the machine-readable posting schedule the scheduler skill reads)
 - `<slug>_lm_diagnostic.html`
 - `<slug>_lm_framework.html`
 - `<slug>_infographic_a.html`
 - `<slug>_infographic_b.html`
 - `gamma_links.txt`
+- `gamma_png/` (exported carousel + typographic infographic PNGs, post-ready)
+- `images/` (baseline Fal.AI images, named by `post_id` — one per `copy_post_image` row)
 
 Share permissions: link-view enabled for the buyer's email; the operator (chris@nowgroup.co.nz by default) as owner.
 
@@ -221,7 +300,7 @@ Order (this is the publish-flow order, not the build order):
 
 1. Brand Context Brief
 2. Spine
-3. Posting Schedule (so buyer sees the cadence first)
+3. Publishing cadence overview — a short human-readable summary of the fortnightly rhythm, ending in **"Full schedule: see `content_manifest.xlsx` in the delivery folder."** The manifest is the machine-driving source; this section exists so the buyer sees the shape of the cadence in the doc without having to open Excel
 4. **Fortnight 1 — Article A** → Carousel A copy + Gamma prompt + wrapper post → Posts A1–A4 → Videos A1–A4 → GEO Blogs A1 + A2 → Infographic A copy + Gamma prompt + wrapper
 5. **Fortnight 2 — Article B** → Carousel B copy + Gamma prompt + wrapper post → Posts B1–B4 → Videos B1–B4 → GEO Blogs B1 + B2 → Infographic B copy + Gamma prompt + wrapper
 6. **Fortnight 3 — Article C** → Carousel C copy + Gamma prompt → Posts C1–C4 → Videos C1–C4 → GEO Blog C1
@@ -235,7 +314,7 @@ Order (this is the publish-flow order, not the build order):
 
 Plain text. Contains:
 - What's in the pack (asset count summary)
-- Recommended publishing order (point at the Posting Schedule in the Google Doc)
+- Recommended publishing order (point at `content_manifest.xlsx` in the delivery folder)
 - How to use the Gamma prompts (link to each generated Gamma URL)
 - How to use the HTML lead magnets ("open in browser → print to PDF, or run through your PDF converter")
 - Contact for questions: chris@nowgroup.co.nz
@@ -246,7 +325,7 @@ Plain text. Contains:
 
 End the build with a single summary containing:
 - Drive folder URL
-- Asset count check, e.g. `4 articles · 4 carousels · 2 infographics · 16 posts · 16 videos · 4 wrappers · 6 GEO blogs · 1 long-form LM · 4 HTML LMs · 7 Gamma URLs · 1 master doc`
+- Asset count check, e.g. `4 articles · 4 carousels · 2 infographics · 16 posts · 16 videos · 4 wrappers · 6 GEO blogs · 1 long-form LM · 4 HTML LMs · 9 Gamma renders · 1 master doc · 1 content_manifest.xlsx · <n> baseline Fal images`
 - Any filters that failed twice + flagged for user review
 - Any missing inputs that were substituted with defaults
 
