@@ -94,5 +94,7 @@ the pricing page → change it here → re-run. Token comes from the AUBIT vault
 
 ## Brand spellings (deliberate, do not "correct")
 
-PsikiQ (wordmark) · psikick.ai / psikick.io (domains) · Qollapsis (engine) ·
-AUBIT · NOW Group
+PsikiQ (wordmark) · psikiq.io (domain) · ELENCHUS (engine) · Greiner (not Griner) ·
+AUBIT · NOW Group · PsikiQ Solutions (NZBN trading name)
+
+Full brand reference — colour, type, voice, motifs, assets — in `BRAND.md`.
