@@ -3,7 +3,7 @@ name: dna-x-build-a
 description: Run a Content Pack Pro build (Tier 1 · Option A) for a NOW Group buyer using Claude.ai connectors (Gamma, Google Drive). Use when the user mentions Content Pack Pro, Option A, WOW Option A, "run a content pack", "build a content pack for [buyer]", or wants to refine / audit / regenerate any asset in an existing pack. Trigger on phrases like "let's build [buyer]'s content pack", "ship Option A for [buyer]", or "regenerate the carousels for [buyer]" — even without the explicit Option A label.
 ---
 
-<!-- version: 1.2.0 · 2026-10-03 — Gamma visual stage rewired for PNG card export and the standalone graphic generator; merged in the Excel manifest + Fal.AI baseline image pass -->
+<!-- version: 1.3.0 · 2026-10-04 — Gamma visual stage rewired for PNG card export and the standalone graphic generator; merged in the Excel manifest + Fal.AI baseline image pass; poster art direction moved onto style themes -->
 
 # DNA-X · Content Pack Pro (Tier 1 · Option A)
 
@@ -221,6 +221,8 @@ Each infographic prompt is rendered **twice**, deliberately, and nothing chooses
 |---|---|---|
 | **Typographic** | social, 4x5, 1 card, `exportAs: png` | Gamma composes the page, so the text is real text. Dense copy survives and the wording comes out exactly as written. **The only route that is safe for regulated claims.** |
 | **Poster** | the standalone graphic generator, portrait | An image model paints the whole page. Usually the stronger scroll-stopper, looser with words. |
+
+**Art direction on the poster.** The poster carries a house art style — `editorial` or `cinematic`. These are not API values: `POST /v1.0/images` takes only prompt, type, sizePreset, themeId and referenceImages, and its `type` enum (`abstract | illustration | photo | scene`) is a category, not a look. In Gamma an image style is a property a **theme** can hold — the Theme Editor has an Images section carrying style keywords, and the images endpoint takes a `themeId` to brand with. So a house style is set up once as its own theme (duplicate the buyer's theme, set the Images style keywords, name it `<BUYER> — Editorial` / `<BUYER> — Cinematic`) and every poster inherits it. Where no style theme exists yet, the build falls back to directing the style in the prompt and says so. Tuning a look afterwards is a Gamma edit, not a code change.
 
 Deliver both and let a person pick. Using both is a normal outcome, not a fallback. **Proofread every word of a poster before it ships** — an image model redraws text each run and will drift spelling, weight and kerning. Never ship a poster carrying a regulated claim on trust.
 
