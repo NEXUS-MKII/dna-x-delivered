@@ -219,6 +219,8 @@ The precondition is that the template lives in the **workspace**. Gallery templa
 
 Where no workspace template is named or found, the build generates from scratch and says so.
 
+Pin style themes by **ID**, not by name. An ID is exact and costs no API call; a name has to be matched against a paginated list and can hit more than one theme once a base theme is renamed into variants. Run the pre-flight before a build — it reads only, spends nothing, and confirms every pinned theme and the carousel template resolve before anything generates.
+
 ### 6.2 Infographics — 4 renders, a pair for each
 
 Each infographic prompt is rendered **twice**, deliberately, and nothing chooses between them:
