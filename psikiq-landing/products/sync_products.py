@@ -21,7 +21,10 @@ HERE = pathlib.Path(__file__).parent
 VAULT = pathlib.Path("/Users/christopherwhite/Applications/Claude Projects/NEXUS MKII/aubit-now")
 BASE = "https://services.leadconnectorhq.com"
 LOCATION = "XmnnOgihSvpbtlApd8cN"          # PsikiQSolutions
-IMG_BASE = "https://nexus-mkii.github.io/psikiq/products"
+MEDIA = json.loads((HERE.parent / "media_map.json").read_text())   # GHL Media Library URLs (push_media.py)
+
+def card_url(key: str) -> str:
+    return MEDIA[f"products/cards/{key}.png"]
 VERSION = "2021-07-28"
 
 def token() -> str:
@@ -68,7 +71,7 @@ def main() -> int:
             "name": item["name"],
             "description": item["description"],
             "productType": "SERVICE",
-            "image": f"{IMG_BASE}/{item['key']}.png",
+            "image": card_url(item["key"]),
             "availableInStore": True,
             "slug": item["key"],
             # medias[].id is required even for externally hosted art — the card's key is stable
@@ -80,7 +83,7 @@ def main() -> int:
             "isTaxesEnabled": bool(cat.get("tax_id")),
             "taxes": [cat["tax_id"]] if cat.get("tax_id") else [],
             "medias": [{"id": item["key"], "title": item["name"],
-                        "url": f"{IMG_BASE}/{item['key']}.png", "type": "image", "isFeatured": True}],
+                        "url": card_url(item["key"]), "type": "image", "isFeatured": True}],
         }
         cur = have.get(item["name"])
         if a.dry_run:

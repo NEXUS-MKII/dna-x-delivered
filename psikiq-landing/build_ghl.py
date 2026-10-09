@@ -8,12 +8,18 @@
                              element (full-width section)
 
 The GHL output strips the document wrapper, lifts GHL's 1170px row cap on the section
-that holds the page, points assets at the public host, and rewrites page links to the
+that holds the page, points assets at their GHL Media Library URLs (media_map.json, from push_media.py), and rewrites page links to the
 GHL paths.  Run after every change; never hand-edit the ghl/ output.
 """
-import re, pathlib
+import json, re, pathlib
 here = pathlib.Path(__file__).parent
-IMG_HOST = 'https://nexus-mkii.github.io/psikiq/'
+MEDIA = json.loads((here / 'media_map.json').read_text())   # path -> GHL media URL
+
+def media(m):
+    rel = m.group(1)
+    if rel not in MEDIA:
+        raise SystemExit(f'{rel} is not in media_map.json: run push_media.py first')
+    return MEDIA[rel]
 PAGES = {                      # source file -> (GHL output, GHL path, header readout)
     'index.html':   ('ghl/psikiq-home-ghl.html',    '/',        '<span class="w">//</span>&nbsp;<span id="rd">SUPERPOSITION</span>'),
     'pricing.html': ('ghl/psikiq-pricing-ghl.html', '/psikiq-pricing', '<span class="w">//</span>&nbsp;PRICING'),
@@ -60,7 +66,7 @@ for src, (out, path, readout) in PAGES.items():
     head_style = re.search(r'(<!-- FONTS.*?</style>)\s*</head>', s, re.S).group(1)
     body = re.search(r'<body>\n(.*)</body>', s, re.S).group(1)
     ghl = head_style + '\n' + body
-    ghl = re.sub(r'(psi-[a-z0-9-]+\.webp|icons/[a-z0-9-]+\.(?:png|ico))', lambda m: IMG_HOST + m.group(1), ghl)
+    ghl = re.sub(r'(psi-[a-z0-9-]+\.webp|icons/[a-z0-9-]+\.(?:png|ico))', media, ghl)
     ghl = relink(ghl)
     o = here / out
     o.write_text(GHL_HEAD.format(name=src.replace('.html', ''), src=src) + ghl)
@@ -71,7 +77,7 @@ for src, (out, path, readout) in PAGES.items():
 FONTS = ('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600'
          '&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap')
 hdr = header.replace('{{READOUT}}', '<span class="w">//</span>&nbsp;PSIKIQ')
-hdr = re.sub(r'(psi-[a-z0-9-]+\.webp|icons/[a-z0-9-]+\.(?:png|ico))', lambda m: IMG_HOST + m.group(1), hdr)
+hdr = re.sub(r'(psi-[a-z0-9-]+\.webp|icons/[a-z0-9-]+\.(?:png|ico))', media, hdr)
 hdr = relink(hdr)
 standalone = f'''<!-- PsikiQ HUD header — standalone. Paste into a Custom Code element at the TOP of any GHL
      page that is NOT one of the generated psikiq-*-ghl.html pages (those carry it already).

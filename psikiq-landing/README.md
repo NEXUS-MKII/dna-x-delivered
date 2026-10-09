@@ -24,7 +24,10 @@ The site header (bar, nav, mobile menu) lives in `partials/header.html`; the bui
 injects it into every page between the `HEADER:start/end` markers, so edit the
 partial, never the injected copy. Page links are written as `pricing.html` /
 `index.html#…` in source and rewritten to the GHL paths in the output. The build strips the document wrapper, lifts GHL's 1170px
-row cap on that section, and points the psi images at nexus-mkii.github.io/psikiq/.
+row cap on that section, and points every image at its GHL Media Library URL from
+`media_map.json`. Images live in the PsikiQSolutions Media Library, not GitHub Pages:
+add or change an image, then run `python3 push_media.py` (it uploads new files and records
+their URLs) before `build_ghl.py`. Product cards use the same map in `products/sync_products.py`.
 Never hand-edit the GHL copy — that is how the two drifted apart in Sep 2026.
 
 ## Structure
@@ -56,7 +59,7 @@ so splitting into a standalone repo later is a clean operation:
 180 apple-touch, 192/512). Regenerate from `psi-gold.webp` if the mark changes. Source
 pages link them in `<head>`; on GHL the header script swaps GHL's default icon for
 ours at load. Also set it in GHL: Sites → Settings → Favicon → `icons/favicon-32.png`.
-The set is mirrored on nexus-mkii.github.io/psikiq/icons/ (what the GHL pages fetch).
+The set is uploaded to the GHL Media Library by `push_media.py` (what the GHL pages fetch).
 
 ## Logo
 
