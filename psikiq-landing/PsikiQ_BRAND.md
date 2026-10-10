@@ -11,7 +11,7 @@ The **premium-positioning brand over the ELENCHUS engine**. Where AUBIT is the m
 and NOW Group is the house, PsikiQ is the face a buyer meets: a consultancy that reads a
 business's position and tells it something it could feel but not prove.
 
-> **We see what your market can't.**
+> **See what your market can't.**
 
 The product thesis and the marketing are the same object. The diagnostic demonstrates
 the claim while making it — every answer returns a *reveal*, so the respondent moves
