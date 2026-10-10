@@ -1,0 +1,2566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNA-X · Generative marketing</title>
+</head>
+<body style="margin:0">
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  DNA-X — BLOCK 00 — FOUNDATION
+  Must be the FIRST Custom Code element on the GHL page.
+  Provides: shared CSS, fonts, dev banner, global JS (offer URLs + counter)
+═══════════════════════════════════════════════════════════════════════════
+  ⚠ TO GO LIVE — fill in offerMap URLs at the bottom of this block.
+  Until then, the yellow dev banner stays visible at the top of the page.
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══ ROOT TOKENS ═══ */
+:root {
+  --dnax-navy: #1A1A2E;          /* primary brand: hero bg, headings, body text */
+  --dnax-deep-navy: #080808;     /* deepest tone: footer, high-contrast panels */
+  --dnax-orange: #E84C1E;        /* accent: CTAs, links, eyebrows, the X in DNAx */
+  --dnax-orange-dk: #B83B17;     /* hover on orange buttons / links */
+  --dnax-orange-light: #FF6B3D;  /* reserved: gradients, glows, hover accents */
+  --dnax-white: #FFFFFF;
+  --dnax-light-bg: #F8F8F8;
+  --dnax-light-gray: #E8E8E8;
+  --dnax-mid-gray: #666666;
+  --dnax-text: #1A1A2E;
+  --dnax-text-muted: #555555;
+  --dnax-text-light: rgba(255, 255, 255, 0.95);
+  --dnax-text-light-dim: rgba(255, 255, 255, 0.78);
+  --dnax-warn-bg: #FFF7ED;
+  --dnax-warn-border: #F59E0B;
+  --dnax-warn-text: #92400E;
+}
+
+/* ═══ RESET (scoped to .dnax-section) ═══ */
+.dnax-section, .dnax-section *, .dnax-section *::before, .dnax-section *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ═══ SHARED LAYOUT ═══ */
+.dnax-section {
+  width: 100%;
+  font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--dnax-text);
+  padding: clamp(60px, 7vw, 100px) clamp(20px, 4vw, 60px);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.dnax-section h1, .dnax-section h2, .dnax-section h3 {
+  font-family: 'Blinker', 'Barlow', -apple-system, sans-serif;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+.dnax-section a {
+  color: var(--dnax-orange);
+  text-decoration: none;
+}
+
+.dnax-section a:hover { color: var(--dnax-orange-dk); }
+
+.dnax-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ═══ EYEBROW ═══ */
+.dnax-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dnax-orange);
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.dnax-eyebrow-led::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dnax-orange);
+  margin-right: 10px;
+  vertical-align: middle;
+  animation: dnax-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dnax-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232, 76, 30, 0.4); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(232, 76, 30, 0); }
+}
+
+/* ═══ BUTTONS — ALL SOLID ORANGE (no blank/hollow buttons anywhere) ═══ */
+.dnax-btn {
+  display: inline-block;
+  padding: 15px 26px;
+  font-family: 'Blinker', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+  background: var(--dnax-orange);
+  color: var(--dnax-white) !important;
+  white-space: nowrap;
+}
+
+.dnax-btn:hover {
+  background: var(--dnax-orange-dk);
+  color: var(--dnax-white) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(232, 76, 30, 0.35);
+}
+
+.dnax-btn-block {
+  display: block;
+  width: 100%;
+}
+
+.dnax-btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--dnax-white) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+}
+
+.dnax-btn-ghost:hover {
+  border-color: var(--dnax-white);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--dnax-white) !important;
+  box-shadow: none;
+}
+
+.dnax-btn-link {
+  display: inline-block;
+  color: var(--dnax-orange);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 15px;
+  border-bottom: 1px dashed var(--dnax-orange);
+  padding-bottom: 2px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.dnax-btn-link:hover {
+  color: var(--dnax-orange-dk);
+  border-bottom-color: var(--dnax-orange-dk);
+}
+
+/* ═══ DEV BANNER (auto-hides when offer URLs configured) ═══ */
+.dnax-dev-banner {
+  background: var(--dnax-warn-bg);
+  border-bottom: 2px solid var(--dnax-warn-border);
+  padding: 11px 24px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dnax-warn-text);
+  font-family: 'Barlow', sans-serif;
+  line-height: 1.5;
+}
+
+.dnax-dev-banner code {
+  font-family: 'Courier New', monospace;
+  background: rgba(245, 158, 11, 0.18);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.dnax-dev-banner.dnax-hidden { display: none; }
+
+/* ═══ COMMON CARD STYLE ═══ */
+.dnax-card {
+  background: var(--dnax-white);
+  border: 1px solid var(--dnax-light-gray);
+  border-radius: 10px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+}
+
+.dnax-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 26, 46, 0.10);
+  border-color: var(--dnax-orange);
+}
+
+.dnax-card-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dnax-orange);
+  margin-bottom: 12px;
+}
+
+.dnax-card h3 {
+  font-size: 24px;
+  color: var(--dnax-text);
+  margin-bottom: 10px;
+}
+
+.dnax-card-sub {
+  font-size: 15px;
+  color: var(--dnax-text-muted);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.dnax-card-bullets {
+  list-style: none;
+  margin: 0 0 22px 0;
+  padding: 0;
+  flex: 1;
+}
+
+.dnax-card-bullets li {
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  padding: 7px 0 7px 22px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.dnax-card-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 12px;
+  height: 2px;
+  background: var(--dnax-orange);
+}
+
+.dnax-card-price {
+  font-family: 'Blinker', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--dnax-orange);
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.dnax-card-meta {
+  font-size: 11px;
+  color: var(--dnax-mid-gray);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+/* ═══ CAROUSEL FRAMEWORK (used by 3 product sections) ═══ */
+.dnax-carousel-wrap {
+  position: relative;
+}
+
+.dnax-carousel-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dnax-carousel-head h3 {
+  font-size: clamp(22px, 2.4vw, 28px);
+  color: var(--dnax-text);
+  margin: 0;
+}
+
+.dnax-carousel-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.dnax-carousel-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--dnax-light-gray);
+  background: var(--dnax-white);
+  color: var(--dnax-text);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: sans-serif;
+}
+
+.dnax-carousel-btn:hover {
+  border-color: var(--dnax-orange);
+  color: var(--dnax-orange);
+}
+
+.dnax-carousel-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: var(--dnax-light-gray);
+  color: var(--dnax-mid-gray);
+}
+
+.dnax-carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 22px;
+  padding: 4px 4px 24px 4px;
+  margin: 0 -4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.dnax-carousel-track::-webkit-scrollbar { display: none; }
+
+.dnax-carousel-card {
+  flex: 0 0 calc((100% - 44px) / 3);
+  scroll-snap-align: start;
+  min-height: 100%;
+}
+
+.dnax-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.dnax-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dnax-light-gray);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.dnax-carousel-dot.active {
+  background: var(--dnax-orange);
+  width: 24px;
+  border-radius: 4px;
+}
+
+@media (max-width: 880px) {
+  .dnax-carousel-card { flex: 0 0 88%; }
+}
+
+@media (max-width: 480px) {
+  .dnax-carousel-card { flex: 0 0 92%; }
+}
+</style>
+
+<!-- Dev mode banner — visible until URLs are wired -->
+<div class="dnax-dev-banner" id="nowDevBanner" role="status">
+  <strong>⚠ Preview mode</strong> — GHL product links are not yet configured.
+  Edit Block 00 (Foundation) <code>DNAX.offerMap</code> at the bottom and replace the
+  <code>#REPLACE_GHL_PRODUCT_URL_*</code> placeholders to activate checkout.
+  This banner auto-hides once URLs are real.
+</div>
+
+<script>
+(function () {
+  /* ═══ NAMESPACE — accessible to all section blocks ═══ */
+  window.DNAX = window.DNAX || {};
+
+  /* ═══ OFFER URL MAP — REPLACE THESE 12 PLACEHOLDERS TO GO LIVE ═══ */
+  DNAX.offerMap = {
+    'content-pack-pro':        '#REPLACE_GHL_PRODUCT_URL_PACK_A',
+    'partner-growth':          '#REPLACE_GHL_PRODUCT_URL_PACK_B',
+    'email-rescue':            '#REPLACE_GHL_PRODUCT_URL_PACK_C',
+    'wow-bundle':              '#REPLACE_GHL_PRODUCT_URL_WOW',
+    'build-d':                 '#REPLACE_GHL_PRODUCT_URL_BUILD_D',
+    'build-e':                 '#REPLACE_GHL_PRODUCT_URL_BUILD_E',
+    'build-f':                 '#REPLACE_GHL_PRODUCT_URL_BUILD_F',
+    'bundle-pipeline':         '#REPLACE_GHL_PRODUCT_URL_PIPELINE',
+    'bundle-conversion':       '#REPLACE_GHL_PRODUCT_URL_CONVERSION',
+    'bundle-authority':        '#REPLACE_GHL_PRODUCT_URL_AUTHORITY',
+    'bundle-complete-factory': '#REPLACE_GHL_PRODUCT_URL_COMPLETE_FACTORY',
+    'calendly':                '#REPLACE_GHL_BOOKING_URL'
+  };
+
+  /* ═══ WIRE BUTTONS + AUTO-HIDE DEV BANNER WHEN ALL CONFIGURED ═══ */
+  DNAX.wireButtons = function () {
+    var unconfigured = [];
+    Object.keys(DNAX.offerMap).forEach(function (key) {
+      var url = DNAX.offerMap[key];
+      var isPlaceholder = url.indexOf('#REPLACE') === 0;
+      if (isPlaceholder) unconfigured.push(key);
+    });
+
+    document.querySelectorAll('[data-offer]').forEach(function (el) {
+      var key = el.getAttribute('data-offer');
+      var url = DNAX.offerMap[key];
+      if (url && url.indexOf('#REPLACE') !== 0) {
+        el.setAttribute('href', url);
+        el.removeAttribute('data-unconfigured');
+      } else {
+        el.setAttribute('data-unconfigured', 'true');
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          alert('⚠ GHL product link not yet configured for "' + key + '". Edit DNAX.offerMap in Block 00 (Foundation).');
+        });
+      }
+    });
+
+    var calendlyEls = document.querySelectorAll('[data-calendly]');
+    calendlyEls.forEach(function (el) {
+      var url = DNAX.offerMap['calendly'];
+      if (url && url.indexOf('#REPLACE') !== 0) {
+        el.setAttribute('href', url);
+      } else {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          alert('⚠ Booking link not yet configured. Edit DNAX.offerMap.calendly in Block 00.');
+        });
+      }
+    });
+
+    /* Hide dev banner if everything is wired */
+    var banner = document.getElementById('nowDevBanner');
+    if (banner && unconfigured.length === 0) {
+      banner.classList.add('dnax-hidden');
+    } else if (unconfigured.length > 0) {
+      console.warn('[DNA-X] ' + unconfigured.length + ' GHL product links not configured:', unconfigured);
+    }
+  };
+
+  /* ═══ COUNTING SUPERSCRIPT ANIMATION (cycles 1-6 in §02 system block) ═══ */
+  DNAX.startCounter = function () {
+    var supers = ['¹', '²', '³', '⁴', '⁵', '⁶'];
+    var counter = document.getElementById('mainCounter');
+    if (!counter) return;
+    var i = 0;
+    setInterval(function () {
+      i = (i + 1) % 6;
+      counter.style.opacity = '0.3';
+      setTimeout(function () {
+        counter.textContent = supers[i];
+        counter.style.opacity = '1';
+      }, 200);
+    }, 1800);
+  };
+
+  /* ═══ CAROUSEL CONTROLS (used by all carousel blocks) ═══ */
+  DNAX.initCarousels = function () {
+    document.querySelectorAll('.dnax-carousel-wrap').forEach(function (wrap) {
+      var track = wrap.querySelector('.dnax-carousel-track');
+      var prev = wrap.querySelector('.dnax-carousel-btn.prev');
+      var next = wrap.querySelector('.dnax-carousel-btn.next');
+      var dots = wrap.querySelectorAll('.dnax-carousel-dot');
+
+      if (!track) return;
+
+      function getCardWidth() {
+        var card = track.querySelector('.dnax-carousel-card');
+        return card ? card.offsetWidth + 22 : 300;
+      }
+
+      function updateState() {
+        var scrollLeft = track.scrollLeft;
+        var maxScroll = track.scrollWidth - track.clientWidth;
+        if (prev) prev.disabled = scrollLeft <= 5;
+        if (next) next.disabled = scrollLeft >= maxScroll - 5;
+        var cardWidth = getCardWidth();
+        var activeIdx = Math.round(scrollLeft / cardWidth);
+        dots.forEach(function (dot, i) {
+          dot.classList.toggle('active', i === activeIdx);
+        });
+      }
+
+      if (prev) prev.addEventListener('click', function () {
+        track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+      });
+      if (next) next.addEventListener('click', function () {
+        track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+      });
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () {
+          track.scrollTo({ left: i * getCardWidth(), behavior: 'smooth' });
+        });
+      });
+
+      track.addEventListener('scroll', updateState);
+      window.addEventListener('resize', updateState);
+      updateState();
+    });
+  };
+
+  /* ═══ INIT ON DOM READY ═══ */
+  function init() {
+    DNAX.wireButtons();
+    DNAX.startCounter();
+    DNAX.initCarousels();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+<!-- ═══ SCHEMA — Organization (FAQ schema lives in Block 06) ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "DNA-X",
+  "parentOrganization": {"@type": "Organization", "name": "PsikiQ Solutions", "url": "https://psikiq.io"},
+  "url": "https://dnaxmarketing.com",
+  "description": "A productised marketing system. Two tiers: $497 done-for-you Essentials and DNAx (X-Factor) bespoke builds in your brand.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "chris@psikiq.io",
+    "contactType": "Sales"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "NZ"
+  }
+}
+</script>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 01 — HERO  (v1.3)
+  Standalone, edit without affecting other sections.
+  Depends on: Block 00 Foundation (CSS variables + buttons)
+═══════════════════════════════════════════════════════════════════════════
+  v1.3 changes from v1.2:
+    • Primary CTA now points to brandkit diagnostic (not in-page anchor)
+    • CTA label: "Begin X-traction — power your X-Factor"
+    • Added urgency line: Brand Blueprint + AI Voice Encoder by week's end
+    • Tagline updated: "Hand built by robots, imagined by humans."
+    • Removed secondary CTA link — keeping focus tight on diagnostic entry
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-hero-section {
+  background: var(--dnax-deep-navy);
+  color: var(--dnax-text-light);
+  position: relative;
+  overflow: hidden;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.dnax-hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+  pointer-events: none;
+}
+
+.dnax-hero-section::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 50%;
+  height: 60%;
+  background: radial-gradient(ellipse, rgba(232,76,30,0.12) 0%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.dnax-hero-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.dnax-hero-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--dnax-orange);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.dnax-hero-eyebrow .dnax-dna-mini {
+  font-family: 'Blinker', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+.dnax-hero-eyebrow .dnax-dna-mini sup {
+  color: var(--dnax-white);
+  font-size: 0.7em;
+  margin-left: 1px;
+}
+
+.dnax-hero-section h1 {
+  font-size: clamp(54px, 8vw, 92px);
+  color: var(--dnax-white);
+  margin-bottom: 24px;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.dnax-hero-section h1 .dnax-x-factor {
+  color: var(--dnax-orange);
+  font-style: italic;
+  font-weight: 800;
+}
+
+.dnax-hero-tagline {
+  font-size: 16px;
+  font-style: italic;
+  color: var(--dnax-text-light-dim);
+  margin-bottom: 28px;
+  letter-spacing: 0.02em;
+}
+
+.dnax-hero-urgency {
+  font-size: clamp(15px, 1.5vw, 17px);
+  color: var(--dnax-text-light);
+  max-width: 580px;
+  margin: 0 auto 36px;
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.dnax-hero-urgency strong {
+  color: var(--dnax-white);
+  font-weight: 700;
+}
+
+.dnax-hero-urgency .dnax-tools {
+  color: var(--dnax-orange);
+  font-weight: 600;
+}
+
+.dnax-hero-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.dnax-hero-cta .dnax-btn {
+  font-size: 16px;
+  padding: 17px 32px;
+}
+
+.dnax-hero-cta-meta {
+  font-size: 12px;
+  color: var(--dnax-text-light-dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.dnax-hero-corner {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  font-family: 'Blinker', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: rgba(255,255,255,0.85);
+  z-index: 3;
+  letter-spacing: -0.02em;
+}
+
+.dnax-hero-corner sup {
+  color: var(--dnax-orange);
+  font-size: 0.7em;
+}
+
+@media (max-width: 880px) {
+  .dnax-hero-corner {
+    top: 18px;
+    right: 18px;
+    font-size: 22px;
+  }
+  .dnax-hero-cta .dnax-btn {
+    font-size: 15px;
+    padding: 15px 22px;
+    white-space: normal;
+    line-height: 1.3;
+  }
+}
+</style>
+
+<section class="dnax-section dnax-hero-section" id="hero">
+  <div class="dnax-hero-corner" aria-hidden="true">
+    DNA<sup>x</sup>
+  </div>
+  <div class="dnax-hero-inner">
+    <div class="dnax-hero-eyebrow">
+      <span class="dnax-dna-mini">DNA<sup>x</sup></span> &nbsp;—&nbsp; DONE NOW, AUTHENTIC.
+    </div>
+    <h1>Your DNA. <span class="dnax-x-factor">Your X-Factor.</span></h1>
+    <p class="dnax-hero-tagline">Hand built by robots, imagined by humans.</p>
+    <p class="dnax-hero-urgency">
+      You could be using your <span class="dnax-tools">Brand Blueprint</span> and <span class="dnax-tools">AI Voice Encoder</span> by the end of the week.
+    </p>
+    <div class="dnax-hero-cta">
+      <a href="#dnax-diagnostic" class="dnax-btn">Begin X-traction — power your X-Factor</a>
+      <p class="dnax-hero-cta-meta">FREE DIAGNOSTIC  •  10 MINUTES  •  NO CARD REQUIRED</p>
+    </div>
+  </div>
+</section>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 02 — THE SYSTEM
+  Combines old problem statement + how-it-works + counting + 6-A spine
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-system-section { background: var(--dnax-white); }
+
+.dnax-system-head {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 50px;
+}
+
+.dnax-system-head h2 {
+  font-size: clamp(32px, 4.2vw, 46px);
+  color: var(--dnax-text);
+  margin-bottom: 22px;
+}
+
+.dnax-system-body {
+  font-size: clamp(16px, 1.6vw, 18px);
+  color: var(--dnax-text-muted);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+.dnax-system-punch {
+  font-family: 'Blinker', sans-serif;
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 800;
+  color: var(--dnax-orange);
+  letter-spacing: -0.01em;
+}
+
+.dnax-tiers-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 50px;
+}
+
+.dnax-tier-mini {
+  padding: 28px 26px;
+  border-radius: 8px;
+  background: var(--dnax-light-bg);
+  border-top: 4px solid var(--dnax-orange);
+}
+
+.dnax-tier-mini.t2 { border-top-color: var(--dnax-navy); }
+
+.dnax-tier-mini h3 {
+  font-size: 19px;
+  margin-bottom: 10px;
+  color: var(--dnax-text);
+}
+
+.dnax-tier-mini p {
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+}
+
+/* Counting block */
+.dnax-counting {
+  text-align: center;
+  padding: 24px 0;
+  margin-bottom: 36px;
+}
+
+.dnax-counting-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--dnax-mid-gray);
+  margin-bottom: 18px;
+}
+
+.dnax-dna-big {
+  font-family: 'Blinker', sans-serif;
+  font-size: clamp(70px, 11vw, 130px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--dnax-text);
+  display: inline-block;
+  line-height: 1;
+}
+
+.dnax-dna-big sup#mainCounter {
+  font-size: 0.55em;
+  color: var(--dnax-orange);
+  font-weight: 800;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+  margin-left: 4px;
+}
+
+.dnax-counting-explainer {
+  font-size: 16px;
+  color: var(--dnax-text-muted);
+  max-width: 640px;
+  margin: 18px auto 0;
+  line-height: 1.6;
+}
+
+.dnax-counting-explainer strong { color: var(--dnax-text); }
+
+/* 6-A spine */
+.dnax-spine {
+  background: var(--dnax-light-bg);
+  border-radius: 8px;
+  padding: 26px 28px;
+}
+
+.dnax-spine-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--dnax-mid-gray);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.dnax-spine-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.dnax-spine-cell {
+  text-align: center;
+  padding: 14px 6px;
+  border-radius: 6px;
+  background: var(--dnax-white);
+  transition: all 0.2s;
+}
+
+.dnax-spine-cell:hover {
+  background: var(--dnax-orange);
+  transform: translateY(-2px);
+}
+
+.dnax-spine-cell:hover .dnax-spine-letter,
+.dnax-spine-cell:hover .dnax-spine-aword,
+.dnax-spine-cell:hover .dnax-spine-mod {
+  color: var(--dnax-white);
+}
+
+.dnax-spine-letter {
+  font-family: 'Blinker', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--dnax-orange);
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.dnax-spine-aword {
+  font-family: 'Blinker', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dnax-text);
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.dnax-spine-mod {
+  font-size: 10px;
+  color: var(--dnax-mid-gray);
+  line-height: 1.3;
+  transition: color 0.2s;
+}
+
+@media (max-width: 880px) {
+  .dnax-tiers-row { grid-template-columns: 1fr; }
+  .dnax-spine-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .dnax-spine-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<section class="dnax-section dnax-system-section">
+  <div class="dnax-container">
+
+    <div class="dnax-system-head">
+      <h2>The plan was never the problem.</h2>
+      <p class="dnax-system-body">
+        Most operators have been planning their content for 6 to 18 months. The plan exists.
+        The intention exists. What's missing is the system that takes the plan and finishes it.
+        That gap — between knowing and doing — is not a motivation problem. It's a machinery problem.
+      </p>
+      <p class="dnax-system-punch">We built the machine. You deploy it.</p>
+    </div>
+
+    <!-- Two tiers explainer -->
+    <div class="dnax-tiers-row">
+      <div class="dnax-tier-mini">
+        <h3>Tier 1 — Essentials</h3>
+        <p>Three done-for-you templates. $497 each. Instant delivery. DNA-X aesthetic. You own the assets forever, no retainer, no waiting.</p>
+      </div>
+      <div class="dnax-tier-mini t2">
+        <h3>Tier 2 — DNA<sup>x</sup></h3>
+        <p>Three bespoke builds in your brand. 2 to 4 weeks. One per client. Our engine underneath, your DNA on top. Not a template — a working asset finished in your voice.</p>
+      </div>
+    </div>
+
+    <!-- Counting visual -->
+    <div class="dnax-counting">
+      <div class="dnax-counting-label">YOUR PROGRESS BADGE</div>
+      <div class="dnax-dna-big">DNA<sup id="mainCounter">x</sup></div>
+      <p class="dnax-counting-explainer">
+        Buy one module, you're at <strong>DNA¹</strong>. Buy two, <strong>DNA²</strong>.
+        Buy all six, <strong>DNA⁶</strong> — the complete genome. The number is your progress
+        badge. It moves as you build.
+      </p>
+    </div>
+
+    <!-- 6-A spine -->
+    <div class="dnax-spine">
+      <div class="dnax-spine-title">The Six A's</div>
+      <div class="dnax-spine-grid">
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">A</div>
+          <div class="dnax-spine-aword">Authority</div>
+          <div class="dnax-spine-mod">Content Pack Pro</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">B</div>
+          <div class="dnax-spine-aword">Activation</div>
+          <div class="dnax-spine-mod">Email Rescue</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">C</div>
+          <div class="dnax-spine-aword">Alliance</div>
+          <div class="dnax-spine-mod">Partner Growth</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">D</div>
+          <div class="dnax-spine-aword">Answers</div>
+          <div class="dnax-spine-mod">Quiz Endpoint</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">E</div>
+          <div class="dnax-spine-aword">Algorithm</div>
+          <div class="dnax-spine-mod">GEO + SEO</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">F</div>
+          <div class="dnax-spine-aword">Architecture</div>
+          <div class="dnax-spine-mod">BizCard 2026</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 03 — TIER 1 ESSENTIALS CAROUSEL
+  Pack A, B, C + WOW Bundle (4 cards). Horizontal scroll-snap.
+  Depends on: Block 00 Foundation (carousel framework + buttons + cards)
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-products-section {
+  background: var(--dnax-light-bg);
+}
+
+.dnax-products-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 50px;
+}
+
+.dnax-products-head h2 {
+  font-size: clamp(34px, 4.5vw, 48px);
+  color: var(--dnax-text);
+  margin-bottom: 14px;
+}
+
+.dnax-products-sub {
+  font-size: clamp(16px, 1.7vw, 18px);
+  color: var(--dnax-text-muted);
+}
+
+/* Tier 1 specific card tweaks */
+.dnax-tier1-card {
+  background: var(--dnax-white);
+  border: 1px solid var(--dnax-light-gray);
+  border-radius: 10px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s;
+  height: 100%;
+}
+
+.dnax-tier1-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 26, 46, 0.10);
+  border-color: var(--dnax-orange);
+}
+
+.dnax-tier1-card.wow {
+  background: linear-gradient(135deg, var(--dnax-navy) 0%, #2a2a4a 100%);
+  color: var(--dnax-white);
+  border: 2px solid var(--dnax-orange);
+  position: relative;
+  overflow: hidden;
+}
+
+.dnax-tier1-card.wow::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 50%;
+  height: 80%;
+  background: radial-gradient(ellipse, rgba(232, 76, 30, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.dnax-tier1-card.wow > * { position: relative; z-index: 2; }
+
+.dnax-tier1-card.wow h3 { color: var(--dnax-white); }
+.dnax-tier1-card.wow .dnax-card-sub { color: var(--dnax-text-light); }
+.dnax-tier1-card.wow .dnax-card-bullets li { color: var(--dnax-text-light-dim); }
+.dnax-tier1-card.wow .dnax-card-bullets li::before { background: var(--dnax-orange); }
+.dnax-tier1-card.wow .dnax-card-meta { color: var(--dnax-text-light-dim); }
+
+.dnax-wow-pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.dnax-wow-strike {
+  text-decoration: line-through;
+  color: var(--dnax-text-light-dim);
+  font-size: 15px;
+}
+
+.dnax-wow-save {
+  display: inline-block;
+  background: var(--dnax-orange);
+  color: var(--dnax-white);
+  padding: 3px 9px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+  align-self: flex-start;
+}
+
+.dnax-section-divider {
+  width: 80px;
+  height: 3px;
+  background: var(--dnax-orange);
+  margin: 60px auto 50px;
+  opacity: 0.35;
+}
+</style>
+
+<section class="dnax-section dnax-products-section" id="products">
+  <div class="dnax-container">
+
+    <div class="dnax-products-head">
+      <span class="dnax-eyebrow">The Modules</span>
+      <h2>Six A's. Two tiers. Pick where to start.</h2>
+      <p class="dnax-products-sub">Three Essentials packs at $497, four bundle paths, three bespoke DNA<sup>x</sup> builds. Swipe to browse each.</p>
+    </div>
+
+    <!-- Tier 1 Carousel -->
+    <div class="dnax-carousel-wrap">
+      <div class="dnax-carousel-head">
+        <h3>Tier 1 — Essentials</h3>
+        <div class="dnax-carousel-controls">
+          <button class="dnax-carousel-btn prev" aria-label="Previous">‹</button>
+          <button class="dnax-carousel-btn next" aria-label="Next">›</button>
+        </div>
+      </div>
+
+      <div class="dnax-carousel-track" id="tier1Track">
+
+        <!-- Card A — Authority -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-tier1-card">
+            <div class="dnax-card-eyebrow">Done Now, Authority.</div>
+            <h3>Content Pack Pro</h3>
+            <p class="dnax-card-sub">31 LinkedIn assets in your voice. 4 days. $497.</p>
+            <ul class="dnax-card-bullets">
+              <li>4 pillar articles, 600 words each, released fortnightly</li>
+              <li>2 carousels + 2 infographics + 8 LinkedIn posts + 8 video scripts</li>
+              <li>Built around your voice. Yours forever.</li>
+            </ul>
+            <div class="dnax-card-price">$497</div>
+            <div class="dnax-card-meta">4-DAY DELIVERY  •  DNA-X AESTHETIC</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="content-pack-pro">Get Content Pack Pro — $497</a>
+          </div>
+        </div>
+
+        <!-- Card B — Activation -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-tier1-card">
+            <div class="dnax-card-eyebrow">Done Now, Activation.</div>
+            <h3>Email Database Rescue</h3>
+            <p class="dnax-card-sub">Cold list re-ignited. 8-week protocol. Instant. $497.</p>
+            <ul class="dnax-card-bullets">
+              <li>Staged 8-week re-engagement sequence</li>
+              <li>Cold-to-warm conversion frameworks</li>
+              <li>"What Happens Next" booklet — your deployment guide</li>
+            </ul>
+            <div class="dnax-card-price">$497</div>
+            <div class="dnax-card-meta">INSTANT DELIVERY  •  DNA-X AESTHETIC</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="email-rescue">Get Email Database Rescue — $497</a>
+          </div>
+        </div>
+
+        <!-- Card C — Alliance -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-tier1-card">
+            <div class="dnax-card-eyebrow">Done Now, Alliance.</div>
+            <h3>Partner Growth System</h3>
+            <p class="dnax-card-sub">Referral frameworks + I-MELD intro templates. Instant. $497.</p>
+            <ul class="dnax-card-bullets">
+              <li>Partnership activation frameworks — evergreen, no expiry</li>
+              <li>Referral trigger protocols and loop-closing systems</li>
+              <li>I-MELD introduction templates, ready to send</li>
+            </ul>
+            <div class="dnax-card-price">$497</div>
+            <div class="dnax-card-meta">INSTANT DELIVERY  •  DNA-X AESTHETIC</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="partner-growth">Get Partner Growth — $497</a>
+          </div>
+        </div>
+
+        <!-- WOW Bundle (hero variant) -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-tier1-card wow">
+            <div class="dnax-card-eyebrow" style="color: var(--dnax-orange);">All three. One bundle.</div>
+            <h3>WOW Factor Bundle</h3>
+            <p class="dnax-card-sub">A + B + C. DNA³ in one buy.</p>
+            <ul class="dnax-card-bullets">
+              <li>Pack A — Content Pack Pro (31 assets)</li>
+              <li>Pack B — Email Database Rescue</li>
+              <li>Pack C — Partner Growth System</li>
+            </ul>
+            <div class="dnax-wow-pricing">
+              <div class="dnax-card-price">$997</div>
+              <span class="dnax-wow-strike">$1,491</span>
+            </div>
+            <span class="dnax-wow-save">SAVE $494</span>
+            <div class="dnax-card-meta">BUNDLE  •  DNA-X AESTHETIC</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="wow-bundle">Get the WOW Bundle — $997</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="dnax-carousel-dots">
+        <button class="dnax-carousel-dot active" aria-label="Slide 1"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 2"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 3"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 4"></button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 04 — DNAx BUILDS CAROUSEL
+  Build D, E, F (3 cards). Horizontal scroll-snap.
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-dnax-section {
+  background: var(--dnax-navy);
+  color: var(--dnax-text-light);
+}
+
+.dnax-dnax-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 50px;
+}
+
+.dnax-dnax-head .dnax-eyebrow {
+  color: var(--dnax-orange);
+}
+
+.dnax-dnax-head h2 {
+  font-size: clamp(34px, 4.5vw, 52px);
+  color: var(--dnax-white);
+  margin: 14px 0 16px;
+}
+
+.dnax-dnax-head h2 .dnax-x-factor {
+  color: var(--dnax-orange);
+  font-style: italic;
+}
+
+.dnax-dnax-sub {
+  font-size: clamp(16px, 1.7vw, 18px);
+  color: var(--dnax-text-light);
+}
+
+.dnax-dnax-section .dnax-carousel-head h3 {
+  color: var(--dnax-white);
+}
+
+.dnax-dnax-section .dnax-carousel-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--dnax-text-light);
+}
+
+.dnax-dnax-section .dnax-carousel-btn:hover {
+  border-color: var(--dnax-orange);
+  color: var(--dnax-orange);
+  background: rgba(232, 76, 30, 0.1);
+}
+
+.dnax-dnax-section .dnax-carousel-btn:disabled {
+  opacity: 0.3;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--dnax-text-light-dim);
+}
+
+.dnax-dnax-section .dnax-carousel-dot {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dnax-dnax-section .dnax-carousel-dot.active {
+  background: var(--dnax-orange);
+}
+
+/* Build cards on dark background */
+.dnax-build-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s;
+  height: 100%;
+}
+
+.dnax-build-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(232, 76, 30, 0.5);
+  transform: translateY(-3px);
+}
+
+.dnax-build-card .dnax-card-eyebrow {
+  color: var(--dnax-orange);
+}
+
+.dnax-build-card h3 {
+  color: var(--dnax-white);
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.dnax-build-card .dnax-card-sub {
+  color: var(--dnax-text-light);
+  margin-bottom: 18px;
+}
+
+.dnax-build-body {
+  font-size: 14px;
+  color: var(--dnax-text-light-dim);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.dnax-build-card .dnax-card-bullets li {
+  color: var(--dnax-text-light-dim);
+  font-size: 14px;
+  padding: 6px 0 6px 22px;
+}
+
+.dnax-build-card .dnax-card-bullets li::before {
+  background: var(--dnax-orange);
+  top: 14px;
+}
+
+.dnax-build-card .dnax-card-price {
+  color: var(--dnax-orange);
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.dnax-build-card .dnax-card-meta {
+  color: var(--dnax-text-light-dim);
+  margin-bottom: 16px;
+}
+
+/* Inline expander */
+.dnax-build-expand {
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+}
+
+.dnax-build-expand summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--dnax-orange);
+  font-weight: 600;
+  font-style: italic;
+  list-style: none;
+  user-select: none;
+}
+
+.dnax-build-expand summary::-webkit-details-marker { display: none; }
+
+.dnax-build-expand summary::after {
+  content: '  →';
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.dnax-build-expand[open] summary::after {
+  transform: rotate(90deg);
+}
+
+.dnax-build-expand-content {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--dnax-text-light-dim);
+  line-height: 1.6;
+}
+
+.dnax-build-expand-content p {
+  margin-bottom: 8px;
+}
+</style>
+
+<section class="dnax-section dnax-dnax-section" id="dnax">
+  <div class="dnax-container">
+
+    <div class="dnax-dnax-head">
+      <span class="dnax-eyebrow dnax-eyebrow-led">DNA<sup>x</sup> — Done Now, Authentic.</span>
+      <h2>Your DNA. <span class="dnax-x-factor">Your X-Factor.</span></h2>
+      <p class="dnax-dnax-sub">Three bespoke modules. Your brand. Our system. 2–4 week delivery. One per client.</p>
+    </div>
+
+    <!-- DNAx Builds Carousel -->
+    <div class="dnax-carousel-wrap">
+      <div class="dnax-carousel-head">
+        <h3>Tier 2 — DNA<sup>x</sup> Builds</h3>
+        <div class="dnax-carousel-controls">
+          <button class="dnax-carousel-btn prev" aria-label="Previous">‹</button>
+          <button class="dnax-carousel-btn next" aria-label="Next">›</button>
+        </div>
+      </div>
+
+      <div class="dnax-carousel-track">
+
+        <!-- Build D — Answers -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-build-card">
+            <div class="dnax-card-eyebrow">Done Now, Answers.</div>
+            <h3>Build D — Quiz Endpoint</h3>
+            <p class="dnax-card-sub">Diagnose your buyer. In your brand. Deployed in your system.</p>
+            <p class="dnax-build-body">
+              Built around YOUR ideal client profile, in YOUR brand voice, deployed in YOUR CRM (or ScoreApp if your CRM doesn't host quizzes). A main quiz landing page, custom scoring, three result tiers, three lead magnets, eight emails. The whole intake-to-qualified-lead engine — finished in 3 weeks, fully white-labelled.
+            </p>
+            <ul class="dnax-card-bullets">
+              <li>DNA Intake quiz (used on you first)</li>
+              <li>Quiz logic deployed in your CRM or ScoreApp — fully white-labelled</li>
+              <li>Main quiz landing page + 3 result pages</li>
+              <li>3 lead magnets + 8-email sequence</li>
+              <li>Hero video edit + 8-week post-quiz flow map</li>
+              <li>Built around your ICP and your brand. Yours forever.</li>
+            </ul>
+            <div class="dnax-card-price">$3,497</div>
+            <div class="dnax-card-meta">3-WEEK BUILD  •  CLIENT BRAND</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="build-d">Start Build D — $3,497</a>
+            <details class="dnax-build-expand">
+              <summary>See what's inside Build D</summary>
+              <div class="dnax-build-expand-content">
+                <p><strong>DNA Intake</strong> — pre-session diagnostic quiz, 8–10 questions. Cuts discovery from cold-start to warm-start.</p>
+                <p><strong>Discovery call</strong> — 45 min, focused on validation and voice.</p>
+                <p><strong>Quiz hosting</strong> — deployed in your CRM (HubSpot, ActiveCampaign, Keap, GoHighLevel etc.) or ScoreApp if your CRM doesn't host quizzes.</p>
+                <p><strong>Production</strong> — quiz universe + scoring + main quiz landing page + 3 result pages + 3 lead magnets + 8 emails + video edit. All in YOUR ICP language and YOUR brand spec.</p>
+                <p><strong>DNA Handover</strong> — 14-day revision window, 90–95% target. Source files yours.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- Build E — Algorithm -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-build-card">
+            <div class="dnax-card-eyebrow">Done Now, Algorithm.</div>
+            <h3>Build E — GEO + SEO Foundation</h3>
+            <p class="dnax-card-sub">12 articles. 3 schema layers. 24 foundation citations.</p>
+            <p class="dnax-build-body">
+              A starter foundation, not a full SEO program. 12 articles, three-layer schema, 24 high-trust citations — designed to give your dedicated SEO partner a clean base to build on. We lay the foundation. They go deeper.
+            </p>
+            <ul class="dnax-card-bullets">
+              <li>12 pillar articles in your voice (1,200–1,800 words)</li>
+              <li>Article + FAQ + Organization schema, all wired</li>
+              <li>24 high-trust citations: 12 automated + 12 hand-placed by a VA</li>
+              <li>GBP config + llms.txt + LinkedIn conversion prompt</li>
+              <li>Hands clean to your SEO partner. No retainer with us.</li>
+            </ul>
+            <div class="dnax-card-price">$2,597</div>
+            <div class="dnax-card-meta">4-WEEK BUILD  •  CLIENT BRAND</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="build-e">Start Build E — $2,597</a>
+            <details class="dnax-build-expand">
+              <summary>See what's inside Build E</summary>
+              <div class="dnax-build-expand-content">
+                <p><strong>SEO + GEO audit</strong> — keyword gap, schema scoring, AI crawler check.</p>
+                <p><strong>12 pillar articles</strong> — operator essay format, GEO-optimised, your voice.</p>
+                <p><strong>3-layer schema</strong> — Article + FAQ + Organization. Site-wide deploy.</p>
+                <p><strong>24-citation foundation pack</strong> — submitted via Apify automation, then manually verified. Designed to give your SEO partner a clean base — not to compete with their work.</p>
+                <p><strong>VA Manual Citations (included)</strong> — 12 hand-placed niche citations on top of the base 12. Total: 24, still a foundation.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- Build F — Architecture -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-build-card">
+            <div class="dnax-card-eyebrow">Done Now, Architecture.</div>
+            <h3>Build F — BizCard 2026</h3>
+            <p class="dnax-card-sub">Three pages. Your brand. GHL or GitHub.</p>
+            <p class="dnax-build-body">
+              The 2026 business card — a URL doing four jobs in one scroll. Three pages, properly assembled. Architecture, not just design.
+            </p>
+            <ul class="dnax-card-bullets">
+              <li>Partner page + Sales page + Lead Magnet Delivery page</li>
+              <li>Built in your aesthetic with brand-improvement notes</li>
+              <li>Dual deployment: GHL block + GitHub repo</li>
+              <li>Mobile-first, schema-wired, brand-voice-extracted</li>
+              <li>Yours forever. Editable. Permanent.</li>
+            </ul>
+            <div class="dnax-card-price">$1,997</div>
+            <div class="dnax-card-meta">2-WEEK BUILD  •  CLIENT BRAND</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="build-f">Start Build F — $1,997</a>
+            <details class="dnax-build-expand">
+              <summary>See what's inside Build F</summary>
+              <div class="dnax-build-expand-content">
+                <p><strong>Discovery call</strong> — 60 min. Page roles, CTAs, hosting target.</p>
+                <p><strong>DNA Extraction</strong> — brand assets + improvement recommendations.</p>
+                <p><strong>3 pages</strong> — Partner + Sales + Lead Magnet, mobile-first, in your aesthetic.</p>
+                <p><strong>Dual deployment</strong> — GHL custom code block AND GitHub repo.</p>
+                <p><strong>Optional bolt-ons</strong> — Animations (+$297) and Deployment Consult (+$297).</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="dnax-carousel-dots">
+        <button class="dnax-carousel-dot active" aria-label="Slide 1"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 2"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 3"></button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 05 — BUNDLES CAROUSEL
+  4 bundle cards: Pipeline Engine, Conversion Stack, Authority Stack,
+                  Complete Factory (hero treatment).
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-bundles-section {
+  background: var(--dnax-light-bg);
+}
+
+.dnax-bundles-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 50px;
+}
+
+.dnax-bundles-head h2 {
+  font-size: clamp(34px, 4.5vw, 48px);
+  color: var(--dnax-text);
+  margin: 14px 0 16px;
+}
+
+.dnax-bundles-sub {
+  font-size: clamp(16px, 1.7vw, 18px);
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+}
+
+.dnax-bundle-card {
+  background: var(--dnax-white);
+  border: 1px solid var(--dnax-light-gray);
+  border-radius: 10px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: all 0.25s;
+}
+
+.dnax-bundle-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 26, 46, 0.10);
+  border-color: var(--dnax-orange);
+}
+
+.dnax-bundle-card.hero {
+  background: linear-gradient(135deg, var(--dnax-navy) 0%, #2a2a4a 100%);
+  color: var(--dnax-white);
+  border: 2px solid var(--dnax-orange);
+  position: relative;
+  overflow: hidden;
+}
+
+.dnax-bundle-card.hero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 50%;
+  height: 80%;
+  background: radial-gradient(ellipse, rgba(232, 76, 30, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.dnax-bundle-card.hero > * { position: relative; z-index: 2; }
+
+.dnax-bundle-card.hero h3 { color: var(--dnax-white); }
+.dnax-bundle-card.hero .dnax-bundle-pricing-line { color: var(--dnax-text-light); }
+.dnax-bundle-card.hero .dnax-bundle-strike { color: var(--dnax-text-light-dim); }
+.dnax-bundle-card.hero .dnax-bundle-body { color: var(--dnax-text-light-dim); }
+
+.dnax-bundle-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dnax-orange);
+  margin-bottom: 12px;
+}
+
+.dnax-bundle-card h3 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: var(--dnax-text);
+}
+
+.dnax-bundle-pricing-line {
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.dnax-bundle-strike {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.dnax-bundle-newprice {
+  color: var(--dnax-orange);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.dnax-bundle-save {
+  display: inline-block;
+  background: rgba(232, 76, 30, 0.12);
+  color: var(--dnax-orange-dk);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+  align-self: flex-start;
+}
+
+.dnax-bundle-card.hero .dnax-bundle-save {
+  background: var(--dnax-orange);
+  color: var(--dnax-white);
+}
+
+.dnax-bundle-body {
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+  margin-bottom: 22px;
+  flex: 1;
+}
+
+.dnax-bundle-price-block {
+  font-family: 'Blinker', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--dnax-orange);
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+/* Path map */
+.dnax-path {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.dnax-path-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dnax-mid-gray);
+  margin-bottom: 18px;
+}
+
+.dnax-path-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dnax-path-step {
+  font-family: 'Blinker', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--dnax-text);
+  padding: 4px;
+}
+
+.dnax-path-step sup {
+  color: var(--dnax-orange);
+  font-size: 0.7em;
+}
+
+.dnax-path-arrow {
+  color: var(--dnax-mid-gray);
+  font-size: 14px;
+}
+</style>
+
+<section class="dnax-section dnax-bundles-section" id="bundles">
+  <div class="dnax-container">
+
+    <div class="dnax-bundles-head">
+      <span class="dnax-eyebrow">Bundles</span>
+      <h2>Stack the A's. Save.</h2>
+      <p class="dnax-bundles-sub">
+        Bundling consolidates real work — one discovery call, one voice extraction, one schema deploy. We pass the savings on.
+      </p>
+    </div>
+
+    <div class="dnax-carousel-wrap">
+      <div class="dnax-carousel-head">
+        <h3>Bundle Paths</h3>
+        <div class="dnax-carousel-controls">
+          <button class="dnax-carousel-btn prev" aria-label="Previous">‹</button>
+          <button class="dnax-carousel-btn next" aria-label="Next">›</button>
+        </div>
+      </div>
+
+      <div class="dnax-carousel-track">
+
+        <!-- Pipeline Engine -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-bundle-card">
+            <div class="dnax-bundle-eyebrow">DNA<sup>²</sup>  •  COUNTS AS 2 OF 6</div>
+            <h3>Pipeline Engine</h3>
+            <p class="dnax-bundle-pricing-line">
+              Build D + Build E  •  <span class="dnax-bundle-strike">$6,094</span>  →  <span class="dnax-bundle-newprice">$5,597</span>
+            </p>
+            <span class="dnax-bundle-save">SAVE $497</span>
+            <p class="dnax-bundle-body">
+              Quiz captures. Articles authority. Pipeline complete. Lead magnets share between modules — 2 of 3 magnets come from the article bank. Voice extracted once.
+            </p>
+            <div class="dnax-bundle-price-block">$5,597</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="bundle-pipeline">Start Pipeline Engine — $5,597</a>
+          </div>
+        </div>
+
+        <!-- Conversion Stack -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-bundle-card">
+            <div class="dnax-bundle-eyebrow">DNA<sup>²</sup>  •  COUNTS AS 2 OF 6</div>
+            <h3>Conversion Stack</h3>
+            <p class="dnax-bundle-pricing-line">
+              Build D + Build F  •  <span class="dnax-bundle-strike">$5,494</span>  →  <span class="dnax-bundle-newprice">$4,997</span>
+            </p>
+            <span class="dnax-bundle-save">SAVE $497</span>
+            <p class="dnax-bundle-body">
+              Quiz captures. BizCard converts. Conversion infrastructure end-to-end. Sales page framework re-purposes from quiz result pages. Voice extracted once.
+            </p>
+            <div class="dnax-bundle-price-block">$4,997</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="bundle-conversion">Start Conversion Stack — $4,997</a>
+          </div>
+        </div>
+
+        <!-- Authority Stack -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-bundle-card">
+            <div class="dnax-bundle-eyebrow">DNA<sup>²</sup>  •  COUNTS AS 2 OF 6</div>
+            <h3>Authority Stack</h3>
+            <p class="dnax-bundle-pricing-line">
+              Build E + Build F  •  <span class="dnax-bundle-strike">$4,594</span>  →  <span class="dnax-bundle-newprice">$4,097</span>
+            </p>
+            <span class="dnax-bundle-save">SAVE $497</span>
+            <p class="dnax-bundle-body">
+              Articles + presence pages. Authority + conversion. The two-pillar buy. Schema covers everything in one deploy. Sales page becomes article 13 in the SEO bank.
+            </p>
+            <div class="dnax-bundle-price-block">$4,097</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="bundle-authority">Start Authority Stack — $4,097</a>
+          </div>
+        </div>
+
+        <!-- Complete Factory (hero) -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-bundle-card hero">
+            <div class="dnax-bundle-eyebrow">DNA<sup>³</sup>  •  THE BESPOKE TRIPLE</div>
+            <h3>Complete Factory</h3>
+            <p class="dnax-bundle-pricing-line">
+              Build D + E + F  •  <span class="dnax-bundle-strike">$8,091</span>  →  <span class="dnax-bundle-newprice">$7,597</span>
+            </p>
+            <span class="dnax-bundle-save">SAVE $494</span>
+            <p class="dnax-bundle-body">
+              All three bespoke builds. Voice extracted once. Schema deployed once. Discovery call covers all three. The serious operator buy — not three disconnected products, but one integrated system.
+            </p>
+            <div class="dnax-bundle-price-block">$7,597</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="bundle-complete-factory">Start Complete Factory — $7,597</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="dnax-carousel-dots">
+        <button class="dnax-carousel-dot active" aria-label="Slide 1"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 2"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 3"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 4"></button>
+      </div>
+    </div>
+
+    <!-- Path map -->
+    <div class="dnax-path">
+      <div class="dnax-path-label">The Genome Path</div>
+      <div class="dnax-path-track">
+        <span class="dnax-path-step">DNA<sup>¹</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>²</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>³</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>⁴</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>⁵</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>⁶</sup></span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 04.5 — HOW THE FUNNEL WORKS
+  Sits between Block 05 (bundles) and Block 06 (proof + FAQ).
+  Surfaces the two-step diagnostic mechanic for share-able / curious visitors.
+  This is REFERENCE, not a primary CTA — the AUBIT email sequence does
+  the qualification work; this page is the catalogue at the end.
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-funnel-section {
+  background: var(--dnax-white);
+}
+
+.dnax-funnel-head {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 50px;
+}
+
+.dnax-funnel-head h2 {
+  font-size: clamp(32px, 4.2vw, 44px);
+  color: var(--dnax-text);
+  margin: 14px 0 16px;
+}
+
+.dnax-funnel-sub {
+  font-size: clamp(15px, 1.5vw, 17px);
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+}
+
+.dnax-funnel-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  margin-bottom: 36px;
+}
+
+.dnax-funnel-step {
+  background: var(--dnax-light-bg);
+  border-radius: 8px;
+  padding: 24px 22px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.dnax-funnel-step:hover {
+  background: var(--dnax-white);
+  border: 1px solid var(--dnax-orange);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.dnax-funnel-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: var(--dnax-orange);
+  font-weight: 800;
+  z-index: 2;
+  background: var(--dnax-white);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--dnax-orange);
+}
+
+.dnax-funnel-step-num {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--dnax-orange);
+  color: var(--dnax-white);
+  font-family: 'Blinker', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 28px;
+  margin-bottom: 14px;
+}
+
+.dnax-funnel-step h4 {
+  font-family: 'Blinker', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--dnax-text);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.dnax-funnel-step p {
+  font-size: 13px;
+  color: var(--dnax-text-muted);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+
+.dnax-funnel-step-meta {
+  font-size: 11px;
+  color: var(--dnax-orange);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dnax-funnel-bridge {
+  background: var(--dnax-light-bg);
+  border-left: 4px solid var(--dnax-orange);
+  border-radius: 6px;
+  padding: 18px 24px;
+  max-width: 820px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+}
+
+.dnax-funnel-bridge strong {
+  color: var(--dnax-text);
+}
+
+.dnax-funnel-bridge a {
+  color: var(--dnax-orange);
+  border-bottom: 1px dashed var(--dnax-orange);
+  font-weight: 600;
+}
+
+@media (max-width: 880px) {
+  .dnax-funnel-flow {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .dnax-funnel-step:not(:last-child)::after {
+    right: 50%;
+    top: auto;
+    bottom: -28px;
+    transform: translateX(50%) rotate(90deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .dnax-funnel-step:not(:last-child)::after {
+    bottom: -24px;
+  }
+}
+</style>
+
+<section class="dnax-section dnax-funnel-section">
+  <div class="dnax-container">
+
+    <div class="dnax-funnel-head">
+      <span class="dnax-eyebrow">How the system works</span>
+      <h2>From a 5-minute diagnostic to your DNA<sup>x</sup> build.</h2>
+      <p class="dnax-funnel-sub">Most visitors arrive here from our AUBIT email sequence — already qualified and ready to choose a module. For everyone else, here's the path that gets you there.</p>
+    </div>
+
+    <div class="dnax-funnel-flow">
+
+      <div class="dnax-funnel-step">
+        <div class="dnax-funnel-step-num">1</div>
+        <h4>Brand Tone Baseline</h4>
+        <p>8 simple questions. Captures your tone, your audience, your offer shape.</p>
+        <div class="dnax-funnel-step-meta">5 MIN  •  FREE</div>
+      </div>
+
+      <div class="dnax-funnel-step">
+        <div class="dnax-funnel-step-num">2</div>
+        <h4>Your AI Lead Agent</h4>
+        <p>The baseline produces an AI agent that speaks in your voice. Yours to use.</p>
+        <div class="dnax-funnel-step-meta">INSTANT  •  FREE</div>
+      </div>
+
+      <div class="dnax-funnel-step">
+        <div class="dnax-funnel-step-num">3</div>
+        <h4>The Deep Dive</h4>
+        <p>20 questions. Maps your full ICP, offer ladder, and proof points. Qualifies you for what's next.</p>
+        <div class="dnax-funnel-step-meta">15 MIN  •  FREE</div>
+      </div>
+
+      <div class="dnax-funnel-step">
+        <div class="dnax-funnel-step-num">4</div>
+        <h4>Your Build Path</h4>
+        <p>Routes you to WOW Essentials or full DNA<sup>x</sup> delivery — based on what you actually need.</p>
+        <div class="dnax-funnel-step-meta">YOUR CHOICE</div>
+      </div>
+
+    </div>
+
+    <div class="dnax-funnel-bridge">
+      <strong>Already on the AUBIT list?</strong> You've likely done step 1 or 2. The modules above are where step 4 lands you. <strong>Cold visitor?</strong> <a href="#dnax-diagnostic">Start at step 1</a> — five minutes, no card, your AI lead agent at the end.
+    </div>
+
+  </div>
+</section>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 06 — PROOF + FAQ
+  6 vignette cards + accordion FAQ (3 groups, 17 questions).
+  Includes FAQPage JSON-LD schema for AI search.
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-proof-section {
+  background: var(--dnax-white);
+}
+
+.dnax-proof-head {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.dnax-proof-head h2 {
+  font-size: clamp(32px, 4.2vw, 46px);
+  color: var(--dnax-text);
+  margin-bottom: 12px;
+}
+
+.dnax-proof-sub {
+  font-size: clamp(15px, 1.5vw, 17px);
+  color: var(--dnax-text-muted);
+}
+
+.dnax-proof-flag {
+  background: rgba(232, 76, 30, 0.06);
+  border-left: 4px solid var(--dnax-orange);
+  border-radius: 6px;
+  padding: 14px 22px;
+  margin: 0 auto 40px;
+  max-width: 880px;
+  font-size: 13px;
+  color: var(--dnax-text-muted);
+  line-height: 1.5;
+}
+
+.dnax-proof-flag strong { color: var(--dnax-orange-dk); }
+
+.dnax-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-bottom: 80px;
+}
+
+.dnax-vignette {
+  background: var(--dnax-light-bg);
+  border-radius: 10px;
+  padding: 26px 24px;
+  border: 1px solid transparent;
+  transition: all 0.25s;
+}
+
+.dnax-vignette:hover {
+  background: var(--dnax-white);
+  border-color: var(--dnax-orange);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.dnax-vignette-badge {
+  display: inline-block;
+  background: var(--dnax-navy);
+  color: var(--dnax-white);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.dnax-vignette-quote {
+  font-size: 14px;
+  color: var(--dnax-text);
+  line-height: 1.55;
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+.dnax-vignette-attr {
+  font-size: 12px;
+  color: var(--dnax-mid-gray);
+  font-weight: 600;
+}
+
+/* FAQ */
+.dnax-faq-section {
+  background: var(--dnax-light-bg);
+}
+
+.dnax-faq-head {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.dnax-faq-head h2 {
+  font-size: clamp(32px, 4.2vw, 46px);
+  color: var(--dnax-text);
+}
+
+.dnax-faq-groups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.dnax-faq-group h3 {
+  font-size: 17px;
+  color: var(--dnax-text);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid var(--dnax-orange);
+  font-family: 'Blinker', sans-serif;
+}
+
+.dnax-faq-item {
+  background: var(--dnax-white);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.dnax-faq-item:hover { border-color: var(--dnax-light-gray); }
+.dnax-faq-item[open] { border-color: var(--dnax-orange); }
+
+.dnax-faq-q {
+  cursor: pointer;
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dnax-text);
+  list-style: none;
+  user-select: none;
+  position: relative;
+  padding-right: 42px;
+  line-height: 1.4;
+}
+
+.dnax-faq-q::-webkit-details-marker { display: none; }
+
+.dnax-faq-q::after {
+  content: '+';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--dnax-orange);
+  transition: transform 0.2s;
+  line-height: 1;
+}
+
+.dnax-faq-item[open] .dnax-faq-q::after {
+  content: '−';
+}
+
+.dnax-faq-a {
+  padding: 0 20px 18px;
+  font-size: 13px;
+  color: var(--dnax-text-muted);
+  line-height: 1.65;
+}
+
+@media (max-width: 880px) {
+  .dnax-proof-grid { grid-template-columns: 1fr 1fr; }
+  .dnax-faq-groups { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .dnax-proof-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- ═══ FAQ ═══ -->
+<section class="dnax-section dnax-faq-section" id="faq">
+  <div class="dnax-container">
+
+    <div class="dnax-faq-head">
+      <h2>Common questions. Direct answers.</h2>
+    </div>
+
+    <div class="dnax-faq-groups">
+
+      <!-- Group 1 — Essentials -->
+      <div class="dnax-faq-group">
+        <h3>Essentials (A / B / C / WOW)</h3>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">How fast is "instant delivery"?</summary>
+          <div class="dnax-faq-a">Within 24 hours of payment. We send the assets via email and a Google Drive folder. Pack A specifically takes 4 days — that's the build window for the 31 authored assets. B and C are ready immediately because they're framework + sequence packs, not authored content.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What does "you own the assets forever" actually mean?</summary>
+          <div class="dnax-faq-a">You get editable source files. We don't host them. We don't gate access. We don't need a subscription. If you change platforms, end your relationship with us, your business — the assets stay yours, on your drive, editable.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Can I get just one pack?</summary>
+          <div class="dnax-faq-a">Yes. Each is sold separately. The WOW Bundle is for buyers who want all three at once and prefer the $494 saving — about a third off the standalone total.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Is there a refund?</summary>
+          <div class="dnax-faq-a">No. These are digital deliverables — once you have them, you have them. We invest the building work upfront. If something is broken on delivery we fix it; we don't refund. If you bought the wrong pack and haven't opened the files yet, email us within 24 hours and we'll swap it out.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Does it work for my industry?</summary>
+          <div class="dnax-faq-a">If you're a B2B service operator (consultant, coach, advisor, agency owner) in NZ or AU, yes. The frameworks apply broadly but the templates are tuned to B2B service language. If you sell to consumers or sell physical products, the principles still apply — but you'll need to translate the templates more than a B2B operator would.</div>
+        </details>
+      </div>
+
+      <!-- Group 2 — DNAˣ -->
+      <div class="dnax-faq-group">
+        <h3>DNA<sup>x</sup> (Build D / E / F)</h3>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Are the timelines real?</summary>
+          <div class="dnax-faq-a">3 weeks for Build D, 4 for E, 2 for F — measured from the discovery call. The clock pauses if you miss a sign-off window by more than 7 days. We finish on time when you do.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What happens if I miss a deadline?</summary>
+          <div class="dnax-faq-a">The build pauses, calendar resumes when you re-engage. No penalty, no extra charge. But it does push the timeline — a 14-day delay on your end becomes a 14-day delay on delivery.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Who owns the source files?</summary>
+          <div class="dnax-faq-a">You do. HTML, CSS, .docx, MP4, schema files, all of it — full editable. Yours to host, edit, repurpose, reuse, fork, or delete.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What stack do I need?</summary>
+          <div class="dnax-faq-a">For Build F: anything that takes HTML and CSS — GoHighLevel, WordPress, Webflow, Squarespace, custom. We deliver GHL-ready and GitHub-ready by default. Other stacks work with the optional +$297 Deployment Consult add-on. For Build D: your CRM if it supports quizzes (HubSpot, ActiveCampaign, Keap, GoHighLevel etc.) — otherwise we deploy via ScoreApp. For Build E: a CMS that takes HTML and a Google Business Profile.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Where does my Build D quiz actually live?</summary>
+          <div class="dnax-faq-a">In your CRM if it has quiz/survey capability — that's the preferred path because every lead lands directly in your existing system. If your CRM doesn't host quizzes natively (or you don't have a CRM yet), we deploy via ScoreApp, fully white-labelled in your brand. Either way, you own it. We don't host it on our platform.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">How do revisions work?</summary>
+          <div class="dnax-faq-a">14-day window for D and F, 21 days for E. One revision round per asset. We aim for 90–95% — the last 5–10% is your voice nuance, the part only you can do. If we missed the mark, we fix it. If you want a different direction, that's a scope variation.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What if my voice changes mid-build?</summary>
+          <div class="dnax-faq-a">That happens. If your voice shifts, we capture it again at the next sign-off point. Substantial pivots count as scope variations ($397 each, documented in writing — we won't surprise you with a charge).</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Can I add another module after starting?</summary>
+          <div class="dnax-faq-a">Yes — but the bundle saving applies only when modules are purchased together. After-purchase additions are full price. If you think you'll want a second module within 60 days, save the $497 and bundle from the start.</div>
+        </details>
+      </div>
+
+      <!-- Group 3 — Add-ons -->
+      <div class="dnax-faq-group">
+        <h3>Add-ons</h3>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What does VA Implementation actually do?</summary>
+          <div class="dnax-faq-a">It removes the deployment work. A trained VA does the paste, schedule, configure, test — the execution layer between "we delivered the asset" and "it's live and running." Tasks vary by pack (full breakdown shown at checkout). Powered by VA World — same operators we trust on our own builds.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">When do I tick add-ons?</summary>
+          <div class="dnax-faq-a">At checkout. Each add-on is a yes/no tick-box with a one-line explainer of what it gets you. No hidden costs, no surprise bundles, no pre-selected upgrades.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Can I add an add-on after purchase?</summary>
+          <div class="dnax-faq-a">Yes — email us within 30 days of purchase and we'll invoice the add-on at the same checkout price. After 30 days, retainer rate applies (which is higher).</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Is Build E a full SEO program?</summary>
+          <div class="dnax-faq-a">No. Build E is a foundation pack — 12 articles, 3 schema layers, 24 high-trust citations. It's a starter, designed to give your dedicated SEO partner a clean base to build deeper work on. We're not stepping on your SEO partner's lane. We're laying the launchpad. If you don't have an SEO partner, the foundation still gets you ranking — but ongoing optimisation lives elsewhere.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Apify automation vs VA Manual Citations — what's the difference?</summary>
+          <div class="dnax-faq-a">Base Build E delivers 12 foundation citations submitted via Apify automation, then manually verified. Build E also includes 12 VA hand-placed citations on niche, high-trust sites — guild directories, chambers, trade associations, industry review sites. Total: 24 citations. Both are foundation work — not full SEO maintenance.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What does the F Animations bolt-on output look like?</summary>
+          <div class="dnax-faq-a">Three branded MP4 micro-loops, 5 to 10 seconds each. Hero background motion, proof-strip logo reveal, CTA button micro-motion. Generated via Pika (Pika Model 2.2 on fal.ai), embedded directly in your three BizCard pages. Source files yours.</div>
+        </details>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ FAQPage SCHEMA — for AI search engines ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How fast is instant delivery?", "acceptedAnswer": { "@type": "Answer", "text": "Within 24 hours of payment. Pack A takes 4 days for the 31 authored assets. B and C are ready immediately." } },
+    { "@type": "Question", "name": "What does you own the assets forever actually mean?", "acceptedAnswer": { "@type": "Answer", "text": "You get editable source files. We don't host them. No subscription. The assets stay yours, on your drive, editable." } },
+    { "@type": "Question", "name": "Are the DNAx timelines real?", "acceptedAnswer": { "@type": "Answer", "text": "3 weeks for Build D, 4 for E, 2 for F — from the discovery call. The clock pauses if sign-off windows are missed by more than 7 days." } },
+    { "@type": "Question", "name": "Who owns the source files?", "acceptedAnswer": { "@type": "Answer", "text": "You do. HTML, CSS, .docx, MP4, schema files. Full editable. Yours to host, edit, repurpose, fork, or delete." } },
+    { "@type": "Question", "name": "What stack do I need?", "acceptedAnswer": { "@type": "Answer", "text": "For Build F: anything that takes HTML/CSS. GHL-ready and GitHub-ready by default. For Build D: your CRM if it supports quizzes, or ScoreApp if it doesn't. For Build E: a CMS that takes HTML and a Google Business Profile." } },
+    { "@type": "Question", "name": "Where does my Build D quiz live?", "acceptedAnswer": { "@type": "Answer", "text": "In your CRM if it supports quizzes natively. Otherwise via ScoreApp, white-labelled in your brand. We don't host it on our platform." } },
+    { "@type": "Question", "name": "Is Build E a full SEO program?", "acceptedAnswer": { "@type": "Answer", "text": "No. Build E is a 24-citation foundation pack — designed to give your dedicated SEO partner a clean base to build on. We lay the launchpad. We don't replace ongoing SEO work." } },
+    { "@type": "Question", "name": "What does VA Implementation actually do?", "acceptedAnswer": { "@type": "Answer", "text": "A trained VA does the paste, schedule, configure, test — the execution layer between we delivered the asset and it's live and running. Powered by VA World." } }
+  ]
+}
+</script>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 07 — FINAL CTA + FOOTER
+  3-door close (Essentials / DNAx / book a call) + footer.
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-final-section {
+  background: var(--dnax-deep-navy);
+  color: var(--dnax-text-light);
+  text-align: center;
+}
+
+.dnax-final-section h2 {
+  font-size: clamp(38px, 5.5vw, 60px);
+  color: var(--dnax-white);
+  margin-bottom: 18px;
+}
+
+.dnax-final-sub {
+  font-size: clamp(17px, 1.8vw, 20px);
+  color: var(--dnax-text-light);
+  margin-bottom: 50px;
+}
+
+.dnax-doors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.dnax-door {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 36px 26px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s;
+  text-align: left;
+}
+
+.dnax-door:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-3px);
+  border-color: rgba(232, 76, 30, 0.4);
+}
+
+.dnax-door.primary {
+  background: linear-gradient(135deg, rgba(232, 76, 30, 0.12), rgba(232, 76, 30, 0.03));
+  border-color: var(--dnax-orange);
+}
+
+.dnax-door h3 {
+  font-size: 22px;
+  color: var(--dnax-white);
+  margin-bottom: 10px;
+}
+
+.dnax-door-sub {
+  font-size: 14px;
+  color: var(--dnax-text-light);
+  margin-bottom: 24px;
+  flex: 1;
+  line-height: 1.55;
+}
+
+/* Footer */
+.dnax-footer-section {
+  background: var(--dnax-deep-navy);
+  color: var(--dnax-text-light);
+  padding: 50px 30px 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dnax-footer-grid {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.dnax-footer-brand {
+  font-size: 13px;
+  color: var(--dnax-text-light);
+  line-height: 1.55;
+}
+
+.dnax-footer-brand strong {
+  color: var(--dnax-white);
+  font-family: 'Blinker', sans-serif;
+}
+
+.dnax-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  font-size: 13px;
+}
+
+.dnax-footer-links a {
+  color: var(--dnax-text-light);
+  transition: color 0.2s;
+}
+
+.dnax-footer-links a:hover { color: var(--dnax-orange); }
+
+.dnax-footer-contact {
+  text-align: right;
+  font-size: 13px;
+  color: var(--dnax-text-light);
+}
+
+.dnax-footer-contact a { color: var(--dnax-orange); }
+
+.dnax-footer-base {
+  max-width: 1180px;
+  margin: 32px auto 0;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--dnax-text-light-dim);
+}
+
+.dnax-footer-base em { font-style: italic; }
+
+@media (max-width: 880px) {
+  .dnax-doors { grid-template-columns: 1fr; }
+  .dnax-footer-grid { grid-template-columns: 1fr; text-align: center; }
+  .dnax-footer-contact { text-align: center; }
+  .dnax-footer-base { flex-direction: column; gap: 10px; text-align: center; }
+}
+</style>
+
+<!-- ═══ FINAL CTA — 3-DOOR CLOSE ═══ -->
+<section class="dnax-section dnax-final-section">
+  <div class="dnax-container">
+    <h2>Ready when you are.</h2>
+    <p class="dnax-final-sub">Three doors. Same system. Pick where you want to start.</p>
+
+    <div class="dnax-doors">
+
+      <div class="dnax-door primary">
+        <h3>Start with Essentials.</h3>
+        <p class="dnax-door-sub">From $497. Instant delivery. Yours forever.</p>
+        <a href="#products" class="dnax-btn dnax-btn-block">See Essentials packs</a>
+      </div>
+
+      <div class="dnax-door">
+        <h3>Go bespoke.</h3>
+        <p class="dnax-door-sub">DNA<sup>x</sup> builds. From $1,997. 2–4 week delivery.</p>
+        <a href="#dnax" class="dnax-btn dnax-btn-block">See DNA<sup>x</sup> builds</a>
+      </div>
+
+      <div class="dnax-door">
+        <h3>Not sure yet?</h3>
+        <p class="dnax-door-sub">Book a 20-minute fit call. We'll work out which door is yours.</p>
+        <a href="#" class="dnax-btn dnax-btn-ghost dnax-btn-block" data-calendly>Book a fit call</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="dnax-footer-section">
+  <div class="dnax-footer-grid">
+    <div class="dnax-footer-brand">
+      <strong>DNA-X</strong> — generative marketing, hand built by robots.<br>
+        A PsikiQ Solutions company. New Zealand.
+    </div>
+    <div class="dnax-footer-links">
+      <a href="https://dnaxmarketing.com/">Home</a>
+      <a href="https://psikiq.io/">PsikiQ</a>
+                  <a href="https://dnaxmarketing.com/privacy">Privacy</a>
+      <a href="https://dnaxmarketing.com/terms">Terms</a>
+    </div>
+    <div class="dnax-footer-contact">
+      Talk to us<br>
+      <a href="mailto:chris@psikiq.io">chris@psikiq.io</a>
+    </div>
+  </div>
+  <div class="dnax-footer-base">
+    <span>© 2026 DNA-X · PsikiQ Solutions. All rights reserved.</span>
+    <em>Hand built by robots, imagined by humans.</em>
+  </div>
+</footer>
+
+</body>
+</html>

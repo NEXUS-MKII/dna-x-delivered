@@ -1,0 +1,263 @@
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 02 — THE SYSTEM
+  Combines old problem statement + how-it-works + counting + 6-A spine
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-system-section { background: var(--dnax-white); }
+
+.dnax-system-head {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 50px;
+}
+
+.dnax-system-head h2 {
+  font-size: clamp(32px, 4.2vw, 46px);
+  color: var(--dnax-text);
+  margin-bottom: 22px;
+}
+
+.dnax-system-body {
+  font-size: clamp(16px, 1.6vw, 18px);
+  color: var(--dnax-text-muted);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+.dnax-system-punch {
+  font-family: 'Blinker', sans-serif;
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 800;
+  color: var(--dnax-orange);
+  letter-spacing: -0.01em;
+}
+
+.dnax-tiers-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 50px;
+}
+
+.dnax-tier-mini {
+  padding: 28px 26px;
+  border-radius: 8px;
+  background: var(--dnax-light-bg);
+  border-top: 4px solid var(--dnax-orange);
+}
+
+.dnax-tier-mini.t2 { border-top-color: var(--dnax-navy); }
+
+.dnax-tier-mini h3 {
+  font-size: 19px;
+  margin-bottom: 10px;
+  color: var(--dnax-text);
+}
+
+.dnax-tier-mini p {
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+}
+
+/* Counting block */
+.dnax-counting {
+  text-align: center;
+  padding: 24px 0;
+  margin-bottom: 36px;
+}
+
+.dnax-counting-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--dnax-mid-gray);
+  margin-bottom: 18px;
+}
+
+.dnax-dna-big {
+  font-family: 'Blinker', sans-serif;
+  font-size: clamp(70px, 11vw, 130px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--dnax-text);
+  display: inline-block;
+  line-height: 1;
+}
+
+.dnax-dna-big sup#mainCounter {
+  font-size: 0.55em;
+  color: var(--dnax-orange);
+  font-weight: 800;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+  margin-left: 4px;
+}
+
+.dnax-counting-explainer {
+  font-size: 16px;
+  color: var(--dnax-text-muted);
+  max-width: 640px;
+  margin: 18px auto 0;
+  line-height: 1.6;
+}
+
+.dnax-counting-explainer strong { color: var(--dnax-text); }
+
+/* 6-A spine */
+.dnax-spine {
+  background: var(--dnax-light-bg);
+  border-radius: 8px;
+  padding: 26px 28px;
+}
+
+.dnax-spine-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--dnax-mid-gray);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.dnax-spine-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.dnax-spine-cell {
+  text-align: center;
+  padding: 14px 6px;
+  border-radius: 6px;
+  background: var(--dnax-white);
+  transition: all 0.2s;
+}
+
+.dnax-spine-cell:hover {
+  background: var(--dnax-orange);
+  transform: translateY(-2px);
+}
+
+.dnax-spine-cell:hover .dnax-spine-letter,
+.dnax-spine-cell:hover .dnax-spine-aword,
+.dnax-spine-cell:hover .dnax-spine-mod {
+  color: var(--dnax-white);
+}
+
+.dnax-spine-letter {
+  font-family: 'Blinker', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--dnax-orange);
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.dnax-spine-aword {
+  font-family: 'Blinker', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dnax-text);
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.dnax-spine-mod {
+  font-size: 10px;
+  color: var(--dnax-mid-gray);
+  line-height: 1.3;
+  transition: color 0.2s;
+}
+
+@media (max-width: 880px) {
+  .dnax-tiers-row { grid-template-columns: 1fr; }
+  .dnax-spine-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .dnax-spine-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<section class="dnax-section dnax-system-section">
+  <div class="dnax-container">
+
+    <div class="dnax-system-head">
+      <h2>The plan was never the problem.</h2>
+      <p class="dnax-system-body">
+        Most operators have been planning their content for 6 to 18 months. The plan exists.
+        The intention exists. What's missing is the system that takes the plan and finishes it.
+        That gap — between knowing and doing — is not a motivation problem. It's a machinery problem.
+      </p>
+      <p class="dnax-system-punch">We built the machine. You deploy it.</p>
+    </div>
+
+    <!-- Two tiers explainer -->
+    <div class="dnax-tiers-row">
+      <div class="dnax-tier-mini">
+        <h3>Tier 1 — Essentials</h3>
+        <p>Three done-for-you templates. $497 each. Instant delivery. DNA-X aesthetic. You own the assets forever, no retainer, no waiting.</p>
+      </div>
+      <div class="dnax-tier-mini t2">
+        <h3>Tier 2 — DNA<sup>x</sup></h3>
+        <p>Three bespoke builds in your brand. 2 to 4 weeks. One per client. Our engine underneath, your DNA on top. Not a template — a working asset finished in your voice.</p>
+      </div>
+    </div>
+
+    <!-- Counting visual -->
+    <div class="dnax-counting">
+      <div class="dnax-counting-label">YOUR PROGRESS BADGE</div>
+      <div class="dnax-dna-big">DNA<sup id="mainCounter">x</sup></div>
+      <p class="dnax-counting-explainer">
+        Buy one module, you're at <strong>DNA¹</strong>. Buy two, <strong>DNA²</strong>.
+        Buy all six, <strong>DNA⁶</strong> — the complete genome. The number is your progress
+        badge. It moves as you build.
+      </p>
+    </div>
+
+    <!-- 6-A spine -->
+    <div class="dnax-spine">
+      <div class="dnax-spine-title">The Six A's</div>
+      <div class="dnax-spine-grid">
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">A</div>
+          <div class="dnax-spine-aword">Authority</div>
+          <div class="dnax-spine-mod">Content Pack Pro</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">B</div>
+          <div class="dnax-spine-aword">Activation</div>
+          <div class="dnax-spine-mod">Email Rescue</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">C</div>
+          <div class="dnax-spine-aword">Alliance</div>
+          <div class="dnax-spine-mod">Partner Growth</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">D</div>
+          <div class="dnax-spine-aword">Answers</div>
+          <div class="dnax-spine-mod">Quiz Endpoint</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">E</div>
+          <div class="dnax-spine-aword">Algorithm</div>
+          <div class="dnax-spine-mod">GEO + SEO</div>
+        </div>
+        <div class="dnax-spine-cell">
+          <div class="dnax-spine-letter">F</div>
+          <div class="dnax-spine-aword">Architecture</div>
+          <div class="dnax-spine-mod">BizCard 2026</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

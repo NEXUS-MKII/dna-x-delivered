@@ -1,0 +1,188 @@
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 01 — HERO  (v1.3)
+  Standalone, edit without affecting other sections.
+  Depends on: Block 00 Foundation (CSS variables + buttons)
+═══════════════════════════════════════════════════════════════════════════
+  v1.3 changes from v1.2:
+    • Primary CTA now points to brandkit diagnostic (not in-page anchor)
+    • CTA label: "Begin X-traction — power your X-Factor"
+    • Added urgency line: Brand Blueprint + AI Voice Encoder by week's end
+    • Tagline updated: "Hand built by robots, imagined by humans."
+    • Removed secondary CTA link — keeping focus tight on diagnostic entry
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.now-hero-section {
+  background: var(--now-deep-navy);
+  color: var(--now-text-light);
+  position: relative;
+  overflow: hidden;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.now-hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+  pointer-events: none;
+}
+
+.now-hero-section::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 50%;
+  height: 60%;
+  background: radial-gradient(ellipse, rgba(232,76,30,0.12) 0%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.now-hero-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.now-hero-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--now-orange);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.now-hero-eyebrow .now-dna-mini {
+  font-family: 'Blinker', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+.now-hero-eyebrow .now-dna-mini sup {
+  color: var(--now-white);
+  font-size: 0.7em;
+  margin-left: 1px;
+}
+
+.now-hero-section h1 {
+  font-size: clamp(54px, 8vw, 92px);
+  color: var(--now-white);
+  margin-bottom: 24px;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.now-hero-section h1 .now-x-factor {
+  color: var(--now-orange);
+  font-style: italic;
+  font-weight: 800;
+}
+
+.now-hero-tagline {
+  font-size: 16px;
+  font-style: italic;
+  color: var(--now-text-light-dim);
+  margin-bottom: 28px;
+  letter-spacing: 0.02em;
+}
+
+.now-hero-urgency {
+  font-size: clamp(15px, 1.5vw, 17px);
+  color: var(--now-text-light);
+  max-width: 580px;
+  margin: 0 auto 36px;
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.now-hero-urgency strong {
+  color: var(--now-white);
+  font-weight: 700;
+}
+
+.now-hero-urgency .now-tools {
+  color: var(--now-orange);
+  font-weight: 600;
+}
+
+.now-hero-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.now-hero-cta .now-btn {
+  font-size: 16px;
+  padding: 17px 32px;
+}
+
+.now-hero-cta-meta {
+  font-size: 12px;
+  color: var(--now-text-light-dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.now-hero-corner {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  font-family: 'Blinker', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: rgba(255,255,255,0.85);
+  z-index: 3;
+  letter-spacing: -0.02em;
+}
+
+.now-hero-corner sup {
+  color: var(--now-orange);
+  font-size: 0.7em;
+}
+
+@media (max-width: 880px) {
+  .now-hero-corner {
+    top: 18px;
+    right: 18px;
+    font-size: 22px;
+  }
+  .now-hero-cta .now-btn {
+    font-size: 15px;
+    padding: 15px 22px;
+    white-space: normal;
+    line-height: 1.3;
+  }
+}
+</style>
+
+<section class="now-section now-hero-section" id="hero">
+  <div class="now-hero-corner" aria-hidden="true">
+    DNA<sup>x</sup>
+  </div>
+  <div class="now-hero-inner">
+    <div class="now-hero-eyebrow">
+      <span class="now-dna-mini">DNA<sup>x</sup></span> &nbsp;—&nbsp; DONE NOW, AUTHENTIC.
+    </div>
+    <h1>Your DNA. <span class="now-x-factor">Your X-Factor.</span></h1>
+    <p class="now-hero-tagline">Hand built by robots, imagined by humans.</p>
+    <p class="now-hero-urgency">
+      You could be using your <span class="now-tools">Brand Blueprint</span> and <span class="now-tools">AI Voice Encoder</span> by the end of the week.
+    </p>
+    <div class="now-hero-cta">
+      <a href="https://netsync.nowgroup.co.nz/brandkit/" class="now-btn">Begin X-traction — power your X-Factor</a>
+      <p class="now-hero-cta-meta">FREE DIAGNOSTIC  •  10 MINUTES  •  NO CARD REQUIRED</p>
+    </div>
+  </div>
+</section>

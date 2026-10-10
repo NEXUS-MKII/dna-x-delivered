@@ -1,0 +1,547 @@
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  MARKETING NOW — BLOCK 00 — FOUNDATION
+  Must be the FIRST Custom Code Block on the Kajabi page.
+  Provides: shared CSS, fonts, dev banner, global JS (offer URLs + counter)
+═══════════════════════════════════════════════════════════════════════════
+  ⚠ TO GO LIVE — fill in offerMap URLs at the bottom of this block.
+  Until then, the yellow dev banner stays visible at the top of the page.
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══ ROOT TOKENS ═══ */
+:root {
+  --now-navy: #1A1A2E;
+  --now-deep-navy: #080808;
+  --now-orange: #E84C1E;
+  --now-orange-dk: #B83B17;
+  --now-orange-light: #FF6B3D;
+  --now-light-bg: #F8F8F8;
+  --now-mid-gray: #666666;
+  --now-light-gray: #E8E8E8;
+  --now-white: #FFFFFF;
+  --now-text: #1A1A2E;
+  --now-text-muted: #555555;
+  --now-text-light: rgba(255, 255, 255, 0.95);
+  --now-text-light-dim: rgba(255, 255, 255, 0.78);
+  --now-warn-bg: #FFF7ED;
+  --now-warn-border: #F59E0B;
+  --now-warn-text: #92400E;
+}
+
+/* ═══ RESET (scoped to .now-section) ═══ */
+.now-section, .now-section *, .now-section *::before, .now-section *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ═══ SHARED LAYOUT ═══ */
+.now-section {
+  width: 100%;
+  font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--now-text);
+  padding: clamp(60px, 7vw, 100px) clamp(20px, 4vw, 60px);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.now-section h1, .now-section h2, .now-section h3 {
+  font-family: 'Blinker', 'Barlow', -apple-system, sans-serif;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+.now-section a {
+  color: var(--now-orange);
+  text-decoration: none;
+}
+
+.now-section a:hover { color: var(--now-orange-dk); }
+
+.now-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ═══ EYEBROW ═══ */
+.now-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--now-orange);
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.now-eyebrow-led::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--now-orange);
+  margin-right: 10px;
+  vertical-align: middle;
+  animation: now-pulse 2s ease-in-out infinite;
+}
+
+@keyframes now-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232, 76, 30, 0.4); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(232, 76, 30, 0); }
+}
+
+/* ═══ BUTTONS — ALL SOLID ORANGE (no blank/hollow buttons anywhere) ═══ */
+.now-btn {
+  display: inline-block;
+  padding: 15px 26px;
+  font-family: 'Blinker', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+  background: var(--now-orange);
+  color: var(--now-white) !important;
+  white-space: nowrap;
+}
+
+.now-btn:hover {
+  background: var(--now-orange-dk);
+  color: var(--now-white) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(232, 76, 30, 0.35);
+}
+
+.now-btn-block {
+  display: block;
+  width: 100%;
+}
+
+.now-btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--now-white) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+}
+
+.now-btn-ghost:hover {
+  border-color: var(--now-white);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--now-white) !important;
+  box-shadow: none;
+}
+
+.now-btn-link {
+  display: inline-block;
+  color: var(--now-orange);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 15px;
+  border-bottom: 1px dashed var(--now-orange);
+  padding-bottom: 2px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.now-btn-link:hover {
+  color: var(--now-orange-dk);
+  border-bottom-color: var(--now-orange-dk);
+}
+
+/* ═══ DEV BANNER (auto-hides when offer URLs configured) ═══ */
+.now-dev-banner {
+  background: var(--now-warn-bg);
+  border-bottom: 2px solid var(--now-warn-border);
+  padding: 11px 24px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--now-warn-text);
+  font-family: 'Barlow', sans-serif;
+  line-height: 1.5;
+}
+
+.now-dev-banner code {
+  font-family: 'Courier New', monospace;
+  background: rgba(245, 158, 11, 0.18);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.now-dev-banner.now-hidden { display: none; }
+
+/* ═══ COMMON CARD STYLE ═══ */
+.now-card {
+  background: var(--now-white);
+  border: 1px solid var(--now-light-gray);
+  border-radius: 10px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+}
+
+.now-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 26, 46, 0.10);
+  border-color: var(--now-orange);
+}
+
+.now-card-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--now-orange);
+  margin-bottom: 12px;
+}
+
+.now-card h3 {
+  font-size: 24px;
+  color: var(--now-text);
+  margin-bottom: 10px;
+}
+
+.now-card-sub {
+  font-size: 15px;
+  color: var(--now-text-muted);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.now-card-bullets {
+  list-style: none;
+  margin: 0 0 22px 0;
+  padding: 0;
+  flex: 1;
+}
+
+.now-card-bullets li {
+  font-size: 14px;
+  color: var(--now-text-muted);
+  padding: 7px 0 7px 22px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.now-card-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 12px;
+  height: 2px;
+  background: var(--now-orange);
+}
+
+.now-card-price {
+  font-family: 'Blinker', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--now-orange);
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.now-card-meta {
+  font-size: 11px;
+  color: var(--now-mid-gray);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+/* ═══ CAROUSEL FRAMEWORK (used by 3 product sections) ═══ */
+.now-carousel-wrap {
+  position: relative;
+}
+
+.now-carousel-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.now-carousel-head h3 {
+  font-size: clamp(22px, 2.4vw, 28px);
+  color: var(--now-text);
+  margin: 0;
+}
+
+.now-carousel-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.now-carousel-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--now-light-gray);
+  background: var(--now-white);
+  color: var(--now-text);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: sans-serif;
+}
+
+.now-carousel-btn:hover {
+  border-color: var(--now-orange);
+  color: var(--now-orange);
+}
+
+.now-carousel-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: var(--now-light-gray);
+  color: var(--now-mid-gray);
+}
+
+.now-carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 22px;
+  padding: 4px 4px 24px 4px;
+  margin: 0 -4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.now-carousel-track::-webkit-scrollbar { display: none; }
+
+.now-carousel-card {
+  flex: 0 0 calc((100% - 44px) / 3);
+  scroll-snap-align: start;
+  min-height: 100%;
+}
+
+.now-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.now-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--now-light-gray);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.now-carousel-dot.active {
+  background: var(--now-orange);
+  width: 24px;
+  border-radius: 4px;
+}
+
+@media (max-width: 880px) {
+  .now-carousel-card { flex: 0 0 88%; }
+}
+
+@media (max-width: 480px) {
+  .now-carousel-card { flex: 0 0 92%; }
+}
+</style>
+
+<!-- Dev mode banner — visible until URLs are wired -->
+<div class="now-dev-banner" id="nowDevBanner" role="status">
+  <strong>⚠ Preview mode</strong> — Kajabi offer URLs are not yet configured.
+  Edit Block 00 (Foundation) <code>NOW.offerMap</code> at the bottom and replace the
+  <code>#REPLACE_KAJABI_OFFER_URL_*</code> placeholders to activate checkout.
+  This banner auto-hides once URLs are real.
+</div>
+
+<script>
+(function () {
+  /* ═══ NAMESPACE — accessible to all section blocks ═══ */
+  window.NOW = window.NOW || {};
+
+  /* ═══ OFFER URL MAP — REPLACE THESE 12 PLACEHOLDERS TO GO LIVE ═══ */
+  NOW.offerMap = {
+    'content-pack-pro':        '#REPLACE_KAJABI_OFFER_URL_PACK_A',
+    'partner-growth':          '#REPLACE_KAJABI_OFFER_URL_PACK_B',
+    'email-rescue':            '#REPLACE_KAJABI_OFFER_URL_PACK_C',
+    'wow-bundle':              '#REPLACE_KAJABI_OFFER_URL_WOW',
+    'build-d':                 '#REPLACE_KAJABI_OFFER_URL_BUILD_D',
+    'build-e':                 '#REPLACE_KAJABI_OFFER_URL_BUILD_E',
+    'build-f':                 '#REPLACE_KAJABI_OFFER_URL_BUILD_F',
+    'bundle-pipeline':         '#REPLACE_KAJABI_OFFER_URL_PIPELINE',
+    'bundle-conversion':       '#REPLACE_KAJABI_OFFER_URL_CONVERSION',
+    'bundle-authority':        '#REPLACE_KAJABI_OFFER_URL_AUTHORITY',
+    'bundle-complete-factory': '#REPLACE_KAJABI_OFFER_URL_COMPLETE_FACTORY',
+    'calendly':                '#REPLACE_CALENDLY_FIT_CALL_URL'
+  };
+
+  /* ═══ WIRE BUTTONS + AUTO-HIDE DEV BANNER WHEN ALL CONFIGURED ═══ */
+  NOW.wireButtons = function () {
+    var unconfigured = [];
+    Object.keys(NOW.offerMap).forEach(function (key) {
+      var url = NOW.offerMap[key];
+      var isPlaceholder = url.indexOf('#REPLACE') === 0;
+      if (isPlaceholder) unconfigured.push(key);
+    });
+
+    document.querySelectorAll('[data-offer]').forEach(function (el) {
+      var key = el.getAttribute('data-offer');
+      var url = NOW.offerMap[key];
+      if (url && url.indexOf('#REPLACE') !== 0) {
+        el.setAttribute('href', url);
+        el.removeAttribute('data-unconfigured');
+      } else {
+        el.setAttribute('data-unconfigured', 'true');
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          alert('⚠ Kajabi URL not yet configured for "' + key + '". Edit NOW.offerMap in Block 00 (Foundation).');
+        });
+      }
+    });
+
+    var calendlyEls = document.querySelectorAll('[data-calendly]');
+    calendlyEls.forEach(function (el) {
+      var url = NOW.offerMap['calendly'];
+      if (url && url.indexOf('#REPLACE') !== 0) {
+        el.setAttribute('href', url);
+      } else {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          alert('⚠ Calendly URL not yet configured. Edit NOW.offerMap.calendly in Block 00.');
+        });
+      }
+    });
+
+    /* Hide dev banner if everything is wired */
+    var banner = document.getElementById('nowDevBanner');
+    if (banner && unconfigured.length === 0) {
+      banner.classList.add('now-hidden');
+    } else if (unconfigured.length > 0) {
+      console.warn('[Marketing NOW] ' + unconfigured.length + ' Kajabi offer URLs not configured:', unconfigured);
+    }
+  };
+
+  /* ═══ COUNTING SUPERSCRIPT ANIMATION (cycles 1-6 in §02 system block) ═══ */
+  NOW.startCounter = function () {
+    var supers = ['¹', '²', '³', '⁴', '⁵', '⁶'];
+    var counter = document.getElementById('mainCounter');
+    if (!counter) return;
+    var i = 0;
+    setInterval(function () {
+      i = (i + 1) % 6;
+      counter.style.opacity = '0.3';
+      setTimeout(function () {
+        counter.textContent = supers[i];
+        counter.style.opacity = '1';
+      }, 200);
+    }, 1800);
+  };
+
+  /* ═══ CAROUSEL CONTROLS (used by all carousel blocks) ═══ */
+  NOW.initCarousels = function () {
+    document.querySelectorAll('.now-carousel-wrap').forEach(function (wrap) {
+      var track = wrap.querySelector('.now-carousel-track');
+      var prev = wrap.querySelector('.now-carousel-btn.prev');
+      var next = wrap.querySelector('.now-carousel-btn.next');
+      var dots = wrap.querySelectorAll('.now-carousel-dot');
+
+      if (!track) return;
+
+      function getCardWidth() {
+        var card = track.querySelector('.now-carousel-card');
+        return card ? card.offsetWidth + 22 : 300;
+      }
+
+      function updateState() {
+        var scrollLeft = track.scrollLeft;
+        var maxScroll = track.scrollWidth - track.clientWidth;
+        if (prev) prev.disabled = scrollLeft <= 5;
+        if (next) next.disabled = scrollLeft >= maxScroll - 5;
+        var cardWidth = getCardWidth();
+        var activeIdx = Math.round(scrollLeft / cardWidth);
+        dots.forEach(function (dot, i) {
+          dot.classList.toggle('active', i === activeIdx);
+        });
+      }
+
+      if (prev) prev.addEventListener('click', function () {
+        track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+      });
+      if (next) next.addEventListener('click', function () {
+        track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+      });
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () {
+          track.scrollTo({ left: i * getCardWidth(), behavior: 'smooth' });
+        });
+      });
+
+      track.addEventListener('scroll', updateState);
+      window.addEventListener('resize', updateState);
+      updateState();
+    });
+  };
+
+  /* ═══ INIT ON DOM READY ═══ */
+  function init() {
+    NOW.wireButtons();
+    NOW.startCounter();
+    NOW.initCarousels();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+<!-- ═══ SCHEMA — Organization (FAQ schema lives in Block 06) ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "NOW Group",
+  "alternateName": "Marketing NOW",
+  "url": "https://www.nowgroup.co.nz",
+  "description": "A productised marketing system. Two tiers: $497 done-for-you Essentials and DNAx (X-Factor) bespoke builds in your brand.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "chris@nowgroup.co.nz",
+    "contactType": "Sales"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Auckland",
+    "addressCountry": "NZ"
+  }
+}
+</script>

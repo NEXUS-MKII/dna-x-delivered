@@ -1,0 +1,204 @@
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 04.5 — HOW THE FUNNEL WORKS
+  Sits between Block 05 (bundles) and Block 06 (proof + FAQ).
+  Surfaces the two-step diagnostic mechanic for share-able / curious visitors.
+  This is REFERENCE, not a primary CTA — the AUBIT email sequence does
+  the qualification work; this page is the catalogue at the end.
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-funnel-section {
+  background: var(--dnax-white);
+}
+
+.dnax-funnel-head {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 50px;
+}
+
+.dnax-funnel-head h2 {
+  font-size: clamp(32px, 4.2vw, 44px);
+  color: var(--dnax-text);
+  margin: 14px 0 16px;
+}
+
+.dnax-funnel-sub {
+  font-size: clamp(15px, 1.5vw, 17px);
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+}
+
+.dnax-funnel-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  margin-bottom: 36px;
+}
+
+.dnax-funnel-step {
+  background: var(--dnax-light-bg);
+  border-radius: 8px;
+  padding: 24px 22px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.dnax-funnel-step:hover {
+  background: var(--dnax-white);
+  border: 1px solid var(--dnax-orange);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.dnax-funnel-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: var(--dnax-orange);
+  font-weight: 800;
+  z-index: 2;
+  background: var(--dnax-white);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--dnax-orange);
+}
+
+.dnax-funnel-step-num {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--dnax-orange);
+  color: var(--dnax-white);
+  font-family: 'Blinker', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 28px;
+  margin-bottom: 14px;
+}
+
+.dnax-funnel-step h4 {
+  font-family: 'Blinker', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--dnax-text);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.dnax-funnel-step p {
+  font-size: 13px;
+  color: var(--dnax-text-muted);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+
+.dnax-funnel-step-meta {
+  font-size: 11px;
+  color: var(--dnax-orange);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dnax-funnel-bridge {
+  background: var(--dnax-light-bg);
+  border-left: 4px solid var(--dnax-orange);
+  border-radius: 6px;
+  padding: 18px 24px;
+  max-width: 820px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+}
+
+.dnax-funnel-bridge strong {
+  color: var(--dnax-text);
+}
+
+.dnax-funnel-bridge a {
+  color: var(--dnax-orange);
+  border-bottom: 1px dashed var(--dnax-orange);
+  font-weight: 600;
+}
+
+@media (max-width: 880px) {
+  .dnax-funnel-flow {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .dnax-funnel-step:not(:last-child)::after {
+    right: 50%;
+    top: auto;
+    bottom: -28px;
+    transform: translateX(50%) rotate(90deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .dnax-funnel-step:not(:last-child)::after {
+    bottom: -24px;
+  }
+}
+</style>
+
+<section class="dnax-section dnax-funnel-section">
+  <div class="dnax-container">
+
+    <div class="dnax-funnel-head">
+      <span class="dnax-eyebrow">How the system works</span>
+      <h2>From a 5-minute diagnostic to your DNA<sup>x</sup> build.</h2>
+      <p class="dnax-funnel-sub">Most visitors arrive here from our AUBIT email sequence — already qualified and ready to choose a module. For everyone else, here's the path that gets you there.</p>
+    </div>
+
+    <div class="dnax-funnel-flow">
+
+      <div class="dnax-funnel-step">
+        <div class="dnax-funnel-step-num">1</div>
+        <h4>Brand Tone Baseline</h4>
+        <p>8 simple questions. Captures your tone, your audience, your offer shape.</p>
+        <div class="dnax-funnel-step-meta">5 MIN  •  FREE</div>
+      </div>
+
+      <div class="dnax-funnel-step">
+        <div class="dnax-funnel-step-num">2</div>
+        <h4>Your AI Lead Agent</h4>
+        <p>The baseline produces an AI agent that speaks in your voice. Yours to use.</p>
+        <div class="dnax-funnel-step-meta">INSTANT  •  FREE</div>
+      </div>
+
+      <div class="dnax-funnel-step">
+        <div class="dnax-funnel-step-num">3</div>
+        <h4>The Deep Dive</h4>
+        <p>20 questions. Maps your full ICP, offer ladder, and proof points. Qualifies you for what's next.</p>
+        <div class="dnax-funnel-step-meta">15 MIN  •  FREE</div>
+      </div>
+
+      <div class="dnax-funnel-step">
+        <div class="dnax-funnel-step-num">4</div>
+        <h4>Your Build Path</h4>
+        <p>Routes you to WOW Essentials or full DNA<sup>x</sup> delivery — based on what you actually need.</p>
+        <div class="dnax-funnel-step-meta">YOUR CHOICE</div>
+      </div>
+
+    </div>
+
+    <div class="dnax-funnel-bridge">
+      <strong>Already on the AUBIT list?</strong> You've likely done step 1 or 2. The modules above are where step 4 lands you. <strong>Cold visitor?</strong> <a href="#dnax-diagnostic">Start at step 1</a> — five minutes, no card, your AI lead agent at the end.
+    </div>
+
+  </div>
+</section>

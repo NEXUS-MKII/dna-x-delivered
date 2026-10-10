@@ -1,0 +1,546 @@
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  DNA-X — BLOCK 00 — FOUNDATION
+  Must be the FIRST Custom Code element on the GHL page.
+  Provides: shared CSS, fonts, dev banner, global JS (offer URLs + counter)
+═══════════════════════════════════════════════════════════════════════════
+  ⚠ TO GO LIVE — fill in offerMap URLs at the bottom of this block.
+  Until then, the yellow dev banner stays visible at the top of the page.
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Blinker:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══ ROOT TOKENS ═══ */
+:root {
+  --dnax-navy: #1A1A2E;          /* primary brand: hero bg, headings, body text */
+  --dnax-deep-navy: #080808;     /* deepest tone: footer, high-contrast panels */
+  --dnax-orange: #E84C1E;        /* accent: CTAs, links, eyebrows, the X in DNAx */
+  --dnax-orange-dk: #B83B17;     /* hover on orange buttons / links */
+  --dnax-orange-light: #FF6B3D;  /* reserved: gradients, glows, hover accents */
+  --dnax-white: #FFFFFF;
+  --dnax-light-bg: #F8F8F8;
+  --dnax-light-gray: #E8E8E8;
+  --dnax-mid-gray: #666666;
+  --dnax-text: #1A1A2E;
+  --dnax-text-muted: #555555;
+  --dnax-text-light: rgba(255, 255, 255, 0.95);
+  --dnax-text-light-dim: rgba(255, 255, 255, 0.78);
+  --dnax-warn-bg: #FFF7ED;
+  --dnax-warn-border: #F59E0B;
+  --dnax-warn-text: #92400E;
+}
+
+/* ═══ RESET (scoped to .dnax-section) ═══ */
+.dnax-section, .dnax-section *, .dnax-section *::before, .dnax-section *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ═══ SHARED LAYOUT ═══ */
+.dnax-section {
+  width: 100%;
+  font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--dnax-text);
+  padding: clamp(60px, 7vw, 100px) clamp(20px, 4vw, 60px);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.dnax-section h1, .dnax-section h2, .dnax-section h3 {
+  font-family: 'Blinker', 'Barlow', -apple-system, sans-serif;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+.dnax-section a {
+  color: var(--dnax-orange);
+  text-decoration: none;
+}
+
+.dnax-section a:hover { color: var(--dnax-orange-dk); }
+
+.dnax-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ═══ EYEBROW ═══ */
+.dnax-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dnax-orange);
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.dnax-eyebrow-led::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dnax-orange);
+  margin-right: 10px;
+  vertical-align: middle;
+  animation: dnax-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dnax-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232, 76, 30, 0.4); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(232, 76, 30, 0); }
+}
+
+/* ═══ BUTTONS — ALL SOLID ORANGE (no blank/hollow buttons anywhere) ═══ */
+.dnax-btn {
+  display: inline-block;
+  padding: 15px 26px;
+  font-family: 'Blinker', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+  background: var(--dnax-orange);
+  color: var(--dnax-white) !important;
+  white-space: nowrap;
+}
+
+.dnax-btn:hover {
+  background: var(--dnax-orange-dk);
+  color: var(--dnax-white) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(232, 76, 30, 0.35);
+}
+
+.dnax-btn-block {
+  display: block;
+  width: 100%;
+}
+
+.dnax-btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--dnax-white) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+}
+
+.dnax-btn-ghost:hover {
+  border-color: var(--dnax-white);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--dnax-white) !important;
+  box-shadow: none;
+}
+
+.dnax-btn-link {
+  display: inline-block;
+  color: var(--dnax-orange);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 15px;
+  border-bottom: 1px dashed var(--dnax-orange);
+  padding-bottom: 2px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.dnax-btn-link:hover {
+  color: var(--dnax-orange-dk);
+  border-bottom-color: var(--dnax-orange-dk);
+}
+
+/* ═══ DEV BANNER (auto-hides when offer URLs configured) ═══ */
+.dnax-dev-banner {
+  background: var(--dnax-warn-bg);
+  border-bottom: 2px solid var(--dnax-warn-border);
+  padding: 11px 24px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dnax-warn-text);
+  font-family: 'Barlow', sans-serif;
+  line-height: 1.5;
+}
+
+.dnax-dev-banner code {
+  font-family: 'Courier New', monospace;
+  background: rgba(245, 158, 11, 0.18);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.dnax-dev-banner.dnax-hidden { display: none; }
+
+/* ═══ COMMON CARD STYLE ═══ */
+.dnax-card {
+  background: var(--dnax-white);
+  border: 1px solid var(--dnax-light-gray);
+  border-radius: 10px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+}
+
+.dnax-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 26, 46, 0.10);
+  border-color: var(--dnax-orange);
+}
+
+.dnax-card-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dnax-orange);
+  margin-bottom: 12px;
+}
+
+.dnax-card h3 {
+  font-size: 24px;
+  color: var(--dnax-text);
+  margin-bottom: 10px;
+}
+
+.dnax-card-sub {
+  font-size: 15px;
+  color: var(--dnax-text-muted);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.dnax-card-bullets {
+  list-style: none;
+  margin: 0 0 22px 0;
+  padding: 0;
+  flex: 1;
+}
+
+.dnax-card-bullets li {
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  padding: 7px 0 7px 22px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.dnax-card-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 12px;
+  height: 2px;
+  background: var(--dnax-orange);
+}
+
+.dnax-card-price {
+  font-family: 'Blinker', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--dnax-orange);
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.dnax-card-meta {
+  font-size: 11px;
+  color: var(--dnax-mid-gray);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+/* ═══ CAROUSEL FRAMEWORK (used by 3 product sections) ═══ */
+.dnax-carousel-wrap {
+  position: relative;
+}
+
+.dnax-carousel-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dnax-carousel-head h3 {
+  font-size: clamp(22px, 2.4vw, 28px);
+  color: var(--dnax-text);
+  margin: 0;
+}
+
+.dnax-carousel-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.dnax-carousel-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--dnax-light-gray);
+  background: var(--dnax-white);
+  color: var(--dnax-text);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: sans-serif;
+}
+
+.dnax-carousel-btn:hover {
+  border-color: var(--dnax-orange);
+  color: var(--dnax-orange);
+}
+
+.dnax-carousel-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: var(--dnax-light-gray);
+  color: var(--dnax-mid-gray);
+}
+
+.dnax-carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 22px;
+  padding: 4px 4px 24px 4px;
+  margin: 0 -4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.dnax-carousel-track::-webkit-scrollbar { display: none; }
+
+.dnax-carousel-card {
+  flex: 0 0 calc((100% - 44px) / 3);
+  scroll-snap-align: start;
+  min-height: 100%;
+}
+
+.dnax-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.dnax-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dnax-light-gray);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.dnax-carousel-dot.active {
+  background: var(--dnax-orange);
+  width: 24px;
+  border-radius: 4px;
+}
+
+@media (max-width: 880px) {
+  .dnax-carousel-card { flex: 0 0 88%; }
+}
+
+@media (max-width: 480px) {
+  .dnax-carousel-card { flex: 0 0 92%; }
+}
+</style>
+
+<!-- Dev mode banner — visible until URLs are wired -->
+<div class="dnax-dev-banner" id="nowDevBanner" role="status">
+  <strong>⚠ Preview mode</strong> — GHL product links are not yet configured.
+  Edit Block 00 (Foundation) <code>DNAX.offerMap</code> at the bottom and replace the
+  <code>#REPLACE_GHL_PRODUCT_URL_*</code> placeholders to activate checkout.
+  This banner auto-hides once URLs are real.
+</div>
+
+<script>
+(function () {
+  /* ═══ NAMESPACE — accessible to all section blocks ═══ */
+  window.DNAX = window.DNAX || {};
+
+  /* ═══ OFFER URL MAP — REPLACE THESE 12 PLACEHOLDERS TO GO LIVE ═══ */
+  DNAX.offerMap = {
+    'content-pack-pro':        '#REPLACE_GHL_PRODUCT_URL_PACK_A',
+    'partner-growth':          '#REPLACE_GHL_PRODUCT_URL_PACK_B',
+    'email-rescue':            '#REPLACE_GHL_PRODUCT_URL_PACK_C',
+    'wow-bundle':              '#REPLACE_GHL_PRODUCT_URL_WOW',
+    'build-d':                 '#REPLACE_GHL_PRODUCT_URL_BUILD_D',
+    'build-e':                 '#REPLACE_GHL_PRODUCT_URL_BUILD_E',
+    'build-f':                 '#REPLACE_GHL_PRODUCT_URL_BUILD_F',
+    'bundle-pipeline':         '#REPLACE_GHL_PRODUCT_URL_PIPELINE',
+    'bundle-conversion':       '#REPLACE_GHL_PRODUCT_URL_CONVERSION',
+    'bundle-authority':        '#REPLACE_GHL_PRODUCT_URL_AUTHORITY',
+    'bundle-complete-factory': '#REPLACE_GHL_PRODUCT_URL_COMPLETE_FACTORY',
+    'calendly':                '#REPLACE_GHL_BOOKING_URL'
+  };
+
+  /* ═══ WIRE BUTTONS + AUTO-HIDE DEV BANNER WHEN ALL CONFIGURED ═══ */
+  DNAX.wireButtons = function () {
+    var unconfigured = [];
+    Object.keys(DNAX.offerMap).forEach(function (key) {
+      var url = DNAX.offerMap[key];
+      var isPlaceholder = url.indexOf('#REPLACE') === 0;
+      if (isPlaceholder) unconfigured.push(key);
+    });
+
+    document.querySelectorAll('[data-offer]').forEach(function (el) {
+      var key = el.getAttribute('data-offer');
+      var url = DNAX.offerMap[key];
+      if (url && url.indexOf('#REPLACE') !== 0) {
+        el.setAttribute('href', url);
+        el.removeAttribute('data-unconfigured');
+      } else {
+        el.setAttribute('data-unconfigured', 'true');
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          alert('⚠ GHL product link not yet configured for "' + key + '". Edit DNAX.offerMap in Block 00 (Foundation).');
+        });
+      }
+    });
+
+    var calendlyEls = document.querySelectorAll('[data-calendly]');
+    calendlyEls.forEach(function (el) {
+      var url = DNAX.offerMap['calendly'];
+      if (url && url.indexOf('#REPLACE') !== 0) {
+        el.setAttribute('href', url);
+      } else {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          alert('⚠ Booking link not yet configured. Edit DNAX.offerMap.calendly in Block 00.');
+        });
+      }
+    });
+
+    /* Hide dev banner if everything is wired */
+    var banner = document.getElementById('nowDevBanner');
+    if (banner && unconfigured.length === 0) {
+      banner.classList.add('dnax-hidden');
+    } else if (unconfigured.length > 0) {
+      console.warn('[DNA-X] ' + unconfigured.length + ' GHL product links not configured:', unconfigured);
+    }
+  };
+
+  /* ═══ COUNTING SUPERSCRIPT ANIMATION (cycles 1-6 in §02 system block) ═══ */
+  DNAX.startCounter = function () {
+    var supers = ['¹', '²', '³', '⁴', '⁵', '⁶'];
+    var counter = document.getElementById('mainCounter');
+    if (!counter) return;
+    var i = 0;
+    setInterval(function () {
+      i = (i + 1) % 6;
+      counter.style.opacity = '0.3';
+      setTimeout(function () {
+        counter.textContent = supers[i];
+        counter.style.opacity = '1';
+      }, 200);
+    }, 1800);
+  };
+
+  /* ═══ CAROUSEL CONTROLS (used by all carousel blocks) ═══ */
+  DNAX.initCarousels = function () {
+    document.querySelectorAll('.dnax-carousel-wrap').forEach(function (wrap) {
+      var track = wrap.querySelector('.dnax-carousel-track');
+      var prev = wrap.querySelector('.dnax-carousel-btn.prev');
+      var next = wrap.querySelector('.dnax-carousel-btn.next');
+      var dots = wrap.querySelectorAll('.dnax-carousel-dot');
+
+      if (!track) return;
+
+      function getCardWidth() {
+        var card = track.querySelector('.dnax-carousel-card');
+        return card ? card.offsetWidth + 22 : 300;
+      }
+
+      function updateState() {
+        var scrollLeft = track.scrollLeft;
+        var maxScroll = track.scrollWidth - track.clientWidth;
+        if (prev) prev.disabled = scrollLeft <= 5;
+        if (next) next.disabled = scrollLeft >= maxScroll - 5;
+        var cardWidth = getCardWidth();
+        var activeIdx = Math.round(scrollLeft / cardWidth);
+        dots.forEach(function (dot, i) {
+          dot.classList.toggle('active', i === activeIdx);
+        });
+      }
+
+      if (prev) prev.addEventListener('click', function () {
+        track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+      });
+      if (next) next.addEventListener('click', function () {
+        track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+      });
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () {
+          track.scrollTo({ left: i * getCardWidth(), behavior: 'smooth' });
+        });
+      });
+
+      track.addEventListener('scroll', updateState);
+      window.addEventListener('resize', updateState);
+      updateState();
+    });
+  };
+
+  /* ═══ INIT ON DOM READY ═══ */
+  function init() {
+    DNAX.wireButtons();
+    DNAX.startCounter();
+    DNAX.initCarousels();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+<!-- ═══ SCHEMA — Organization (FAQ schema lives in Block 06) ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "DNA-X",
+  "parentOrganization": {"@type": "Organization", "name": "PsikiQ Solutions", "url": "https://psikiq.io"},
+  "url": "https://dnaxmarketing.com",
+  "description": "A productised marketing system. Two tiers: $497 done-for-you Essentials and DNAx (X-Factor) bespoke builds in your brand.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "chris@psikiq.io",
+    "contactType": "Sales"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "NZ"
+  }
+}
+</script>

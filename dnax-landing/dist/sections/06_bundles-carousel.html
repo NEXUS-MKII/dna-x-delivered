@@ -1,0 +1,305 @@
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 05 — BUNDLES CAROUSEL
+  4 bundle cards: Pipeline Engine, Conversion Stack, Authority Stack,
+                  Complete Factory (hero treatment).
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-bundles-section {
+  background: var(--dnax-light-bg);
+}
+
+.dnax-bundles-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 50px;
+}
+
+.dnax-bundles-head h2 {
+  font-size: clamp(34px, 4.5vw, 48px);
+  color: var(--dnax-text);
+  margin: 14px 0 16px;
+}
+
+.dnax-bundles-sub {
+  font-size: clamp(16px, 1.7vw, 18px);
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+}
+
+.dnax-bundle-card {
+  background: var(--dnax-white);
+  border: 1px solid var(--dnax-light-gray);
+  border-radius: 10px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: all 0.25s;
+}
+
+.dnax-bundle-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 26, 46, 0.10);
+  border-color: var(--dnax-orange);
+}
+
+.dnax-bundle-card.hero {
+  background: linear-gradient(135deg, var(--dnax-navy) 0%, #2a2a4a 100%);
+  color: var(--dnax-white);
+  border: 2px solid var(--dnax-orange);
+  position: relative;
+  overflow: hidden;
+}
+
+.dnax-bundle-card.hero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 50%;
+  height: 80%;
+  background: radial-gradient(ellipse, rgba(232, 76, 30, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.dnax-bundle-card.hero > * { position: relative; z-index: 2; }
+
+.dnax-bundle-card.hero h3 { color: var(--dnax-white); }
+.dnax-bundle-card.hero .dnax-bundle-pricing-line { color: var(--dnax-text-light); }
+.dnax-bundle-card.hero .dnax-bundle-strike { color: var(--dnax-text-light-dim); }
+.dnax-bundle-card.hero .dnax-bundle-body { color: var(--dnax-text-light-dim); }
+
+.dnax-bundle-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dnax-orange);
+  margin-bottom: 12px;
+}
+
+.dnax-bundle-card h3 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: var(--dnax-text);
+}
+
+.dnax-bundle-pricing-line {
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.dnax-bundle-strike {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.dnax-bundle-newprice {
+  color: var(--dnax-orange);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.dnax-bundle-save {
+  display: inline-block;
+  background: rgba(232, 76, 30, 0.12);
+  color: var(--dnax-orange-dk);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+  align-self: flex-start;
+}
+
+.dnax-bundle-card.hero .dnax-bundle-save {
+  background: var(--dnax-orange);
+  color: var(--dnax-white);
+}
+
+.dnax-bundle-body {
+  font-size: 14px;
+  color: var(--dnax-text-muted);
+  line-height: 1.6;
+  margin-bottom: 22px;
+  flex: 1;
+}
+
+.dnax-bundle-price-block {
+  font-family: 'Blinker', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--dnax-orange);
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+/* Path map */
+.dnax-path {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.dnax-path-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dnax-mid-gray);
+  margin-bottom: 18px;
+}
+
+.dnax-path-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dnax-path-step {
+  font-family: 'Blinker', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--dnax-text);
+  padding: 4px;
+}
+
+.dnax-path-step sup {
+  color: var(--dnax-orange);
+  font-size: 0.7em;
+}
+
+.dnax-path-arrow {
+  color: var(--dnax-mid-gray);
+  font-size: 14px;
+}
+</style>
+
+<section class="dnax-section dnax-bundles-section" id="bundles">
+  <div class="dnax-container">
+
+    <div class="dnax-bundles-head">
+      <span class="dnax-eyebrow">Bundles</span>
+      <h2>Stack the A's. Save.</h2>
+      <p class="dnax-bundles-sub">
+        Bundling consolidates real work — one discovery call, one voice extraction, one schema deploy. We pass the savings on.
+      </p>
+    </div>
+
+    <div class="dnax-carousel-wrap">
+      <div class="dnax-carousel-head">
+        <h3>Bundle Paths</h3>
+        <div class="dnax-carousel-controls">
+          <button class="dnax-carousel-btn prev" aria-label="Previous">‹</button>
+          <button class="dnax-carousel-btn next" aria-label="Next">›</button>
+        </div>
+      </div>
+
+      <div class="dnax-carousel-track">
+
+        <!-- Pipeline Engine -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-bundle-card">
+            <div class="dnax-bundle-eyebrow">DNA<sup>²</sup>  •  COUNTS AS 2 OF 6</div>
+            <h3>Pipeline Engine</h3>
+            <p class="dnax-bundle-pricing-line">
+              Build D + Build E  •  <span class="dnax-bundle-strike">$6,094</span>  →  <span class="dnax-bundle-newprice">$5,597</span>
+            </p>
+            <span class="dnax-bundle-save">SAVE $497</span>
+            <p class="dnax-bundle-body">
+              Quiz captures. Articles authority. Pipeline complete. Lead magnets share between modules — 2 of 3 magnets come from the article bank. Voice extracted once.
+            </p>
+            <div class="dnax-bundle-price-block">$5,597</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="bundle-pipeline">Start Pipeline Engine — $5,597</a>
+          </div>
+        </div>
+
+        <!-- Conversion Stack -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-bundle-card">
+            <div class="dnax-bundle-eyebrow">DNA<sup>²</sup>  •  COUNTS AS 2 OF 6</div>
+            <h3>Conversion Stack</h3>
+            <p class="dnax-bundle-pricing-line">
+              Build D + Build F  •  <span class="dnax-bundle-strike">$5,494</span>  →  <span class="dnax-bundle-newprice">$4,997</span>
+            </p>
+            <span class="dnax-bundle-save">SAVE $497</span>
+            <p class="dnax-bundle-body">
+              Quiz captures. BizCard converts. Conversion infrastructure end-to-end. Sales page framework re-purposes from quiz result pages. Voice extracted once.
+            </p>
+            <div class="dnax-bundle-price-block">$4,997</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="bundle-conversion">Start Conversion Stack — $4,997</a>
+          </div>
+        </div>
+
+        <!-- Authority Stack -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-bundle-card">
+            <div class="dnax-bundle-eyebrow">DNA<sup>²</sup>  •  COUNTS AS 2 OF 6</div>
+            <h3>Authority Stack</h3>
+            <p class="dnax-bundle-pricing-line">
+              Build E + Build F  •  <span class="dnax-bundle-strike">$4,594</span>  →  <span class="dnax-bundle-newprice">$4,097</span>
+            </p>
+            <span class="dnax-bundle-save">SAVE $497</span>
+            <p class="dnax-bundle-body">
+              Articles + presence pages. Authority + conversion. The two-pillar buy. Schema covers everything in one deploy. Sales page becomes article 13 in the SEO bank.
+            </p>
+            <div class="dnax-bundle-price-block">$4,097</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="bundle-authority">Start Authority Stack — $4,097</a>
+          </div>
+        </div>
+
+        <!-- Complete Factory (hero) -->
+        <div class="dnax-carousel-card">
+          <div class="dnax-bundle-card hero">
+            <div class="dnax-bundle-eyebrow">DNA<sup>³</sup>  •  THE BESPOKE TRIPLE</div>
+            <h3>Complete Factory</h3>
+            <p class="dnax-bundle-pricing-line">
+              Build D + E + F  •  <span class="dnax-bundle-strike">$8,091</span>  →  <span class="dnax-bundle-newprice">$7,597</span>
+            </p>
+            <span class="dnax-bundle-save">SAVE $494</span>
+            <p class="dnax-bundle-body">
+              All three bespoke builds. Voice extracted once. Schema deployed once. Discovery call covers all three. The serious operator buy — not three disconnected products, but one integrated system.
+            </p>
+            <div class="dnax-bundle-price-block">$7,597</div>
+            <a href="#" class="dnax-btn dnax-btn-block" data-offer="bundle-complete-factory">Start Complete Factory — $7,597</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="dnax-carousel-dots">
+        <button class="dnax-carousel-dot active" aria-label="Slide 1"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 2"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 3"></button>
+        <button class="dnax-carousel-dot" aria-label="Slide 4"></button>
+      </div>
+    </div>
+
+    <!-- Path map -->
+    <div class="dnax-path">
+      <div class="dnax-path-label">The Genome Path</div>
+      <div class="dnax-path-track">
+        <span class="dnax-path-step">DNA<sup>¹</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>²</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>³</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>⁴</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>⁵</sup></span>
+        <span class="dnax-path-arrow">→</span>
+        <span class="dnax-path-step">DNA<sup>⁶</sup></span>
+      </div>
+    </div>
+
+  </div>
+</section>

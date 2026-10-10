@@ -1,0 +1,326 @@
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 06 — PROOF + FAQ
+  6 vignette cards + accordion FAQ (3 groups, 17 questions).
+  Includes FAQPage JSON-LD schema for AI search.
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.dnax-proof-section {
+  background: var(--dnax-white);
+}
+
+.dnax-proof-head {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.dnax-proof-head h2 {
+  font-size: clamp(32px, 4.2vw, 46px);
+  color: var(--dnax-text);
+  margin-bottom: 12px;
+}
+
+.dnax-proof-sub {
+  font-size: clamp(15px, 1.5vw, 17px);
+  color: var(--dnax-text-muted);
+}
+
+.dnax-proof-flag {
+  background: rgba(232, 76, 30, 0.06);
+  border-left: 4px solid var(--dnax-orange);
+  border-radius: 6px;
+  padding: 14px 22px;
+  margin: 0 auto 40px;
+  max-width: 880px;
+  font-size: 13px;
+  color: var(--dnax-text-muted);
+  line-height: 1.5;
+}
+
+.dnax-proof-flag strong { color: var(--dnax-orange-dk); }
+
+.dnax-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-bottom: 80px;
+}
+
+.dnax-vignette {
+  background: var(--dnax-light-bg);
+  border-radius: 10px;
+  padding: 26px 24px;
+  border: 1px solid transparent;
+  transition: all 0.25s;
+}
+
+.dnax-vignette:hover {
+  background: var(--dnax-white);
+  border-color: var(--dnax-orange);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.dnax-vignette-badge {
+  display: inline-block;
+  background: var(--dnax-navy);
+  color: var(--dnax-white);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.dnax-vignette-quote {
+  font-size: 14px;
+  color: var(--dnax-text);
+  line-height: 1.55;
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+.dnax-vignette-attr {
+  font-size: 12px;
+  color: var(--dnax-mid-gray);
+  font-weight: 600;
+}
+
+/* FAQ */
+.dnax-faq-section {
+  background: var(--dnax-light-bg);
+}
+
+.dnax-faq-head {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.dnax-faq-head h2 {
+  font-size: clamp(32px, 4.2vw, 46px);
+  color: var(--dnax-text);
+}
+
+.dnax-faq-groups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.dnax-faq-group h3 {
+  font-size: 17px;
+  color: var(--dnax-text);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid var(--dnax-orange);
+  font-family: 'Blinker', sans-serif;
+}
+
+.dnax-faq-item {
+  background: var(--dnax-white);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.dnax-faq-item:hover { border-color: var(--dnax-light-gray); }
+.dnax-faq-item[open] { border-color: var(--dnax-orange); }
+
+.dnax-faq-q {
+  cursor: pointer;
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dnax-text);
+  list-style: none;
+  user-select: none;
+  position: relative;
+  padding-right: 42px;
+  line-height: 1.4;
+}
+
+.dnax-faq-q::-webkit-details-marker { display: none; }
+
+.dnax-faq-q::after {
+  content: '+';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--dnax-orange);
+  transition: transform 0.2s;
+  line-height: 1;
+}
+
+.dnax-faq-item[open] .dnax-faq-q::after {
+  content: '−';
+}
+
+.dnax-faq-a {
+  padding: 0 20px 18px;
+  font-size: 13px;
+  color: var(--dnax-text-muted);
+  line-height: 1.65;
+}
+
+@media (max-width: 880px) {
+  .dnax-proof-grid { grid-template-columns: 1fr 1fr; }
+  .dnax-faq-groups { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .dnax-proof-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- ═══ FAQ ═══ -->
+<section class="dnax-section dnax-faq-section" id="faq">
+  <div class="dnax-container">
+
+    <div class="dnax-faq-head">
+      <h2>Common questions. Direct answers.</h2>
+    </div>
+
+    <div class="dnax-faq-groups">
+
+      <!-- Group 1 — Essentials -->
+      <div class="dnax-faq-group">
+        <h3>Essentials (A / B / C / WOW)</h3>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">How fast is "instant delivery"?</summary>
+          <div class="dnax-faq-a">Within 24 hours of payment. We send the assets via email and a Google Drive folder. Pack A specifically takes 4 days — that's the build window for the 31 authored assets. B and C are ready immediately because they're framework + sequence packs, not authored content.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What does "you own the assets forever" actually mean?</summary>
+          <div class="dnax-faq-a">You get editable source files. We don't host them. We don't gate access. We don't need a subscription. If you change platforms, end your relationship with us, your business — the assets stay yours, on your drive, editable.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Can I get just one pack?</summary>
+          <div class="dnax-faq-a">Yes. Each is sold separately. The WOW Bundle is for buyers who want all three at once and prefer the $494 saving — about a third off the standalone total.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Is there a refund?</summary>
+          <div class="dnax-faq-a">No. These are digital deliverables — once you have them, you have them. We invest the building work upfront. If something is broken on delivery we fix it; we don't refund. If you bought the wrong pack and haven't opened the files yet, email us within 24 hours and we'll swap it out.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Does it work for my industry?</summary>
+          <div class="dnax-faq-a">If you're a B2B service operator (consultant, coach, advisor, agency owner) in NZ or AU, yes. The frameworks apply broadly but the templates are tuned to B2B service language. If you sell to consumers or sell physical products, the principles still apply — but you'll need to translate the templates more than a B2B operator would.</div>
+        </details>
+      </div>
+
+      <!-- Group 2 — DNAˣ -->
+      <div class="dnax-faq-group">
+        <h3>DNA<sup>x</sup> (Build D / E / F)</h3>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Are the timelines real?</summary>
+          <div class="dnax-faq-a">3 weeks for Build D, 4 for E, 2 for F — measured from the discovery call. The clock pauses if you miss a sign-off window by more than 7 days. We finish on time when you do.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What happens if I miss a deadline?</summary>
+          <div class="dnax-faq-a">The build pauses, calendar resumes when you re-engage. No penalty, no extra charge. But it does push the timeline — a 14-day delay on your end becomes a 14-day delay on delivery.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Who owns the source files?</summary>
+          <div class="dnax-faq-a">You do. HTML, CSS, .docx, MP4, schema files, all of it — full editable. Yours to host, edit, repurpose, reuse, fork, or delete.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What stack do I need?</summary>
+          <div class="dnax-faq-a">For Build F: anything that takes HTML and CSS — GoHighLevel, WordPress, Webflow, Squarespace, custom. We deliver GHL-ready and GitHub-ready by default. Other stacks work with the optional +$297 Deployment Consult add-on. For Build D: your CRM if it supports quizzes (HubSpot, ActiveCampaign, Keap, GoHighLevel etc.) — otherwise we deploy via ScoreApp. For Build E: a CMS that takes HTML and a Google Business Profile.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Where does my Build D quiz actually live?</summary>
+          <div class="dnax-faq-a">In your CRM if it has quiz/survey capability — that's the preferred path because every lead lands directly in your existing system. If your CRM doesn't host quizzes natively (or you don't have a CRM yet), we deploy via ScoreApp, fully white-labelled in your brand. Either way, you own it. We don't host it on our platform.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">How do revisions work?</summary>
+          <div class="dnax-faq-a">14-day window for D and F, 21 days for E. One revision round per asset. We aim for 90–95% — the last 5–10% is your voice nuance, the part only you can do. If we missed the mark, we fix it. If you want a different direction, that's a scope variation.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What if my voice changes mid-build?</summary>
+          <div class="dnax-faq-a">That happens. If your voice shifts, we capture it again at the next sign-off point. Substantial pivots count as scope variations ($397 each, documented in writing — we won't surprise you with a charge).</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Can I add another module after starting?</summary>
+          <div class="dnax-faq-a">Yes — but the bundle saving applies only when modules are purchased together. After-purchase additions are full price. If you think you'll want a second module within 60 days, save the $497 and bundle from the start.</div>
+        </details>
+      </div>
+
+      <!-- Group 3 — Add-ons -->
+      <div class="dnax-faq-group">
+        <h3>Add-ons</h3>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What does VA Implementation actually do?</summary>
+          <div class="dnax-faq-a">It removes the deployment work. A trained VA does the paste, schedule, configure, test — the execution layer between "we delivered the asset" and "it's live and running." Tasks vary by pack (full breakdown shown at checkout). Powered by VA World — same operators we trust on our own builds.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">When do I tick add-ons?</summary>
+          <div class="dnax-faq-a">At checkout. Each add-on is a yes/no tick-box with a one-line explainer of what it gets you. No hidden costs, no surprise bundles, no pre-selected upgrades.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Can I add an add-on after purchase?</summary>
+          <div class="dnax-faq-a">Yes — email us within 30 days of purchase and we'll invoice the add-on at the same checkout price. After 30 days, retainer rate applies (which is higher).</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Is Build E a full SEO program?</summary>
+          <div class="dnax-faq-a">No. Build E is a foundation pack — 12 articles, 3 schema layers, 24 high-trust citations. It's a starter, designed to give your dedicated SEO partner a clean base to build deeper work on. We're not stepping on your SEO partner's lane. We're laying the launchpad. If you don't have an SEO partner, the foundation still gets you ranking — but ongoing optimisation lives elsewhere.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">Apify automation vs VA Manual Citations — what's the difference?</summary>
+          <div class="dnax-faq-a">Base Build E delivers 12 foundation citations submitted via Apify automation, then manually verified. Build E also includes 12 VA hand-placed citations on niche, high-trust sites — guild directories, chambers, trade associations, industry review sites. Total: 24 citations. Both are foundation work — not full SEO maintenance.</div>
+        </details>
+
+        <details class="dnax-faq-item">
+          <summary class="dnax-faq-q">What does the F Animations bolt-on output look like?</summary>
+          <div class="dnax-faq-a">Three branded MP4 micro-loops, 5 to 10 seconds each. Hero background motion, proof-strip logo reveal, CTA button micro-motion. Generated via Pika (Pika Model 2.2 on fal.ai), embedded directly in your three BizCard pages. Source files yours.</div>
+        </details>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ FAQPage SCHEMA — for AI search engines ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How fast is instant delivery?", "acceptedAnswer": { "@type": "Answer", "text": "Within 24 hours of payment. Pack A takes 4 days for the 31 authored assets. B and C are ready immediately." } },
+    { "@type": "Question", "name": "What does you own the assets forever actually mean?", "acceptedAnswer": { "@type": "Answer", "text": "You get editable source files. We don't host them. No subscription. The assets stay yours, on your drive, editable." } },
+    { "@type": "Question", "name": "Are the DNAx timelines real?", "acceptedAnswer": { "@type": "Answer", "text": "3 weeks for Build D, 4 for E, 2 for F — from the discovery call. The clock pauses if sign-off windows are missed by more than 7 days." } },
+    { "@type": "Question", "name": "Who owns the source files?", "acceptedAnswer": { "@type": "Answer", "text": "You do. HTML, CSS, .docx, MP4, schema files. Full editable. Yours to host, edit, repurpose, fork, or delete." } },
+    { "@type": "Question", "name": "What stack do I need?", "acceptedAnswer": { "@type": "Answer", "text": "For Build F: anything that takes HTML/CSS. GHL-ready and GitHub-ready by default. For Build D: your CRM if it supports quizzes, or ScoreApp if it doesn't. For Build E: a CMS that takes HTML and a Google Business Profile." } },
+    { "@type": "Question", "name": "Where does my Build D quiz live?", "acceptedAnswer": { "@type": "Answer", "text": "In your CRM if it supports quizzes natively. Otherwise via ScoreApp, white-labelled in your brand. We don't host it on our platform." } },
+    { "@type": "Question", "name": "Is Build E a full SEO program?", "acceptedAnswer": { "@type": "Answer", "text": "No. Build E is a 24-citation foundation pack — designed to give your dedicated SEO partner a clean base to build on. We lay the launchpad. We don't replace ongoing SEO work." } },
+    { "@type": "Question", "name": "What does VA Implementation actually do?", "acceptedAnswer": { "@type": "Answer", "text": "A trained VA does the paste, schedule, configure, test — the execution layer between we delivered the asset and it's live and running. Powered by VA World." } }
+  ]
+}
+</script>

@@ -1,0 +1,301 @@
+<!--
+═══════════════════════════════════════════════════════════════════════════
+  BLOCK 04 — DNAx BUILDS CAROUSEL
+  Build D, E, F (3 cards). Horizontal scroll-snap.
+  Depends on: Block 00 Foundation
+═══════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+.now-dnax-section {
+  background: var(--now-navy);
+  color: var(--now-text-light);
+}
+
+.now-dnax-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 50px;
+}
+
+.now-dnax-head .now-eyebrow {
+  color: var(--now-orange);
+}
+
+.now-dnax-head h2 {
+  font-size: clamp(34px, 4.5vw, 52px);
+  color: var(--now-white);
+  margin: 14px 0 16px;
+}
+
+.now-dnax-head h2 .now-x-factor {
+  color: var(--now-orange);
+  font-style: italic;
+}
+
+.now-dnax-sub {
+  font-size: clamp(16px, 1.7vw, 18px);
+  color: var(--now-text-light);
+}
+
+.now-dnax-section .now-carousel-head h3 {
+  color: var(--now-white);
+}
+
+.now-dnax-section .now-carousel-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--now-text-light);
+}
+
+.now-dnax-section .now-carousel-btn:hover {
+  border-color: var(--now-orange);
+  color: var(--now-orange);
+  background: rgba(232, 76, 30, 0.1);
+}
+
+.now-dnax-section .now-carousel-btn:disabled {
+  opacity: 0.3;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--now-text-light-dim);
+}
+
+.now-dnax-section .now-carousel-dot {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.now-dnax-section .now-carousel-dot.active {
+  background: var(--now-orange);
+}
+
+/* Build cards on dark background */
+.now-build-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s;
+  height: 100%;
+}
+
+.now-build-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(232, 76, 30, 0.5);
+  transform: translateY(-3px);
+}
+
+.now-build-card .now-card-eyebrow {
+  color: var(--now-orange);
+}
+
+.now-build-card h3 {
+  color: var(--now-white);
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.now-build-card .now-card-sub {
+  color: var(--now-text-light);
+  margin-bottom: 18px;
+}
+
+.now-build-body {
+  font-size: 14px;
+  color: var(--now-text-light-dim);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.now-build-card .now-card-bullets li {
+  color: var(--now-text-light-dim);
+  font-size: 14px;
+  padding: 6px 0 6px 22px;
+}
+
+.now-build-card .now-card-bullets li::before {
+  background: var(--now-orange);
+  top: 14px;
+}
+
+.now-build-card .now-card-price {
+  color: var(--now-orange);
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.now-build-card .now-card-meta {
+  color: var(--now-text-light-dim);
+  margin-bottom: 16px;
+}
+
+/* Inline expander */
+.now-build-expand {
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+}
+
+.now-build-expand summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--now-orange);
+  font-weight: 600;
+  font-style: italic;
+  list-style: none;
+  user-select: none;
+}
+
+.now-build-expand summary::-webkit-details-marker { display: none; }
+
+.now-build-expand summary::after {
+  content: '  →';
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.now-build-expand[open] summary::after {
+  transform: rotate(90deg);
+}
+
+.now-build-expand-content {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--now-text-light-dim);
+  line-height: 1.6;
+}
+
+.now-build-expand-content p {
+  margin-bottom: 8px;
+}
+</style>
+
+<section class="now-section now-dnax-section" id="dnax">
+  <div class="now-container">
+
+    <div class="now-dnax-head">
+      <span class="now-eyebrow now-eyebrow-led">DNA<sup>x</sup> — Done Now, Authentic.</span>
+      <h2>Your DNA. <span class="now-x-factor">Your X-Factor.</span></h2>
+      <p class="now-dnax-sub">Three bespoke modules. Your brand. Our system. 2–4 week delivery. One per client.</p>
+    </div>
+
+    <!-- DNAx Builds Carousel -->
+    <div class="now-carousel-wrap">
+      <div class="now-carousel-head">
+        <h3>Tier 2 — DNA<sup>x</sup> Builds</h3>
+        <div class="now-carousel-controls">
+          <button class="now-carousel-btn prev" aria-label="Previous">‹</button>
+          <button class="now-carousel-btn next" aria-label="Next">›</button>
+        </div>
+      </div>
+
+      <div class="now-carousel-track">
+
+        <!-- Build D — Answers -->
+        <div class="now-carousel-card">
+          <div class="now-build-card">
+            <div class="now-card-eyebrow">Done Now, Answers.</div>
+            <h3>Build D — Quiz Funnel</h3>
+            <p class="now-card-sub">Diagnose your buyer. In your brand. Deployed in your system.</p>
+            <p class="now-build-body">
+              Built around YOUR ideal client profile, in YOUR brand voice, deployed in YOUR CRM (or ScoreApp if your CRM doesn't host quizzes). Custom-scored. Three result tiers, three lead magnets, eight emails. The whole intake-to-qualified-lead engine — finished in 3 weeks, fully white-labelled.
+            </p>
+            <ul class="now-card-bullets">
+              <li>DNA Intake quiz (used on you first)</li>
+              <li>Quiz logic deployed in your CRM or ScoreApp — fully white-labelled</li>
+              <li>3 result pages, 3 lead magnets, 8-email sequence</li>
+              <li>Hero video edit + 8-week post-quiz flow map</li>
+              <li>Built around your ICP and your brand. Yours forever.</li>
+            </ul>
+            <div class="now-card-price">$2,497</div>
+            <div class="now-card-meta">3-WEEK BUILD  •  CLIENT BRAND</div>
+            <a href="#" class="now-btn now-btn-block" data-offer="build-d">Start Build D — $2,497</a>
+            <details class="now-build-expand">
+              <summary>See what's inside Build D</summary>
+              <div class="now-build-expand-content">
+                <p><strong>DNA Intake</strong> — pre-session diagnostic quiz, 8–10 questions. Cuts discovery from cold-start to warm-start.</p>
+                <p><strong>Discovery call</strong> — 45 min, focused on validation and voice.</p>
+                <p><strong>Quiz hosting</strong> — deployed in your CRM (HubSpot, ActiveCampaign, Keap, GoHighLevel etc.) or ScoreApp if your CRM doesn't host quizzes.</p>
+                <p><strong>Production</strong> — quiz universe + scoring + landing + 3 result pages + 3 lead magnets + 8 emails + video edit. All in YOUR ICP language and YOUR brand spec.</p>
+                <p><strong>DNA Handover</strong> — 14-day revision window, 90–95% target. Source files yours.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- Build E — Algorithm -->
+        <div class="now-carousel-card">
+          <div class="now-build-card">
+            <div class="now-card-eyebrow">Done Now, Algorithm.</div>
+            <h3>Build E — GEO + SEO Foundation</h3>
+            <p class="now-card-sub">12 articles. 3 schema layers. 12 foundation citations.</p>
+            <p class="now-build-body">
+              A starter foundation, not a full SEO program. 12 articles, three-layer schema, 12 high-trust citations — designed to give your dedicated SEO partner a clean base to build on. We lay the foundation. They go deeper.
+            </p>
+            <ul class="now-card-bullets">
+              <li>12 pillar articles in your voice (1,200–1,800 words)</li>
+              <li>Article + FAQ + Organization schema, all wired</li>
+              <li>12 high-trust citations — manually verified foundation</li>
+              <li>GBP config + llms.txt + LinkedIn conversion prompt</li>
+              <li>Hands clean to your SEO partner. No retainer with us.</li>
+            </ul>
+            <div class="now-card-price">$1,997</div>
+            <div class="now-card-meta">4-WEEK BUILD  •  CLIENT BRAND</div>
+            <a href="#" class="now-btn now-btn-block" data-offer="build-e">Start Build E — $1,997</a>
+            <details class="now-build-expand">
+              <summary>See what's inside Build E</summary>
+              <div class="now-build-expand-content">
+                <p><strong>SEO + GEO audit</strong> — keyword gap, schema scoring, AI crawler check.</p>
+                <p><strong>12 pillar articles</strong> — operator essay format, GEO-optimised, your voice.</p>
+                <p><strong>3-layer schema</strong> — Article + FAQ + Organization. Site-wide deploy.</p>
+                <p><strong>12-citation foundation pack</strong> — submitted via Apify automation, then manually verified. Designed to give your SEO partner a clean base — not to compete with their work.</p>
+                <p><strong>Optional Depth Upgrade (+$597)</strong> — VA Manual Citations: 12 hand-placed niche citations on top of the base 12. Total: 24, still a foundation.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- Build F — Architecture -->
+        <div class="now-carousel-card">
+          <div class="now-build-card">
+            <div class="now-card-eyebrow">Done Now, Architecture.</div>
+            <h3>Build F — BizCard 2026</h3>
+            <p class="now-card-sub">Three pages. Your brand. Kajabi or GitHub.</p>
+            <p class="now-build-body">
+              The 2026 business card — a URL doing four jobs in one scroll. Three pages, properly assembled. Architecture, not just design.
+            </p>
+            <ul class="now-card-bullets">
+              <li>Partner page + Sales page + Lead Magnet Delivery page</li>
+              <li>Built in your aesthetic with brand-improvement notes</li>
+              <li>Dual deployment: Kajabi block + GitHub repo</li>
+              <li>Mobile-first, schema-wired, brand-voice-extracted</li>
+              <li>Yours forever. Editable. Permanent.</li>
+            </ul>
+            <div class="now-card-price">$1,497</div>
+            <div class="now-card-meta">2-WEEK BUILD  •  CLIENT BRAND</div>
+            <a href="#" class="now-btn now-btn-block" data-offer="build-f">Start Build F — $1,497</a>
+            <details class="now-build-expand">
+              <summary>See what's inside Build F</summary>
+              <div class="now-build-expand-content">
+                <p><strong>Discovery call</strong> — 60 min. Page roles, CTAs, hosting target.</p>
+                <p><strong>DNA Extraction</strong> — brand assets + improvement recommendations.</p>
+                <p><strong>3 pages</strong> — Partner + Sales + Lead Magnet, mobile-first, in your aesthetic.</p>
+                <p><strong>Dual deployment</strong> — Kajabi custom code block AND GitHub repo.</p>
+                <p><strong>Optional bolt-ons</strong> — Animations (+$297) and Deployment Consult (+$297).</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="now-carousel-dots">
+        <button class="now-carousel-dot active" aria-label="Slide 1"></button>
+        <button class="now-carousel-dot" aria-label="Slide 2"></button>
+        <button class="now-carousel-dot" aria-label="Slide 3"></button>
+      </div>
+    </div>
+
+  </div>
+</section>
