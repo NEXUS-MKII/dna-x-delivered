@@ -17,7 +17,7 @@ from sync_products import BASE, LOCATION, VERSION, token  # noqa: E402
 
 HERE = pathlib.Path(__file__).parent
 MAP = HERE / "media_map.json"
-FILES = (["psi-gold.webp", "psi-split.webp", "psi-split-250.webp"]
+FILES = (["psi-gold.webp", "psi-split.webp", "psi-split-250.webp", "logo/psikiq-og-1200x630.png"]
          + sorted(f"icons/{p.name}" for p in (HERE / "icons").iterdir() if p.suffix in (".png", ".ico"))
          + sorted(f"products/cards/{p.name}" for p in (HERE / "products/cards").glob("*.png")))
 
