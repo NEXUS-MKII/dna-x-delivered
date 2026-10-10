@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PsikiQ — Sales Diagnostic</title>
+<meta name="description" content="Most pipelines don’t have a lead problem. They have a leak. Fourteen questions, seven stages, one read: where your pipeline loses the most.">
+<meta name="theme-color" content="#17110A">
+<link rel="icon" href="icons/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PsikiQ — Sales Diagnostic">
+<meta property="og:description" content="Most pipelines don’t have a lead problem. They have a leak. Find yours in fourteen questions.">
+<meta property="og:site_name" content="PsikiQ">
+<!-- FONTS — one preconnect (the file origin; the CSS is preloaded, which opens its own
+     connection), then the CSS off the critical path. Only the weights the page sets. -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Chakra+Petch:wght@300;400&family=JetBrains+Mono:wght@500&display=swap"></noscript>
+<style>
+  /* Tokens and ground are the home page's, verbatim — every page must read as one site. */
+  :root{
+    --void:#17110A;
+    --white:#FFFFFF;
+    --white-2:#EEF0F3;
+    --gold:#E6BE6A;
+    --gold-deep:#B8912F;
+    --silver:#C9CFD6;
+    --silver-2:#9AA3AD;
+    --accent:#E6BE6A;
+    --accent-ink:#A8801E;
+    --accent-glow:rgba(230,190,106,.28);
+    --warm:#E8912E;
+    --line-dark:#1C232D;
+    --line-light:#E1E4E9;
+    --mut-dark:#727E8E;
+    --mut-light:#8A93A0;
+    --ink:#17110A;
+    --steel-stripes:repeating-linear-gradient(90deg,
+        #17110a 0px,#20180e 2px,#191108 4px,#241b0f 6px,#150f08 8px);
+    --steel-sheen:linear-gradient(105deg,
+        rgba(230,190,106,.10) 0%,
+        rgba(230,190,106,.18) 12%,
+        rgba(201,207,214,.06) 26%,
+        transparent 42%,
+        rgba(230,190,106,.10) 62%,
+        transparent 84%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:300;background:var(--void);color:var(--white);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:0;}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+  .steel{position:relative;background-color:#17110a;
+    background-image:var(--steel-sheen),var(--steel-stripes);
+    background-blend-mode:screen,normal;}
+  .steel::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(201,207,214,.05),transparent 20%,transparent 82%,rgba(0,0,0,.35));
+    pointer-events:none;}
+
+  .hud{position:fixed;inset:0;pointer-events:none;z-index:100;}
+  .hud .corner{position:absolute;width:24px;height:24px;border-color:var(--gold);opacity:.6;}
+  .hud .tl{top:18px;left:18px;border-top:1.5px solid;border-left:1.5px solid;}
+  .hud .tr{top:18px;right:18px;border-top:1.5px solid;border-right:1.5px solid;}
+  .hud .bl{bottom:18px;left:18px;border-bottom:1.5px solid;border-left:1.5px solid;}
+  .hud .br{bottom:18px;right:18px;border-bottom:1.5px solid;border-right:1.5px solid;}
+  .hud .progress{position:absolute;bottom:24px;left:52px;right:52px;height:1px;background:rgba(201,207,214,.12);}
+  .hud .progress .fill{position:absolute;left:0;top:0;height:100%;width:0%;background:linear-gradient(90deg,var(--warm),var(--gold));}
+  .hud .state{position:absolute;bottom:18px;right:52px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--silver-2);opacity:.85;}
+  @media(max-width:640px){.hud .state{display:none;}.hud .progress{left:18px;right:18px;}}
+
+  .kicker{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--warm);margin-bottom:24px;}
+  .wrap{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+
+  /* ── the opening ── */
+  .ct-hero{padding:calc(78px + clamp(56px,8vw,110px)) clamp(24px,6vw,88px) clamp(48px,6vw,80px);position:relative;color:var(--white);}
+  .ct-hero h1{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(40px,7.4vw,88px);line-height:.98;text-transform:uppercase;letter-spacing:.01em;color:var(--white);text-wrap:balance;max-width:14ch;}
+  .ct-hero h1 .em{color:var(--gold);}
+  .ct-hero .lede{margin-top:20px;color:var(--silver);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:clamp(16px,2vw,20px);line-height:1.6;max-width:56ch;}
+  .ct-hero .lede b{color:var(--gold);font-weight:400;}
+  .ct-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(230,190,106,.45),transparent);}
+
+  /* ── the exchange — the message and the direct lines, side by side ── */
+  .ct{padding:clamp(56px,7vw,96px) clamp(24px,6vw,88px);position:relative;color:var(--white);}
+  .ct-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:48px clamp(40px,6vw,88px);align-items:start;}
+  @media(max-width:860px){.ct-grid{grid-template-columns:1fr;}}
+
+  /* the form — an instrument, not a form. Ruled fields, gold focus, mono labels. */
+  .msg{position:relative;border:1px solid rgba(230,190,106,.24);border-top:2px solid var(--gold);border-radius:8px;
+    background:linear-gradient(160deg,rgba(38,29,17,.7),rgba(20,15,9,.85));padding:clamp(24px,3.4vw,40px);}
+  .msg::before{content:"\03C8 // INBOUND";position:absolute;top:14px;right:18px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.12em;color:var(--gold);opacity:.6;}
+  .msg h2{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(22px,2.8vw,30px);text-transform:uppercase;letter-spacing:.01em;color:var(--white);line-height:1.1;max-width:18ch;}
+  .msg .sub{margin-top:10px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;line-height:1.6;color:var(--mut-dark);max-width:52ch;}
+  .fields{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;}
+  .fields .full{grid-column:1 / -1;}
+  @media(max-width:560px){.fields{grid-template-columns:1fr;}}
+  .f{display:flex;flex-direction:column;gap:7px;}
+  .f label{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut-dark);}
+  .f label i{font-style:normal;color:var(--warm);}
+  .f input,.f select,.f textarea{width:100%;padding:13px 15px;border-radius:6px;border:1px solid rgba(230,190,106,.24);
+    background:rgba(0,0,0,.32);color:var(--white);font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:15.5px;line-height:1.5;
+    transition:border-color .18s,box-shadow .18s;appearance:none;-webkit-appearance:none;}
+  .f select{background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+    background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:40px;}
+  .f select option{background:#17110a;color:var(--white);}
+  .f textarea{min-height:150px;resize:vertical;}
+  .f input::placeholder,.f textarea::placeholder{color:#6b7280;}
+  .f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(230,190,106,.12);}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .consent{margin-top:18px;display:flex;gap:12px;align-items:flex-start;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:13px;line-height:1.55;color:var(--mut-dark);}
+  .consent input{margin-top:4px;width:15px;height:15px;accent-color:var(--gold);flex:none;}
+  .consent b{color:var(--silver);font-weight:400;}
+  .actions{margin-top:24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:12px;background:var(--gold);color:var(--ink);font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.06em;padding:15px 34px;border-radius:6px;border:none;text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s,filter .15s;box-shadow:0 8px 26px var(--accent-glow);}
+  .btn:hover{filter:brightness(1.06);transform:translateY(-2px);box-shadow:0 12px 40px var(--accent-glow);}
+  .btn[disabled]{opacity:.5;cursor:default;transform:none;filter:none;}
+  .btn-ghost{background:transparent;color:var(--gold);border:1px solid rgba(230,190,106,.45);box-shadow:none;}
+  .btn-ghost:hover{background:rgba(230,190,106,.09);box-shadow:0 10px 34px rgba(230,190,106,.14);}
+  .status{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:var(--mut-dark);}
+  .status.ok{color:var(--gold);}
+  .status.err{color:var(--warm);}
+  .sent{display:none;padding:28px 0 8px;}
+  .sent .s-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:12px;}
+  .sent .s-t{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(20px,2.6vw,28px);line-height:1.35;color:var(--white);max-width:26ch;}
+  .sent .s-t b{font-weight:500;color:var(--gold);}
+  .msg.done form{display:none;}
+  .msg.done .sent{display:block;}
+
+  /* the direct lines — ruled rows, one gesture each */
+  .lines h2{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(22px,2.8vw,30px);text-transform:uppercase;letter-spacing:.01em;color:var(--white);line-height:1.1;}
+  .line{display:block;padding:18px 0;border-top:1px solid rgba(230,190,106,.14);text-decoration:none;color:inherit;transition:padding-left .2s;}
+  .line:last-of-type{border-bottom:1px solid rgba(230,190,106,.14);}
+  a.line:hover{padding-left:6px;}
+  .line .l-k{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--warm);}
+  .line .l-v{margin-top:5px;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(17px,2vw,21px);text-transform:uppercase;letter-spacing:.02em;color:var(--white);line-height:1.15;}
+  a.line:hover .l-v{color:var(--gold);}
+  .line .l-d{margin-top:4px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:13.5px;line-height:1.55;color:var(--mut-dark);}
+  .lines .first{margin-top:22px;}
+  .line[hidden]{display:none;}
+
+  /* what happens next — three ruled steps */
+  .next{margin-top:44px;}
+  .next .n-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:14px;}
+  .step{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:12px 0;border-top:1px solid rgba(230,190,106,.12);}
+  .step:last-child{border-bottom:1px solid rgba(230,190,106,.12);}
+  .step .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.14em;color:var(--gold);padding-top:3px;}
+  .step .t{font-family:'Oswald',sans-serif;font-weight:400;font-size:16px;letter-spacing:.02em;text-transform:uppercase;color:var(--silver);}
+  .step .d{margin-top:3px;font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:13.5px;line-height:1.55;color:var(--mut-dark);}
+  .where{margin-top:36px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut-dark);line-height:1.9;}
+  .where b{color:var(--silver-2);font-weight:400;}
+
+  /* the honest close */
+  .close{padding:clamp(56px,7vw,96px) clamp(24px,6vw,88px);position:relative;color:var(--white);border-top:1px solid rgba(230,190,106,.12);}
+  .close .q{margin-left:auto;max-width:60ch;text-align:right;border-right:2px solid var(--gold);padding:6px 24px 6px 0;}
+  .close .q p{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(18px,2.4vw,26px);line-height:1.4;color:var(--white);}
+  .close .q p b{font-weight:500;color:var(--gold);}
+  .close .q .s{margin-top:12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;color:var(--gold);opacity:.8;}
+
+  footer{padding:40px clamp(24px,6vw,80px);border-top:1px solid var(--line-dark);position:relative;}
+  footer .inner2{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;width:100%;}
+  footer .fmk{display:inline-flex;align-items:center;gap:.4em;font-family:'Oswald',sans-serif;font-weight:600;font-size:22px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);}
+  footer .fmk img{height:1.05em;width:auto;display:block;}
+  footer .fmk .q{color:var(--gold);}
+  footer .fine{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.03em;color:var(--mut-dark);}
+  footer .fine b{color:var(--silver-2);font-weight:400;}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+  .qz{position:fixed;inset:0;z-index:200;display:none;background:rgba(9,6,3,.93);
+    backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);}
+  .qz.open{display:block;}
+  body.qz-lock{overflow:hidden;}
+  .qz-shell{position:absolute;inset:clamp(0px,3vh,28px) clamp(0px,4vw,40px);
+    background-color:#17110a;background-image:var(--steel-sheen),var(--steel-stripes);
+    background-blend-mode:screen,normal;border:1px solid rgba(230,190,106,.24);
+    border-radius:clamp(0px,1vw,14px);box-shadow:0 40px 120px rgba(0,0,0,.7);
+    display:flex;flex-direction:column;overflow:hidden;}
+  .qz-top{display:flex;align-items:center;gap:16px;padding:14px clamp(16px,2.6vw,28px);
+    border-bottom:1px solid rgba(230,190,106,.18);flex:none;}
+  .qz-brand{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--gold);opacity:.85;white-space:nowrap;}
+  .qz-brand b{color:var(--warm);font-weight:400;}
+  .qz-x{margin-left:auto;width:34px;height:34px;flex:none;border-radius:50%;cursor:pointer;
+    border:1px solid rgba(230,190,106,.3);background:transparent;color:var(--gold);
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:15px;line-height:1;
+    transition:background .2s,transform .15s;}
+  .qz-x:hover{background:rgba(230,190,106,.12);transform:translateY(-1px);}
+
+  /* the unaware → aware axis. The spectrum is always drawn; progress reveals it. */
+  .qz-axis{padding:12px clamp(16px,2.6vw,28px) 14px;border-bottom:1px solid rgba(230,190,106,.12);flex:none;}
+  .ax-track{position:relative;height:3px;border-radius:3px;background:rgba(201,207,214,.11);overflow:hidden;}
+  .ax-spectrum{position:absolute;inset:0;border-radius:3px;
+    background:linear-gradient(90deg,#C0503C 0%,#B4600F 34%,#E6BE6A 68%,#5B8CB8 100%);
+    clip-path:inset(0 calc(100% - var(--p,0%)) 0 0);
+    transition:clip-path .55s cubic-bezier(.2,.8,.2,1);}
+  .ax-labels{display:flex;justify-content:space-between;margin-top:7px;
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;}
+  .ax-labels .un{color:#C0503C;} .ax-labels .aw{color:#5B8CB8;}
+  .ax-labels .ct{color:var(--mut-dark);letter-spacing:.1em;}
+
+  .qz-body{flex:1;overflow-y:auto;padding:clamp(26px,4.5vh,54px) clamp(20px,4vw,44px);
+    display:flex;flex-direction:column;justify-content:center;}
+  .qz-inner{width:100%;max-width:660px;margin:0 auto;}
+  .qz-step{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--warm);margin-bottom:18px;}
+  .qz-h{font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(22px,3.5vw,38px);
+    line-height:1.14;text-transform:uppercase;letter-spacing:.005em;color:var(--white);text-wrap:balance;}
+  .qz-p{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:15px;line-height:1.65;
+    color:var(--mut-dark);margin-top:16px;max-width:58ch;}
+  .qz-p b{color:var(--silver);font-weight:400;}
+
+  .qz-choices{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:620px){.qz-choices{grid-template-columns:1fr;}}
+  .qz-pick{text-align:left;padding:20px 22px;border-radius:8px;cursor:pointer;
+    border:1px solid rgba(230,190,106,.26);background:rgba(230,190,106,.045);
+    font-family:'Oswald',sans-serif;font-weight:400;font-size:17px;letter-spacing:.02em;
+    color:var(--white);transition:border-color .18s,background .18s,transform .15s;}
+  .qz-pick:hover{border-color:var(--gold);background:rgba(230,190,106,.11);transform:translateY(-2px);}
+
+  /* the reveal — the awareness layer, the reason this converts */
+  .qz-reveal{margin-top:8px;border-left:2px solid var(--gold);padding:4px 0 4px 22px;}
+  .qz-reveal .rv-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:12px;}
+  .qz-reveal .rv-t{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(17px,2.4vw,25px);
+    line-height:1.4;color:var(--white);}
+
+  .qz-search{width:100%;margin-top:26px;padding:15px 17px;border-radius:8px;
+    border:1px solid rgba(230,190,106,.3);background:rgba(0,0,0,.32);color:var(--white);
+    font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:16px;}
+  .qz-search::placeholder{color:#6b7280;}
+  .qz-search:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(230,190,106,.12);}
+  .qz-list{margin-top:14px;max-height:min(42vh,340px);overflow-y:auto;display:flex;flex-direction:column;gap:6px;
+    padding-right:4px;}
+  .qz-opt{text-align:left;padding:12px 15px;border-radius:6px;cursor:pointer;
+    border:1px solid rgba(201,207,214,.12);background:rgba(255,255,255,.02);color:var(--silver);
+    font-family:'Chakra Petch',system-ui,sans-serif;font-weight:400;font-size:14.5px;
+    transition:border-color .15s,background .15s,color .15s;}
+  .qz-opt:hover{border-color:var(--gold);background:rgba(230,190,106,.09);color:var(--white);}
+  .qz-opt em{font-style:normal;color:var(--gold);}
+  .qz-none{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:var(--mut-dark);padding:14px 2px;}
+
+  .qz-fields{margin-top:26px;display:flex;flex-direction:column;gap:12px;}
+  .qz-fields label{display:flex;flex-direction:column;gap:6px;
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--mut-dark);}
+  .qz-fields input{padding:13px 15px;border-radius:7px;border:1px solid rgba(230,190,106,.24);
+    background:rgba(0,0,0,.32);color:var(--white);font-family:'Chakra Petch',system-ui,sans-serif;font-size:15.5px;}
+  .qz-fields input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(230,190,106,.12);}
+  .qz-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+
+  .qz-actions{margin-top:28px;display:flex;align-items:center;gap:16px 20px;flex-wrap:wrap;}
+  .qz-btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--ink);
+    font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.06em;
+    padding:15px 32px;border-radius:6px;border:none;cursor:pointer;text-decoration:none;
+    transition:filter .15s,transform .15s,box-shadow .15s;box-shadow:0 8px 26px var(--accent-glow);}
+  .qz-btn:hover{filter:brightness(1.06);transform:translateY(-2px);}
+  .qz-btn[disabled]{opacity:.5;cursor:default;transform:none;filter:none;}
+  .qz-skip{background:none;border:none;cursor:pointer;color:var(--mut-dark);
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;letter-spacing:.09em;
+    text-transform:uppercase;text-decoration:underline;text-underline-offset:4px;}
+  .qz-skip:hover{color:var(--gold);}
+  .qz-back{background:none;border:none;cursor:pointer;color:var(--mut-dark);
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;margin-bottom:18px;padding:0;}
+  .qz-back:hover{color:var(--gold);}
+
+  /* the read */
+  .qz-kind{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--warm);margin-bottom:14px;}
+  .qz-tiles{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}
+  .qz-tile{border:1px solid rgba(230,190,106,.22);border-top:2px solid var(--gold);border-radius:8px;
+    padding:18px 20px;background:rgba(230,190,106,.045);}
+  .qz-tile .t-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--mut-dark);}
+  .qz-tile .t-v{font-family:'Oswald',sans-serif;font-weight:600;font-size:32px;line-height:1.1;
+    color:var(--gold);margin-top:8px;font-variant-numeric:tabular-nums;}
+  .qz-tile .t-s{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:var(--mut-dark);margin-top:6px;}
+  .qz-narr{margin-top:22px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;line-height:1.7;
+    color:var(--silver-2);border-left:1px solid rgba(201,207,214,.2);padding-left:16px;}
+  .qz-now{margin-top:30px;border-top:1px solid rgba(230,190,106,.22);padding-top:24px;}
+  .qz-now .n-t{font-family:'Oswald',sans-serif;font-weight:400;font-size:clamp(17px,2.3vw,23px);
+    line-height:1.4;color:var(--white);}
+  .qz-now .n-c{margin-top:14px;font-family:'Chakra Petch',system-ui,sans-serif;font-size:15px;
+    line-height:1.65;color:var(--gold);}
+  .qz-edge{margin-top:26px;border:1px solid rgba(232,145,46,.4);border-radius:8px;padding:20px 22px;
+    background:rgba(232,145,46,.07);}
+  .qz-edge .e-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--warm);margin-bottom:10px;}
+  .qz-edge p{font-family:'Chakra Petch',system-ui,sans-serif;font-size:15px;line-height:1.6;color:var(--silver);}
+  .qz-note{margin-top:20px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;
+    letter-spacing:.06em;color:var(--mut-dark);opacity:.8;}
+  .qz-err{border:1px solid rgba(232,145,46,.45);border-radius:8px;padding:20px 22px;
+    background:rgba(232,145,46,.08);font-family:'Chakra Petch',system-ui,sans-serif;font-size:15px;
+    line-height:1.6;color:var(--silver);}
+  .qz-spin{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--gold);opacity:.85;}
+  /* ── THE SALES DIAGNOSTIC — the prognosis wizard, inline on its own page ── */
+  .dx{padding:0 clamp(12px,4vw,48px) clamp(56px,8vw,96px);}
+  .dx-shell{max-width:860px;margin:0 auto;border:1px solid rgba(230,190,106,.22);border-radius:14px;
+    background:rgba(9,6,3,.72);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);}
+  .dx-body{padding:clamp(26px,4.5vh,54px) clamp(20px,4vw,44px);}
+  .dx-verts{max-height:none;}
+  .dx-picked b{color:var(--gold);font-weight:500;}
+  .dx-nav{margin-top:18px;}
+  .dx-strip{margin-top:26px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;}
+  @media(max-width:720px){.dx-strip{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  .dx-st{border:1px solid rgba(201,207,214,.16);border-top:3px solid var(--mut-dark);border-radius:7px;padding:10px 10px 11px;min-width:0;}
+  .dx-st .t-l{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--silver-2);overflow-wrap:anywhere;}
+  .dx-st .t-s{font-family:'Oswald',sans-serif;font-weight:400;font-size:15px;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;}
+  .dx-holding{border-top-color:#5B8CB8;} .dx-holding .t-s{color:#8DB2D4;}
+  .dx-thin{border-top-color:var(--gold);} .dx-thin .t-s{color:var(--gold);}
+  .dx-leaking{border-top-color:#C0503C;} .dx-leaking .t-s{color:#E07A64;}
+  .dx-c{background:rgba(230,190,106,.08);box-shadow:0 0 0 1px rgba(230,190,106,.55) inset;}
+  .dx-consent span{display:flex;gap:10px;align-items:flex-start;text-transform:none;letter-spacing:0;font-family:'Chakra Petch',system-ui,sans-serif;font-size:14px;color:var(--silver);}
+  .dx-consent input{margin-top:3px;accent-color:var(--gold);}
+  [hidden]{display:none!important;}
+</style>
+</head>
+<body>
+<script>document.documentElement.className+=' js';</script>
+<!-- HEADER:start (generated from partials/header.html by build_ghl.py — do not edit here) -->
+<!-- SITE HEADER — the HUD pill. Shared by every page; injected by build_ghl.py between the
+     HEADER markers (edit THIS file, never the injected copy). The readout span is per page.
+     Also emitted standalone as ghl/psikiq-header-ghl.html for any other GHL page. -->
+<style>
+  /* ── the pill ── */
+  .hdr{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(94%,1400px);z-index:110;
+    background:rgba(23,17,10,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid rgba(230,190,106,.34);border-radius:6px;
+    box-shadow:0 0 0 1px rgba(230,190,106,.06),inset 0 1px 0 rgba(255,255,255,.04),0 10px 34px rgba(0,0,0,.55);
+    transition:border-color .3s,box-shadow .3s;}
+  .hdr::before,.hdr::after{content:"";position:absolute;width:14px;height:14px;pointer-events:none;border-color:var(--gold);border-style:solid;border-width:0;}
+  .hdr::before{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;border-radius:2px 0 0 0;}
+  .hdr::after{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 2px 0;}
+  .hdr.scrolled{border-color:rgba(230,190,106,.7);box-shadow:0 0 0 1px rgba(230,190,106,.12),inset 0 1px 0 rgba(255,255,255,.05),0 14px 40px rgba(0,0,0,.6),0 0 26px rgba(230,190,106,.10);}
+  .hdr-in{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px;padding:0 clamp(16px,2.4vw,28px);overflow:hidden;}
+  /* a slow scan — the instrument is on */
+  .hdr-in::before{content:"";position:absolute;left:0;right:0;height:36%;pointer-events:none;
+    background:linear-gradient(180deg,transparent,rgba(230,190,106,.05),transparent);animation:hdr-scan 7s linear infinite;}
+  @keyframes hdr-scan{0%{transform:translateY(-100%);opacity:0;}15%{opacity:1;}85%{opacity:1;}100%{transform:translateY(400%);opacity:0;}}
+  .hdr-l{display:flex;align-items:center;gap:16px;min-width:0;position:relative;z-index:1;}
+  .hdr-brand{display:inline-flex;align-items:center;gap:.4em;font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;
+    text-transform:uppercase;letter-spacing:.04em;color:var(--white);text-decoration:none;white-space:nowrap;}
+  .hdr-brand img{height:1.1em;width:auto;display:block;}
+  .hdr-brand .q{color:var(--gold);}
+  .hdr-read{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;color:var(--gold);opacity:.85;white-space:nowrap;}
+  .hdr-read .w{color:var(--warm);}
+  .hdr-read i{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:hdr-pulse 2.4s ease-in-out infinite;flex:none;}
+  @keyframes hdr-pulse{0%,100%{box-shadow:0 0 0 0 rgba(230,190,106,.7);}50%{box-shadow:0 0 0 5px rgba(230,190,106,0);}}
+  .hdr-nav{display:flex;align-items:center;gap:2px;position:relative;z-index:1;}
+  .hdr-nav a{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--silver-2);text-decoration:none;padding:8px 13px;border-radius:4px;border:1px solid transparent;transition:color .18s,background .18s,border-color .18s;white-space:nowrap;}
+  .hdr-nav a:hover{color:var(--white);background:rgba(230,190,106,.08);border-color:rgba(230,190,106,.3);}
+  .hdr-nav a.on{color:var(--gold);background:rgba(230,190,106,.08);border-color:rgba(230,190,106,.28);}
+  .hdr-nav .sep{width:1px;height:12px;background:rgba(201,207,214,.14);margin:0 4px;flex:none;}
+  .hdr-cta{margin-left:10px;font-family:'Oswald',sans-serif!important;font-weight:500;font-size:13px!important;letter-spacing:.08em!important;
+    color:var(--ink)!important;background:var(--gold)!important;border-color:rgba(230,190,106,.5)!important;padding:9px 18px!important;
+    box-shadow:0 0 14px rgba(230,190,106,.28);transition:filter .18s,box-shadow .18s!important;}
+  .hdr-cta:hover{filter:brightness(1.06);box-shadow:0 0 22px rgba(230,190,106,.5);}
+  .hdr-burger{display:none;width:40px;height:40px;border:1px solid rgba(230,190,106,.35);border-radius:5px;background:transparent;cursor:pointer;
+    align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0;position:relative;z-index:1;-webkit-tap-highlight-color:transparent;}
+  .hdr-burger i{display:block;width:18px;height:1.5px;background:rgba(255,255,255,.8);transition:transform .22s,opacity .22s,background .18s;}
+  .hdr-burger[aria-expanded="true"] i{background:var(--gold);}
+  .hdr-burger[aria-expanded="true"] i:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .hdr-burger[aria-expanded="true"] i:nth-child(2){opacity:0;}
+  .hdr-burger[aria-expanded="true"] i:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+  /* ── the drawer — drops from the pill on small screens ── */
+  .hdr-menu{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;padding:8px;
+    background:rgba(23,17,10,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid rgba(230,190,106,.4);border-radius:6px;box-shadow:0 14px 40px rgba(0,0,0,.7);}
+  .hdr-menu::before,.hdr-menu::after{content:"";position:absolute;width:12px;height:12px;border-color:var(--gold);border-style:solid;border-width:0;}
+  .hdr-menu::before{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px;}
+  .hdr-menu::after{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px;}
+  .hdr-menu.open{display:block;}
+  .hdr-menu a{display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:4px;border:1px solid transparent;
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:15px;text-transform:uppercase;letter-spacing:.05em;color:var(--silver);text-decoration:none;
+    transition:color .18s,background .18s,border-color .18s;}
+  .hdr-menu a:hover,.hdr-menu a.on{color:var(--gold);background:rgba(230,190,106,.08);border-color:rgba(230,190,106,.28);}
+  .hdr-menu a::before{content:"\03C8";font-family:'Oswald',sans-serif;color:var(--gold);opacity:.45;font-size:13px;width:14px;}
+  .hdr-menu .m-cta{margin-top:6px;justify-content:center;color:var(--ink);background:var(--gold);border-color:rgba(230,190,106,.5);font-weight:600;}
+  .hdr-menu .m-cta::before{content:none;}
+  .hdr-menu .m-cta:hover{color:var(--ink);filter:brightness(1.06);}
+  @media(max-width:900px){.hdr-nav{display:none;}.hdr-burger{display:flex;}}
+  @media(max-width:640px){.hdr{top:10px;width:96%;}.hdr-in{height:54px;}.hdr-brand{font-size:18px;}.hdr-read{display:none;}}
+</style>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <div class="hdr-l">
+      <a class="hdr-brand" href="index.html" aria-label="PsikiQ home"><img src="psi-gold.webp" alt="" aria-hidden="true"><span>Psiki<span class="q">Q</span></span></a>
+      <span class="hdr-read mono"><i aria-hidden="true"></i><span class="w">//</span>&nbsp;MEASURING</span>
+    </div>
+    <nav class="hdr-nav" aria-label="Site">
+      <a href="index.html#instrument">The instrument</a><span class="sep"></span>
+      <a href="index.html#engine">The engine</a><span class="sep"></span>
+      <a href="index.html#proof">Proof</a><span class="sep"></span>
+      <a href="diagnostic.html" data-nav="diagnostic">Sales diagnostic</a><span class="sep"></span>
+      <a href="pricing.html" data-nav="pricing">Pricing</a><span class="sep"></span>
+      <a href="contact.html" data-nav="contact">Contact</a>
+      <a href="index.html#prognosis" class="hdr-cta" data-cta="quiz">Get your prognosis</a>
+    </nav>
+    <button class="hdr-burger" id="hdrBurger" type="button" aria-label="Menu" aria-controls="hdrMenu" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+  <nav class="hdr-menu" id="hdrMenu" aria-label="Site, mobile">
+    <a href="index.html">Home</a>
+    <a href="index.html#instrument">The instrument</a>
+    <a href="index.html#engine">The engine</a>
+    <a href="index.html#proof">Proof</a>
+    <a href="diagnostic.html" data-nav="diagnostic">Sales diagnostic</a>
+    <a href="pricing.html" data-nav="pricing">Pricing</a>
+    <a href="contact.html" data-nav="contact">Contact</a>
+    <a href="index.html#prognosis" class="m-cta" data-cta="quiz">&#968;&nbsp; Get your prognosis</a>
+  </nav>
+</header>
+<script>
+/* FAVICON — GHL puts its own icon in <head>; swap it for the brand's. Paths are rewritten
+   to the public host by the build, so this works from any GHL page. */
+(function(){
+  var icons=[['icon','icons/favicon-32.png','32x32','image/png'],['icon','icons/favicon-16.png','16x16','image/png'],
+             ['apple-touch-icon','icons/apple-touch-icon.png','180x180',''],['icon','icons/icon-192.png','192x192','image/png']];
+  var have=document.querySelector('link[rel="icon"][href*="icons/favicon"]'); if(have)return;   /* the source pages link them in <head> */
+  [].forEach.call(document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]'),function(l){l.parentNode.removeChild(l);});
+  icons.forEach(function(i){var l=document.createElement('link');l.rel=i[0];l.href=i[1];l.sizes=i[2];if(i[3])l.type=i[3];document.head.appendChild(l);});
+})();
+(function(){
+  var h=document.getElementById('hdr'),b=document.getElementById('hdrBurger'),m=document.getElementById('hdrMenu');
+  if(!h||!b||!m)return;
+  function set(o){b.setAttribute('aria-expanded',o?'true':'false');m.classList.toggle('open',o);}
+  b.addEventListener('click',function(e){e.stopPropagation();set(b.getAttribute('aria-expanded')!=='true');});
+  document.addEventListener('click',function(e){if(!h.contains(e.target))set(false);});
+  m.addEventListener('click',function(e){if(e.target.closest('a'))set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  var t=false;
+  window.addEventListener('scroll',function(){if(t)return;t=true;requestAnimationFrame(function(){h.classList.toggle('scrolled',window.scrollY>60);t=false;});},{passive:true});
+  /* current page */
+  var here=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'').replace(/\/$/,'')||'/';
+  [].forEach.call(document.querySelectorAll('[data-nav]'),function(a){
+    var p=a.getAttribute('href').replace(/\.html$/,'').replace(/\/$/,'');
+    if(here===p||here.split('/').pop()===p.split('/').pop())a.classList.add('on');
+  });
+})();
+</script>
+
+<!-- HEADER:end -->
+
+  <div class="hud">
+    <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+    <div class="state mono">STATE&nbsp;&middot;&nbsp;MEASURING</div>
+    <div class="progress"><div class="fill" id="pf"></div></div>
+  </div>
+
+  <!-- THE OPENING -->
+  <section class="ct-hero steel">
+    <div class="wrap">
+      <div class="kicker mono">the sales diagnostic</div>
+      <h1>Most pipelines don&rsquo;t have a lead problem. <span class="em">They have a leak.</span></h1>
+      <p class="lede">Fourteen yes-or-no questions across the seven stages a lead passes through, from the first hello to the referral after the work. <b>No email needed to see your read.</b> Every answer shows you something, and the read at the end names the one place your pipeline is losing the most.</p>
+    </div>
+  </section>
+
+  <!-- THE INSTRUMENT, RUNNING — inline, in PsikiQ markup -->
+  <section class="dx steel" id="diagnostic">
+    <div class="dx-shell">
+      <div class="qz-top">
+        <div class="qz-brand mono">&#968;&nbsp;PSIKIQ&nbsp;<b>//</b>&nbsp;SALES DIAGNOSTIC</div>
+      </div>
+      <div class="qz-axis" id="dxAxis" hidden>
+        <div class="ax-track"><div class="ax-spectrum" id="dxSpectrum"></div></div>
+        <div class="ax-labels mono">
+          <span class="un">unaware</span><span class="ct" id="dxCount"></span><span class="aw">aware</span>
+        </div>
+      </div>
+      <div class="dx-body"><div class="qz-inner" id="dxInner" aria-live="polite"></div></div>
+    </div>
+  </section>
+
+  <footer class="steel">
+    <div class="inner2">
+      <div class="fmk">
+        <img src="psi-gold.webp" alt="" aria-hidden="true">
+        Psiki<span class="q">Q</span>
+      </div>
+      <div class="fine mono">powered by the <b>ELENCHUS</b> engine &middot; built by <b>AUBIT</b> &middot; by <b>PSIKIQ SOLUTIONS</b></div>
+    </div>
+  </footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ── WIRING ── leave a value empty and that action stays inert. */
+  var BOOK_URL = 'https://book.psikiq.io/widget/booking/hilKmb9laNRnqffVwmSk';   /* booking link (the Business Diagnostic calendar for now) */
+  var FORM_ENDPOINT = 'https://services.leadconnectorhq.com/hooks/XmnnOgihSvpbtlApd8cN/webhook-trigger/d89c171f-157d-4364-acf7-a03638e46eb2';   /* GHL inbound webhook (same as the contact page) */
+
+  /* ── THE INSTRUMENT ──────────────────────────────────────────────────
+     Seven stages, two markers each. A stage is HOLDING (both yes), THIN (one)
+     or LEAKING (none). The read names the CONSTRAINT: we read the pipe before
+     the source, because more leads into a leaky pipe is a faster way to waste
+     them. Priority: follow up, draft, convert, close, then attract, muster,
+     multiply. First leaking stage wins; if none leak, the first thin one. */
+  var STAGES = [
+    {id:'attract',  n:'i',   name:'Attract'},
+    {id:'muster',   n:'ii',  name:'Muster'},
+    {id:'follow',   n:'iii', name:'Follow up'},
+    {id:'draft',    n:'iv',  name:'Draft'},
+    {id:'convert',  n:'v',   name:'Convert'},
+    {id:'close',    n:'vi',  name:'Close'},
+    {id:'multiply', n:'vii', name:'Multiply'}
+  ];
+  var PRIORITY = ['follow','draft','convert','close','attract','muster','multiply'];
+
+  var VERTICALS = ['IT or managed services','Accounting or bookkeeping','Recruitment','Other professional services','Something else'];
+
+  var Q = [
+    {s:'attract', p:'Do new enquiries come from more than one channel you could turn up or down on purpose?',
+     y:'More than one, on purpose', n:'Mostly referral or luck',
+     r:'Referral is a gift, not a channel. If you can&rsquo;t turn it up, you can&rsquo;t plan on it.'},
+    {s:'attract', p:'Could a stranger tell, within thirty seconds on your site or profile, who you&rsquo;re for and what to do next?',
+     y:'Yes, it&rsquo;s clear', n:'Probably not',
+     r:'Clarity turns attention into enquiries. Confusion bleeds them silently, and you never see the ones who left.'},
+    {s:'muster', p:'Do enquiries land in one place automatically, rather than scattered across inbox, phone and DMs?',
+     y:'One place', n:'They&rsquo;re scattered',
+     r:'A lead you can&rsquo;t see is a lead you can&rsquo;t follow up.'},
+    {s:'muster', p:'Do you know anything about a lead beyond their name and email before the first conversation?',
+     y:'Yes, we capture context', n:'Name and email, mostly',
+     r:'Context before contact turns a cold call into a relevant one. It&rsquo;s the whole reason a diagnostic sits at the front door.'},
+    {s:'follow', p:'Does a new enquiry hear from you the same working day, ideally within the hour?',
+     y:'Same day, usually faster', n:'It depends who&rsquo;s free',
+     r:'Interest cools by the hour. Whoever responds first usually sets the frame for everything after.'},
+    {s:'follow', p:'If they don&rsquo;t reply, do they get at least three more touches before you let them go?',
+     y:'Yes, there&rsquo;s a cadence', n:'One follow-up, maybe two',
+     r:'Silence is usually timing, not a no. Most pipelines give up just before the reply would have come.'},
+    {s:'draft', p:'Do you know whether a lead fits (need, budget, timing) before you get on the call?',
+     y:'Yes, before the call', n:'We find out on the call',
+     r:'Qualifying on the call spends your best hours on people who were never going to buy.'},
+    {s:'draft', p:'Is someone other than you, a team member or a VA, handling first touch and qualification?',
+     y:'Yes, someone else', n:'It&rsquo;s me',
+     r:'The founder on first touch is the most expensive follow-up in the business, and the least consistent.'},
+    {s:'convert', p:'Is there a defined path from first call to proposal, the same steps every time?',
+     y:'Yes, defined', n:'Every deal is different',
+     r:'If every deal is improvised, you can&rsquo;t see which step is losing them.'},
+    {s:'convert', p:'Do you know roughly what share of first calls turn into proposals?',
+     y:'Roughly, yes', n:'No idea',
+     r:'You can&rsquo;t fix a conversion rate you&rsquo;ve never measured. The number is the first lever.'},
+    {s:'close', p:'When a prospect says &ldquo;we&rsquo;ll think about it&rdquo;, is there a planned next step, beyond &ldquo;I&rsquo;ll check in&rdquo;?',
+     y:'There&rsquo;s a planned step', n:'I check in and hope',
+     r:'&ldquo;We&rsquo;ll think about it&rdquo; is usually an unanswered question. A planned next step goes and finds it.'},
+    {s:'close', p:'Is your price introduced before the proposal, so the number isn&rsquo;t a surprise when it lands?',
+     y:'Yes, it&rsquo;s seeded early', n:'It arrives with the proposal',
+     r:'Sticker shock is a sequencing problem, not a price problem.'},
+    {s:'multiply', p:'After a sale, is asking for a review or a referral a step in your process rather than a mood?',
+     y:'It&rsquo;s a step', n:'When I remember',
+     r:'Most businesses live on referral and almost none build for it. In our own survey of 33 NZ owners, 85% named referral as their main way of winning clients, and 75% had no structure for it.'},
+    {s:'multiply', p:'Do past clients hear from you on a schedule after the work ends?',
+     y:'Yes, on a schedule', n:'Not really',
+     r:'The cheapest next sale is the last client. Silence teaches them you&rsquo;ve moved on.'}
+  ];
+
+  var READS = {
+    follow:{h:'The leak is in the follow-up.',
+      b:'Leads are reaching you. They&rsquo;re cooling before anyone meets them. Right now the response depends on who has a spare moment, and interest doesn&rsquo;t wait for one.',
+      v:'Every lead you pay to attract is being discounted by the gap between their enquiry and your reply.',
+      route:'Pipeline Foundations', why:'Speed to lead built in, a follow-up cadence that runs without you, and a VA on first touch.'},
+    draft:{h:'The leak is in the sorting.',
+      b:'The wrong people are getting your best hours. Without a read before the call, every conversation costs the same, whether it could ever buy or not.',
+      v:'A full calendar isn&rsquo;t a full pipeline. It may just be a busy one.',
+      route:'Pipeline Foundations', why:'Fit criteria, a pre-call read, and first touch and qualification moved off your plate.'},
+    convert:{h:'The leak is between the first call and the proposal.',
+      b:'Deals start well and then improvise. Without a defined path or a conversion number you can feel the drop-off, but you can&rsquo;t point at it.',
+      v:'You can&rsquo;t fix a step you&rsquo;ve never seen.',
+      route:'Pipeline Foundations', why:'A defined path, stages tracked in your CRM, and the one number worth watching every week.'},
+    close:{h:'The leak is at the close.',
+      b:'People reach the proposal and stall. Usually that&rsquo;s an unanswered question, or a price that arrived as a surprise.',
+      v:'The number isn&rsquo;t the problem. The order it arrived in is.',
+      route:'Consultative Selling Reset', why:'Price seeded early, a planned next step for every stall, and objections answered before they&rsquo;re raised.'},
+    attract:{h:'The pipe holds. The source is thin.',
+      b:'Your process can take more than it&rsquo;s getting. Work arrives by referral or luck, which means you can&rsquo;t plan on it.',
+      v:'This is the one position where more leads is the right answer.',
+      route:'A growth engine', why:'A diagnostic quiz funnel, LinkedIn prospecting, or content that builds familiarity before the first hello.'},
+    muster:{h:'Leads arrive, then scatter.',
+      b:'Enquiries land in inboxes, phones and DMs, and they arrive with no context. Some are never seen again.',
+      v:'A lead you can&rsquo;t see is a lead you can&rsquo;t follow up.',
+      route:'Pipeline Foundations', why:'One place for every enquiry, and context captured before contact.'},
+    multiply:{h:'The pipe holds. The back door is open.',
+      b:'You win the work, then let the relationship go quiet. The layer most businesses live on is the one nobody builds.',
+      v:'Your next client is probably someone your last client knows.',
+      route:'Pipeline Oversight', why:'Review and referral built into the process, and past clients on a schedule.'},
+    ready:{h:'Your pipeline is ready for more.',
+      b:'Every stage holds. That&rsquo;s rarer than it should be. The constraint now is reach, not process.',
+      v:'This is when a front door pays: more of the right people, sorted before they reach you.',
+      route:'A growth engine', why:'A diagnostic quiz funnel or LinkedIn prospecting, built on a pipeline that can take the weight.'}
+  };
+
+  /* ── STATE ── */
+  var inner = document.getElementById('dxInner'), axis = document.getElementById('dxAxis'),
+      spec = document.getElementById('dxSpectrum'), count = document.getElementById('dxCount');
+  var st = {i:-1, a:[], vertical:'', read:null};
+
+  function stageOf(id){ for(var k=0;k<STAGES.length;k++) if(STAGES[k].id===id) return STAGES[k]; }
+  function setAxis(){
+    var done = st.a.filter(function(x){return x!=null;}).length;
+    axis.hidden = st.i < 0;
+    spec.style.setProperty('--p', (done/Q.length*100).toFixed(1)+'%');
+    count.textContent = done+' / '+Q.length;
+  }
+  function focusTop(){ var h=inner.querySelector('.qz-h'); if(h){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); } }
+  function scrollIn(){ var t=document.getElementById('diagnostic').getBoundingClientRect().top; if(t<0||t>window.innerHeight*.6) document.getElementById('diagnostic').scrollIntoView({behavior:'smooth',block:'start'}); }
+
+  /* opening: the vertical */
+  function renderStart(){
+    st.i = -1; setAxis();
+    inner.innerHTML =
+      '<div class="qz-step">before we start</div>'+
+      '<h2 class="qz-h">What kind of business are you reading?</h2>'+
+      '<p class="qz-p">It sets the examples, not the scoring. <b>Every business gets the same fourteen questions.</b></p>'+
+      '<div class="qz-list dx-verts">'+VERTICALS.map(function(v,k){return '<button type="button" class="qz-opt" data-v="'+k+'">'+v+'</button>';}).join('')+'</div>';
+    [].forEach.call(inner.querySelectorAll('[data-v]'),function(b){
+      b.onclick=function(){ st.vertical=VERTICALS[+b.dataset.v]; st.i=0; renderQ(); scrollIn(); };
+    });
+  }
+
+  function renderQ(){
+    setAxis();
+    var q = Q[st.i], s = stageOf(q.s), ans = st.a[st.i];
+    var html =
+      '<div class="qz-step">'+s.n+' &middot; '+s.name.toLowerCase()+' &nbsp;&mdash;&nbsp; '+(st.i+1)+' of '+Q.length+'</div>'+
+      '<h2 class="qz-h">'+q.p+'</h2>';
+    if(ans==null){
+      html += '<div class="qz-choices">'+
+        '<button type="button" class="qz-pick" data-a="1">'+q.y+'</button>'+
+        '<button type="button" class="qz-pick" data-a="0">'+q.n+'</button></div>';
+    } else {
+      html += '<p class="qz-p dx-picked mono">you said &middot; <b>'+(ans?q.y:q.n)+'</b></p>'+
+        '<div class="qz-reveal"><div class="rv-l">what this shows</div><div class="rv-t">'+q.r+'</div></div>'+
+        '<div class="qz-actions"><button type="button" class="qz-btn" id="dxNext">'+(st.i<Q.length-1?'Next &rarr;':'See your read &rarr;')+'</button></div>';
+    }
+    html += '<div class="qz-actions dx-nav"><button type="button" class="qz-back" id="dxBack">&larr; back</button></div>';
+    inner.innerHTML = html;
+    [].forEach.call(inner.querySelectorAll('[data-a]'),function(b){
+      b.onclick=function(){ st.a[st.i] = b.dataset.a==='1'; renderQ(); };
+    });
+    var nx=document.getElementById('dxNext'); if(nx){ nx.onclick=function(){ if(st.i<Q.length-1){ st.i++; renderQ(); } else renderRead(); }; nx.focus(); }
+    document.getElementById('dxBack').onclick=function(){ if(st.i>0){ st.i--; st.a[st.i]=null; renderQ(); } else renderStart(); };
+    if(ans==null) focusTop();
+  }
+
+  function readOut(){
+    var status = {};
+    STAGES.forEach(function(s){
+      var yes = 0; Q.forEach(function(q,k){ if(q.s===s.id && st.a[k]) yes++; });
+      status[s.id] = yes===2 ? 'holding' : (yes===1 ? 'thin' : 'leaking');
+    });
+    var c = null;
+    PRIORITY.some(function(id){ if(status[id]==='leaking'){ c=id; return true; } });
+    if(!c) PRIORITY.some(function(id){ if(status[id]==='thin'){ c=id; return true; } });
+    return {status:status, constraint:c, key:c||'ready', leaking:STAGES.filter(function(s){return status[s.id]==='leaking';}).length};
+  }
+
+  function renderRead(){
+    st.read = readOut(); setAxis();
+    var r = st.read, R = READS[r.key], cs = r.constraint ? stageOf(r.constraint) : null;
+    var kind = !cs ? 'every stage holds' : (r.status[r.constraint]==='leaking' ? 'constraint &middot; '+cs.n+' &middot; '+cs.name.toLowerCase() : 'thinnest point &middot; '+cs.n+' &middot; '+cs.name.toLowerCase());
+    var strip = STAGES.map(function(s){
+      var v = r.status[s.id];
+      return '<div class="dx-st dx-'+v+(s.id===r.constraint?' dx-c':'')+'"><div class="t-l">'+s.n+' &middot; '+s.name+'</div><div class="t-s">'+v+'</div></div>';
+    }).join('');
+    inner.innerHTML =
+      '<div class="qz-kind">your read &middot; '+kind+'</div>'+
+      '<h2 class="qz-h">'+R.h+'</h2>'+
+      '<p class="qz-p">'+R.b+'</p>'+
+      '<div class="dx-strip" aria-label="Your pipeline, stage by stage">'+strip+'</div>'+
+      '<p class="qz-note mono">'+(r.leaking ? r.leaking+' of 7 stages leaking. We read the pipe before the source: more leads into a leaky pipe is a faster way to waste them.' : 'No stage is leaking outright.')+'</p>'+
+      '<div class="qz-now"><div class="n-t">'+R.v+'</div>'+
+        '<div class="n-c"><b>Where we&rsquo;d start: '+R.route+'.</b> '+R.why+'</div></div>'+
+      '<div class="qz-actions">'+(BOOK_URL?'<a class="qz-btn" href="'+BOOK_URL+'">&#968;&nbsp; Talk through your read</a>':'')+
+        '<button type="button" class="qz-skip" id="dxSend">send me this read &rarr;</button>'+
+        '<button type="button" class="qz-skip" id="dxAgain">run it again</button></div>'+
+      '<div id="dxForm"></div>';
+    document.getElementById('dxAgain').onclick=function(){ st.a=[]; renderStart(); scrollIn(); };
+    document.getElementById('dxSend').onclick=renderForm;
+    scrollIn(); focusTop();
+  }
+
+  function summary(){
+    var r = st.read, lines = STAGES.map(function(s){ return s.name+': '+r.status[s.id]; });
+    return 'Sales Diagnostic read: '+READS[r.key].h+'\nBusiness: '+st.vertical+'\n'+lines.join('\n')+'\nSuggested start: '+READS[r.key].route;
+  }
+
+  function renderForm(){
+    var box = document.getElementById('dxForm');
+    if(!FORM_ENDPOINT){ box.innerHTML='<p class="qz-note mono">Sending isn&rsquo;t switched on yet. Take a screenshot of your read, or book a time above.</p>'; return; }
+    box.innerHTML =
+      '<form class="qz-fields" id="dxF" novalidate>'+
+        '<label>Name<input id="dxName" autocomplete="name" required></label>'+
+        '<label>Email<input id="dxEmail" type="email" autocomplete="email" required></label>'+
+        '<label>Business<input id="dxBiz" autocomplete="organization"></label>'+
+        '<label class="dx-consent"><span><input type="checkbox" id="dxOk"> Send me this read, and it&rsquo;s fine for PsikiQ to follow up about it.</span></label>'+
+        '<div class="qz-hp" aria-hidden="true"><input id="dxHp" tabindex="-1" autocomplete="off"></div>'+
+        '<div class="qz-actions"><button class="qz-btn" id="dxGo" type="submit">Send my read</button><span class="qz-note mono" id="dxSay"></span></div>'+
+      '</form>';
+    var f=document.getElementById('dxF'), say=document.getElementById('dxSay');
+    document.getElementById('dxName').focus();
+    f.addEventListener('submit',function(e){
+      e.preventDefault();
+      var name=document.getElementById('dxName').value.trim(), email=document.getElementById('dxEmail').value.trim();
+      if(!name||!email){ say.textContent='name and email are the two we need'; return; }
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ say.textContent='that email doesn’t look right'; return; }
+      if(!document.getElementById('dxOk').checked){ say.textContent='tick the line so we can send it'; return; }
+      var r=st.read, payload={ name:name, email:email, business:document.getElementById('dxBiz').value.trim(),
+        about:'Sales Diagnostic', message:summary(), page:location.href, source:'sales-diagnostic',
+        vertical:st.vertical, constraint:r.key, stages:r.status, website_hp:document.getElementById('dxHp').value };
+      var go=document.getElementById('dxGo'); go.disabled=true; say.textContent='sending…';
+      fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+        .then(function(res){ if(!res.ok) throw new Error('bad'); box.innerHTML='<p class="qz-note mono">Sent. Your read is on its way, and a person will follow up.</p>'; })
+        .catch(function(){ go.disabled=false; say.textContent='it didn’t go through, try once more'; });
+    });
+  }
+
+  renderStart();
+
+  /* progress rail */
+  var pf=document.getElementById('pf');
+  function progress(){ var d=document.documentElement,m=d.scrollHeight-d.clientHeight; pf.style.width=((m>0?Math.min(1,d.scrollTop/m):0)*100).toFixed(1)+'%'; }
+  var t=false;
+  window.addEventListener('scroll',function(){ if(t)return; t=true; requestAnimationFrame(function(){progress();t=false;}); },{passive:true});
+  window.addEventListener('resize',progress); progress();
+})();
+</script>
+</body>
+</html>

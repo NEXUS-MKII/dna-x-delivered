@@ -24,9 +24,11 @@ PAGES = {                      # source file -> (GHL output, GHL path, header re
     'index.html':   ('ghl/psikiq-home-ghl.html',    '/',        '<span class="w">//</span>&nbsp;<span id="rd">SUPERPOSITION</span>'),
     'pricing.html': ('ghl/psikiq-pricing-ghl.html', '/psikiq-pricing', '<span class="w">//</span>&nbsp;PRICING'),
     'contact.html': ('ghl/psikiq-contact-ghl.html', '/psikiq-contact', '<span class="w">//</span>&nbsp;LISTENING'),
+    'diagnostic.html': ('ghl/psikiq-diagnostic-ghl.html', '/psikiq-sales-diagnostic', '<span class="w">//</span>&nbsp;MEASURING'),
 }
 # GHL page paths as they exist in the site (the home page is the domain root)
-LINKS = {'index.html': '/', 'pricing.html': '/psikiq-pricing', 'contact.html': '/psikiq-contact'}
+LINKS = {'index.html': '/', 'pricing.html': '/psikiq-pricing', 'contact.html': '/psikiq-contact',
+         'diagnostic.html': '/psikiq-sales-diagnostic'}
 
 def relink(text):
     """source pages link to each other as files; the GHL site uses paths. Applies to
